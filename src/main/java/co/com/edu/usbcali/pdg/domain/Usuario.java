@@ -3,10 +3,17 @@ package co.com.edu.usbcali.pdg.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.Date;
-
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,7 +35,7 @@ public class Usuario implements java.io.Serializable {
 
 	@Id
 	@Column(name = "usua_id", unique = true, nullable = false)
-	@NotNull
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long usuaId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -36,12 +43,19 @@ public class Usuario implements java.io.Serializable {
 	@NotNull
 	private TipoUsuario tipoUsuario;
 
+	@NotNull
 	@Column(name = "codigo")
 	private String codigo;
+	
+	@NotNull
 	@Column(name = "direccion")
 	private String direccion;
+	
+	@NotNull
 	@Column(name = "estado")
 	private String estado;
+	
+	@NotNull
 	@Column(name = "nombre")
 	private String nombre;
 

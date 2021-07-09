@@ -1,148 +1,237 @@
 package co.com.edu.usbcali.pdg.service;
 
-import co.com.edu.usbcali.pdg.domain.*;
-import co.com.edu.usbcali.pdg.exception.*;
-import co.com.edu.usbcali.pdg.repository.*;
-import co.com.edu.usbcali.pdg.utility.Utilities;
-
-import lombok.extern.slf4j.Slf4j;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.context.annotation.Scope;
-
-import org.springframework.stereotype.Service;
-
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.math.*;
-
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Validator;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import co.com.edu.usbcali.pdg.domain.Artefacto;
+import co.com.edu.usbcali.pdg.domain.TipoArtefacto;
+import co.com.edu.usbcali.pdg.domain.Usuario;
+import co.com.edu.usbcali.pdg.dto.ArtefactoDTO;
+import co.com.edu.usbcali.pdg.exception.ZMessManager;
+import co.com.edu.usbcali.pdg.repository.ArtefactoRepository;
+import co.com.edu.usbcali.pdg.utility.Constantes;
+import lombok.extern.slf4j.Slf4j;
 
 /**
-* @author Zathura Code Generator Version 9.0 http://zathuracode.org
-* www.zathuracode.org
-*
-*/
+ * @author Zathura Code Generator Version 9.0 http://zathuracode.org
+ *         www.zathuracode.org
+ *
+ */
 @Scope("singleton")
 @Service
 @Slf4j
 public class ArtefactoServiceImpl implements ArtefactoService {
-    @Autowired
-    private ArtefactoRepository artefactoRepository;
-    @Autowired
-    private Validator validator;
+	
+	@Autowired
+	private ArtefactoRepository artefactoRepository;
+	
+	@Autowired
+	private TipoArtefactoService tipoArtefactoService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
+	
+	@Autowired
+	private Validator validator;
 
-    @Override
-    public void validate(Artefacto artefacto)
-        throws ConstraintViolationException {
-        Set<ConstraintViolation<Artefacto>> constraintViolations = validator.validate(artefacto);
+	@Override
+	public void validate(Artefacto artefacto) throws ConstraintViolationException {
+		Set<ConstraintViolation<Artefacto>> constraintViolations = validator.validate(artefacto);
 
-        if (!constraintViolations.isEmpty()) {
-            throw new ConstraintViolationException(constraintViolations);
-        }
-    }
+		if (!constraintViolations.isEmpty()) {
+			throw new ConstraintViolationException(constraintViolations);
+		}
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Long count() {
-        return artefactoRepository.count();
-    }
+	@Override
+	@Transactional(readOnly = true)
+	public Long count() {
+		return artefactoRepository.count();
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Artefacto> findAll() {
-        log.debug("finding all Artefacto instances");
+	@Override
+	@Transactional(readOnly = true)
+	public List<Artefacto> findAll() {
+		log.debug("finding all Artefacto instances");
 
-        return artefactoRepository.findAll();
-    }
+		return artefactoRepository.findAll();
+	}
 
-    @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Artefacto save(Artefacto entity) throws Exception {
-        log.debug("saving Artefacto instance");
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public Artefacto save(Artefacto entity) throws Exception {
+		log.debug("saving Artefacto instance");
 
-        if (entity == null) {
-            throw new ZMessManager().new NullEntityExcepcion("Artefacto");
-        }
+		if (entity == null) {
+			throw new ZMessManager().new NullEntityExcepcion("Artefacto");
+		}
 
-        validate(entity);
+		validate(entity);
 
-        if (artefactoRepository.existsById(entity.getArteId())) {
-            throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-        }
+		if (artefactoRepository.existsById(entity.getArteId())) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
 
-        return artefactoRepository.save(entity);
-    }
+		return artefactoRepository.save(entity);
+	}
 
-    @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void delete(Artefacto entity) throws Exception {
-        log.debug("deleting Artefacto instance");
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void delete(Artefacto entity) throws Exception {
+		log.debug("deleting Artefacto instance");
 
-        if (entity == null) {
-            throw new ZMessManager().new NullEntityExcepcion("Artefacto");
-        }
+		if (entity == null) {
+			throw new ZMessManager().new NullEntityExcepcion("Artefacto");
+		}
 
-        if (entity.getArteId() == null) {
-            throw new ZMessManager().new EmptyFieldException("arteId");
-        }
+		if (entity.getArteId() == null) {
+			throw new ZMessManager().new EmptyFieldException("arteId");
+		}
 
-        if (artefactoRepository.existsById(entity.getArteId()) == false) {
-            throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-        }
+		if (artefactoRepository.existsById(entity.getArteId()) == false) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
 
-        artefactoRepository.deleteById(entity.getArteId());
-        log.debug("delete Artefacto successful");
-    }
+		artefactoRepository.deleteById(entity.getArteId());
+		log.debug("delete Artefacto successful");
+	}
 
-    @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public void deleteById(Long id) throws Exception {
-        log.debug("deleting Artefacto instance");
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void deleteById(Long id) throws Exception {
+		log.debug("deleting Artefacto instance");
 
-        if (id == null) {
-            throw new ZMessManager().new EmptyFieldException("arteId");
-        }
+		if (id == null) {
+			throw new ZMessManager().new EmptyFieldException("arteId");
+		}
 
-        if (artefactoRepository.existsById(id)) {
-            delete(artefactoRepository.findById(id).get());
-        }
-    }
+		if (artefactoRepository.existsById(id)) {
+			delete(artefactoRepository.findById(id).get());
+		}
+	}
 
-    @Override
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-    public Artefacto update(Artefacto entity) throws Exception {
-        log.debug("updating Artefacto instance");
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public Artefacto update(Artefacto entity) throws Exception {
+		log.debug("updating Artefacto instance");
 
-        if (entity == null) {
-            throw new ZMessManager().new NullEntityExcepcion("Artefacto");
-        }
+		if (entity == null) {
+			throw new ZMessManager().new NullEntityExcepcion("Artefacto");
+		}
 
-        validate(entity);
+		validate(entity);
 
-        if (artefactoRepository.existsById(entity.getArteId()) == false) {
-            throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-        }
+		if (artefactoRepository.existsById(entity.getArteId()) == false) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
 
-        return artefactoRepository.save(entity);
-    }
+		return artefactoRepository.save(entity);
+	}
 
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<Artefacto> findById(Long arteId) {
-        log.debug("getting Artefacto instance");
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Artefacto> findById(Long arteId) {
+		log.debug("getting Artefacto instance");
 
-        return artefactoRepository.findById(arteId);
-    }
+		return artefactoRepository.findById(arteId);
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void crearArtefacto(ArtefactoDTO artefactoDTO) throws Exception {
+		try {
+			
+			//Validar que artefactoDTO no sea null 
+			if (artefactoDTO == null) {
+				throw new ZMessManager("El artefacto esta nulo o vacío.");
+			}
+			
+			Artefacto artefacto = new Artefacto();
+			
+			//Metodo que implementa las validaciones
+			validarArtefacto(artefactoDTO, artefacto);
+			
+			//Seteo el estado
+			artefacto.setEstado(Constantes.ESTADO_ACTIVO);
+			
+			artefactoRepository.save(artefacto);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+
+	private void validarArtefacto(ArtefactoDTO artefactoDTO, Artefacto artefacto) {
+		//validar que el codigo no sea null
+		if (artefactoDTO.getCodigo() != null && !artefactoDTO.getCodigo().isBlank()) {
+			
+			//Seteo del codigo
+			artefacto.setCodigo(artefactoDTO.getCodigo());
+			
+		} else {
+			throw new ZMessManager("El codigo se encuentra nulo o vacío");
+		}
+		
+		//Validar que el url no sea null 
+		if (artefactoDTO.getUrl() != null && !artefactoDTO.getUrl().isBlank()) {
+			
+			//Seteo el url
+			artefacto.setUrl(artefactoDTO.getUrl());
+			
+		} else {
+			throw new ZMessManager("El url se encuentra nulo o vacío.");
+		}
+		
+		//Validar que el url no sea null 
+		if (artefactoDTO.getTiarId_TipoArtefacto() != null) {
+			
+			//Valido que el tipo de artefacto exista
+			Optional<TipoArtefacto> tipoArtefactoOpt = tipoArtefactoService.findById(artefactoDTO.getTiarId_TipoArtefacto());
+			
+			if (!tipoArtefactoOpt.isPresent()) {
+				throw new ZMessManager("El tipo de artefacto seleccionado no exíste.");
+			}
+			
+			TipoArtefacto tipoArtefacto = tipoArtefactoOpt.get();
+			
+			//Seteo el tipo de artefacto
+			artefacto.setTipoArtefacto(tipoArtefacto);
+			
+		} else {
+			throw new ZMessManager("El url se encuentra nulo o vacío");
+		}
+		
+		//Validar que el usuario no sea null 
+		if (artefactoDTO.getUsuaId_Usuario() != null) {
+			
+			//Valido que el usuario exista
+			Optional<Usuario> usuarioOpt = usuarioService.findById(artefactoDTO.getUsuaId_Usuario());
+			
+			if (!usuarioOpt.isPresent()) {
+				throw new ZMessManager("El usuario seleccionado seleccionado no exíste.");
+			}
+			
+			Usuario usuario = usuarioOpt.get();
+			
+			//Seteo el usuario
+			artefacto.setUsuario(usuario);
+			
+		} else {
+			throw new ZMessManager("El url se encuentra nulo o vacío");
+		}
+		
+	}
+	
 }

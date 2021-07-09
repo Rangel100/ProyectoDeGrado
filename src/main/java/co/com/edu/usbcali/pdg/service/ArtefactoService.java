@@ -1,10 +1,7 @@
 package co.com.edu.usbcali.pdg.service;
 
 import co.com.edu.usbcali.pdg.domain.Artefacto;
-
-import java.math.*;
-
-import java.util.*;
+import co.com.edu.usbcali.pdg.dto.ArtefactoDTO;
 
 
 /**
@@ -13,4 +10,6 @@ import java.util.*;
 *
 */
 public interface ArtefactoService extends GenericService<Artefacto, Long> {
+
+	void crearArtefacto(ArtefactoDTO artefactoDTO) throws Exception;
 }

@@ -1,10 +1,7 @@
 package co.com.edu.usbcali.pdg.service;
 
 import co.com.edu.usbcali.pdg.domain.TipoUsuario;
-
-import java.math.*;
-
-import java.util.*;
+import co.com.edu.usbcali.pdg.dto.TipoUsuarioDTO;
 
 
 /**
@@ -13,4 +10,6 @@ import java.util.*;
 *
 */
 public interface TipoUsuarioService extends GenericService<TipoUsuario, Long> {
+
+	void crearTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) throws Exception;
 }

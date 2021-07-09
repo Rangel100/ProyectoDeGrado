@@ -1,166 +1,235 @@
-package  co.com.edu.usbcali.pdg.service;
+package co.com.edu.usbcali.pdg.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
-import java.math.*;
-import java.util.*;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import co.com.edu.usbcali.pdg.exception.*;
-import co.com.edu.usbcali.pdg.repository.*;
+
+import co.com.edu.usbcali.pdg.domain.Artefacto;
+import co.com.edu.usbcali.pdg.domain.TipoUsuario;
+import co.com.edu.usbcali.pdg.domain.Usuario;
+import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
+import co.com.edu.usbcali.pdg.exception.ZMessManager;
+import co.com.edu.usbcali.pdg.repository.UsuarioRepository;
+import co.com.edu.usbcali.pdg.utility.Constantes;
 import co.com.edu.usbcali.pdg.utility.Utilities;
-
-import co.com.edu.usbcali.pdg.domain.*;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Validator;
-
 import lombok.extern.slf4j.Slf4j;
 
 /**
-* @author Zathura Code Generator Version 9.0 http://zathuracode.org/
-* www.zathuracode.org
-* 
-*/
+ * @author Zathura Code Generator Version 9.0 http://zathuracode.org/
+ *         www.zathuracode.org
+ * 
+ */
 
 @Scope("singleton")
 @Service
 @Slf4j
-public class UsuarioServiceImpl implements UsuarioService{
+public class UsuarioServiceImpl implements UsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
+	private TipoUsuarioService tipoUsuarioService;
+
+	@Autowired
 	private Validator validator;
-                
-    @Override        		
-	public void validate(Usuario usuario)throws ConstraintViolationException{		
-		
-		Set<ConstraintViolation<Usuario>> constraintViolations =validator.validate(usuario);
-		 if (!constraintViolations.isEmpty()) {			
+
+	@Override
+	public void validate(Usuario usuario) throws ConstraintViolationException {
+
+		Set<ConstraintViolation<Usuario>> constraintViolations = validator.validate(usuario);
+		if (!constraintViolations.isEmpty()) {
 			throw new ConstraintViolationException(constraintViolations);
 		}
-		
-	}
-	
-	@Override
-	@Transactional(readOnly=true)
-	public Long count(){
-	 	return usuarioRepository.count();
+
 	}
 
 	@Override
-	@Transactional(readOnly=true)
-	public List<Usuario> findAll(){
-		log.debug("finding all Usuario instances");
-       	return usuarioRepository.findAll();
-    }
-			
-			
+	@Transactional(readOnly = true)
+	public Long count() {
+		return usuarioRepository.count();
+	}
+
 	@Override
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)			
-    public Usuario save(Usuario entity) throws Exception {
+	@Transactional(readOnly = true)
+	public List<Usuario> findAll() {
+		log.debug("finding all Usuario instances");
+		return usuarioRepository.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public Usuario save(Usuario entity) throws Exception {
 		log.debug("saving Usuario instance");
-	   
-	    
-	    if(entity==null){
+
+		if (entity == null) {
 			throw new ZMessManager().new NullEntityExcepcion("Usuario");
 		}
+
+		validate(entity);
+
+		if (usuarioRepository.existsById(entity.getUsuaId())) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
+
+		return usuarioRepository.save(entity);
+
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void delete(Usuario entity) throws Exception {
+		log.debug("deleting Usuario instance");
+
+		if (entity == null) {
+			throw new ZMessManager().new NullEntityExcepcion("Usuario");
+		}
+
+		if (entity.getUsuaId() == null) {
+			throw new ZMessManager().new EmptyFieldException("usuaId");
+		}
+
+		if (usuarioRepository.existsById(entity.getUsuaId()) == false) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
+
+		findById(entity.getUsuaId()).ifPresent(entidad -> {
+			List<Artefacto> artefactos = entidad.getArtefactos();
+			if (Utilities.validationsList(artefactos) == true) {
+				throw new ZMessManager().new DeletingException("artefactos");
+			}
+		});
+
+		usuarioRepository.deleteById(entity.getUsuaId());
+		log.debug("delete Usuario successful");
+
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void deleteById(Long id) throws Exception {
+		log.debug("deleting Usuario instance");
+		if (id == null) {
+			throw new ZMessManager().new EmptyFieldException("usuaId");
+		}
+		if (usuarioRepository.existsById(id)) {
+			delete(usuarioRepository.findById(id).get());
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public Usuario update(Usuario entity) throws Exception {
+
+		log.debug("updating Usuario instance");
+
+		if (entity == null) {
+			throw new ZMessManager().new NullEntityExcepcion("Usuario");
+		}
+
+		validate(entity);
+
+		if (usuarioRepository.existsById(entity.getUsuaId()) == false) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
+
+		return usuarioRepository.save(entity);
+
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Usuario> findById(Long usuaId) {
+		log.debug("getting Usuario instance");
+		return usuarioRepository.findById(usuaId);
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void crearUsuario(UsuarioDTO usuarioDTO) throws Exception {
+		try {
+			
+			//Validar que usuarioDTO no sea null 
+			if (usuarioDTO == null) {
+				throw new ZMessManager("El artefacto esta nulo o vacío.");
+			}
+			
+			Usuario usuario = new Usuario();
+			
+			//Metodo que implementa las validaciones
+			validarUsuario(usuarioDTO, usuario);
+			
+			//Seteo el estado
+			usuario.setEstado(Constantes.ESTADO_ACTIVO);
+			
+			usuarioRepository.save(usuario);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+
+	private void validarUsuario(UsuarioDTO usuarioDTO, Usuario usuario) {
+		//Validar que el tipo de usuario no sea null 
+		if (usuarioDTO.getTiusId_TipoUsuario() != null) {
+			
+			//Valido que el tipo de usuario exista
+			Optional<TipoUsuario> tipoUsuarioOpt = tipoUsuarioService.findById(usuarioDTO.getTiusId_TipoUsuario());
+			
+			if (!tipoUsuarioOpt.isPresent()) {
+				throw new ZMessManager("El tipo de usuario seleccionado no exíste.");
+			}
+			
+			TipoUsuario tipoUsuario = tipoUsuarioOpt.get();
+			
+			//Seteo el tipo de usuario
+			usuario.setTipoUsuario(tipoUsuario);
+			
+		} else {
+			throw new ZMessManager("El tipo de usuario se encuentra nulo o vacío");
+		}
 		
-		validate(entity);	
-	
-		if(usuarioRepository.existsById(entity.getUsuaId())){
-           throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-        }    
-	
-	    return usuarioRepository.save(entity);
-	   
-    }
+		//validar que el codigo no sea null
+		if (usuarioDTO.getCodigo() != null && !usuarioDTO.getCodigo().isBlank()) {
 			
+			//Seteo del codigo
+			usuario.setCodigo(usuarioDTO.getCodigo());
 			
-			@Override
-			@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-            public void delete(Usuario entity) throws Exception {
-            	log.debug("deleting Usuario instance");
-            	
-	            if(entity==null){
-	    			throw new ZMessManager().new NullEntityExcepcion("Usuario");
-	    		}
-    	
-                                if(entity.getUsuaId()==null){
-                    throw new ZMessManager().new EmptyFieldException("usuaId");
-                    }
-                        
-            if(usuarioRepository.existsById(entity.getUsuaId())==false){
-           		throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-        	} 
-            
-            	            findById(entity.getUsuaId()).ifPresent(entidad->{	            	
-	                													List<Artefacto> artefactos = entidad.getArtefactos();
-							                    if(Utilities.validationsList(artefactos)==true){
-                       	 	throw new ZMessManager().new DeletingException("artefactos");
-                        }
-	                	            });
-                       
+		} else {
+			throw new ZMessManager("El codigo se encuentra nulo o vacío");
+		}
+		
+		//Validar que el direccion no sea null 
+		if (usuarioDTO.getDireccion() != null && !usuarioDTO.getDireccion().isBlank()) {
+			
+			//Seteo el direccion
+			usuario.setDireccion(usuarioDTO.getDireccion());
+			
+		} else {
+			throw new ZMessManager("La direccion se encuentra nulo o vacío.");
+		}
+		
+		//Validar que el nombre no sea null 
+		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().isBlank()) {
+			
+			//Seteo el nombre
+			usuario.setNombre(usuarioDTO.getNombre());
+			
+		} else {
+			throw new ZMessManager("El nombre se encuentra nulo o vacío.");
+		}
+		
+	}
 
-           
-            
-            usuarioRepository.deleteById(entity.getUsuaId());
-            log.debug("delete Usuario successful");
-            
-           
-            	
-            }
-            
-            @Override
-			@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-            public void deleteById(Long id) throws Exception {            
-            	log.debug("deleting Usuario instance");
-            	if(id==null){
-            		throw new ZMessManager().new EmptyFieldException("usuaId");
-            	}
-            	if(usuarioRepository.existsById(id)){
-           			delete(usuarioRepository.findById(id).get());
-       			}    
-            }	
-			
-			@Override
-			@Transactional(readOnly = false, propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-            public Usuario update(Usuario entity) throws Exception {
-
-				log.debug("updating Usuario instance");
-				
-	           
-	            
-	            	if(entity==null){
-		    			throw new ZMessManager().new NullEntityExcepcion("Usuario");
-		    		}
-		    		
-	            validate(entity);
-	            
-	            
-	            if(usuarioRepository.existsById(entity.getUsuaId())==false){
-           			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
-        		}	            
-	
-	            return usuarioRepository.save(entity);
-	        
-            }
-			
-			@Override
-			@Transactional(readOnly=true)
-            public Optional<Usuario> findById(Long usuaId) {            
-            	log.debug("getting Usuario instance");
-            	return usuarioRepository.findById(usuaId);
-            }
-			
 }
