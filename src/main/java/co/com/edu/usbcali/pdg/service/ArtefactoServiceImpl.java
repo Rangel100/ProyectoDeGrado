@@ -18,6 +18,7 @@ import co.com.edu.usbcali.pdg.domain.Artefacto;
 import co.com.edu.usbcali.pdg.domain.TipoArtefacto;
 import co.com.edu.usbcali.pdg.domain.Usuario;
 import co.com.edu.usbcali.pdg.dto.ArtefactoDTO;
+import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
 import co.com.edu.usbcali.pdg.exception.ZMessManager;
 import co.com.edu.usbcali.pdg.repository.ArtefactoRepository;
 import co.com.edu.usbcali.pdg.utility.Constantes;
@@ -35,6 +36,9 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 	
 	@Autowired
 	private ArtefactoRepository artefactoRepository;
+	
+	@Autowired
+	private ArtefactoService artefactoService;
 	
 	@Autowired
 	private TipoArtefactoService tipoArtefactoService;
@@ -234,4 +238,40 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 		
 	}
 	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void eliminarArtefactosPorUsuario(UsuarioDTO usuarioDTO) throws Exception {
+		try {
+			
+			//Validar que usuarioDTO no sea null 
+			if (usuarioDTO == null) {
+				throw new ZMessManager("El usuario esta nulo o vacío.");
+			}
+			
+			//Validar que el usuaId no sea nulo
+			if (usuarioDTO.getUsuaId() == null ) {
+				throw new ZMessManager("El identificador del usuario esta nulo o vacío.");
+			}
+			
+			//Metodo que consulta los artefactos asociados a un usuario
+			List<Artefacto> artefactosList = artefactoRepository.findByUsuario_usuaId(usuarioDTO.getUsuaId());
+			
+			//Si la lista no esta vacía se 
+			if (!artefactosList.isEmpty()) {
+				
+				//recorro la lista de los artefactos para inactivarlos
+				for (Artefacto  artefacto: artefactosList) {
+					
+					//Seteo el estado inactivo
+					artefacto.setEstado(Constantes.ESTADO_INACTIVO);
+					
+					artefactoService.update(artefacto);
+				}
+			}
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
 }

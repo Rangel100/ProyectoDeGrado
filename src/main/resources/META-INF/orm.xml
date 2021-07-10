@@ -4,6 +4,25 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
         http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd" version="2.2">
         
+	<entity class="co.com.edu.usbcali.pdg.domain.Usuario">
+		<named-native-query name="Usuario.consultarUsuario"
+			result-set-mapping="consultarUsuario">
+			<query>
+	        <![CDATA[
+				select 	usua.usua_id usuaId,
+						usua.nombre nombre,
+						usua.codigo codigo,
+						usua.direccion direccion,
+						string_agg( '' || arte.arte_id, ',') artefactosList
+				from usuario usua
+				left join artefacto arte on arte.usua_id = usua.usua_id
+				where usua.usua_id = :pUsuaId
+				and usua.estado = :pEstado
+				group by usua.usua_id 
+	        ]]>
+	        </query>
+		</named-native-query>
+	</entity>
     
    
 </entity-mappings>

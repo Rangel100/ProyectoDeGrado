@@ -1,10 +1,11 @@
 package co.com.edu.usbcali.pdg.repository;
 
-import co.com.edu.usbcali.pdg.domain.Usuario;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-import java.math.BigDecimal;
+import co.com.edu.usbcali.pdg.domain.Usuario;
+import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
 
 
 /**
@@ -13,4 +14,8 @@ import java.math.BigDecimal;
 *
 */
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+	
+	@Query(nativeQuery = true)
+	UsuarioDTO consultarUsuario(@Param("pUsuaId") Long usuaId,
+								@Param("pEstado") String estado);
 }

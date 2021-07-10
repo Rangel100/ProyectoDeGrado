@@ -1,5 +1,6 @@
 package co.com.edu.usbcali.pdg.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -17,8 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import co.com.edu.usbcali.pdg.domain.Artefacto;
 import co.com.edu.usbcali.pdg.domain.TipoUsuario;
 import co.com.edu.usbcali.pdg.domain.Usuario;
+import co.com.edu.usbcali.pdg.dto.ArtefactoDTO;
 import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
 import co.com.edu.usbcali.pdg.exception.ZMessManager;
+import co.com.edu.usbcali.pdg.mapper.ArtefactoMapper;
 import co.com.edu.usbcali.pdg.repository.UsuarioRepository;
 import co.com.edu.usbcali.pdg.utility.Constantes;
 import co.com.edu.usbcali.pdg.utility.Utilities;
@@ -39,7 +42,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
+	private UsuarioService usuarioService;
+	
+	@Autowired
 	private TipoUsuarioService tipoUsuarioService;
+	
+	@Autowired
+	private ArtefactoService artefactoService;
+	
+	@Autowired
+	private ArtefactoMapper artefactoMapper;
 
 	@Autowired
 	private Validator validator;
@@ -223,13 +235,140 @@ public class UsuarioServiceImpl implements UsuarioService {
 		//Validar que el nombre no sea null 
 		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().isBlank()) {
 			
-			//Seteo el nombre
-			usuario.setNombre(usuarioDTO.getNombre());
+			//Validar que el apellido no sea null 
+			if (usuarioDTO.getApellido() != null && !usuarioDTO.getApellido().isBlank()) {
+
+				//Seteo el nombre
+				usuario.setNombre(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido());
+				
+			} else {
+				throw new ZMessManager("El nombre se encuentra nulo o vacío.");
+			}
 			
 		} else {
 			throw new ZMessManager("El nombre se encuentra nulo o vacío.");
 		}
 		
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void actualizarUsuario(UsuarioDTO usuarioDTO) throws Exception {
+		try {
+			
+			//Validar que usuarioDTO no sea null 
+			if (usuarioDTO == null) {
+				throw new ZMessManager("El usuario esta nulo o vacío.");
+			}
+			
+			//Validar que el usuaId no sea nulo
+			if (usuarioDTO.getUsuaId() == null ) {
+				throw new ZMessManager("El identificador del usuario esta nulo o vacío.");
+			}
+			
+			//Validar que el usuario exísta
+			Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioDTO.getUsuaId());
+			
+			if (!usuarioOpt.isPresent()) {
+				throw new ZMessManager("El usuario no fue encontrado.");
+			}
+			
+			Usuario usuario = usuarioOpt.get();
+			
+			//Metodo que implementa las validaciones
+			validarUsuario(usuarioDTO, usuario);
+			
+			//Seteo el estado
+			usuario.setEstado(Constantes.ESTADO_ACTIVO);
+			
+			usuarioService.update(usuario);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void eliminarUsuario(UsuarioDTO usuarioDTO) throws Exception {
+		try {
+			
+			//Validar que usuarioDTO no sea null 
+			if (usuarioDTO == null) {
+				throw new ZMessManager("El usuario esta nulo o vacío.");
+			}
+			
+			//Validar que el usuaId no sea nulo
+			if (usuarioDTO.getUsuaId() == null ) {
+				throw new ZMessManager("El identificador del usuario esta nulo o vacío.");
+			}
+			
+			//Validar que el usuario exísta
+			Optional<Usuario> usuarioOpt = usuarioRepository.findById(usuarioDTO.getUsuaId());
+			
+			if (!usuarioOpt.isPresent()) {
+				throw new ZMessManager("El usuario no fue encontrado.");
+			}
+			
+			Usuario usuario = usuarioOpt.get();
+			
+			//Seteo el estado inactivo
+			usuario.setEstado(Constantes.ESTADO_INACTIVO);
+			
+			usuarioService.update(usuario);
+			
+			//inactivo los artefactos que el usuario tenga registrados
+			artefactoService.eliminarArtefactosPorUsuario(usuarioDTO);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public UsuarioDTO consultarUsuario(Long usuaId) throws Exception {
+		try {
+			
+			//Validar que el usuaId no sea null 
+			if (usuaId == null) {
+				throw new ZMessManager("El identificador del usuario esta nulo o vacío.");
+			}
+			
+			//Validar que el usuario exísta
+			UsuarioDTO usuarioDTO = usuarioRepository.consultarUsuario(usuaId, Constantes.ESTADO_ACTIVO);
+			
+			if (usuarioDTO.getArtefactosList() != null) {
+				
+				List<ArtefactoDTO> artefactoDTOs = new ArrayList<>();
+				String[] artefactosList = usuarioDTO.getArtefactosList().split(",");
+				
+				for (int i = 0; i < artefactosList.length; i++) {
+					
+					Optional<Artefacto> artefactoOpt =  artefactoService.findById(Long.parseLong(artefactosList[i]));
+					
+					if (!artefactoOpt.isPresent()) {
+						throw new ZMessManager("El artefacto no exíste.");
+					}
+					
+					Artefacto artefacto = artefactoOpt.get();
+					ArtefactoDTO artefactoDTO = artefactoMapper.artefactoToArtefactoDTO(artefacto);
+					artefactoDTOs.add(artefactoDTO);
+					
+				}
+				
+				usuarioDTO.setArtefactoDTOs(artefactoDTOs);
+				
+			}
+			
+			return usuarioDTO;
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
 	}
 
 }

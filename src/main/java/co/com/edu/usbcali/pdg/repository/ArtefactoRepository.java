@@ -1,10 +1,10 @@
 package co.com.edu.usbcali.pdg.repository;
 
-import co.com.edu.usbcali.pdg.domain.Artefacto;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.math.BigDecimal;
+import co.com.edu.usbcali.pdg.domain.Artefacto;
 
 
 /**
@@ -13,4 +13,6 @@ import java.math.BigDecimal;
 *
 */
 public interface ArtefactoRepository extends JpaRepository<Artefacto, Long> {
+	
+	List<Artefacto> findByUsuario_usuaId(Long usuaId);
 }
