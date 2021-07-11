@@ -36,6 +36,12 @@ public class TipoArtefactoServiceImpl implements TipoArtefactoService {
 
 	@Autowired
 	private TipoArtefactoRepository tipoArtefactoRepository;
+	
+	@Autowired
+	private TipoArtefactoService tipoArtefactoService;
+	
+	@Autowired
+	private ArtefactoService artefactoService;
 
 	@Autowired
 	private Validator validator;
@@ -169,6 +175,107 @@ public class TipoArtefactoServiceImpl implements TipoArtefactoService {
 			tipoArtefacto.setEstado(Constantes.ESTADO_ACTIVO);
 			
 			tipoArtefactoRepository.save(tipoArtefacto);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void actualizarTipoArtefacto(TipoArtefactoDTO tipoArtefactoDTO) throws Exception {
+		try {
+			
+			//Validar que TipoArtefactoDTO no sea null 
+			if (tipoArtefactoDTO == null) {
+				throw new ZMessManager("El tipo de artefacto esta nulo o vacío.");
+			}
+			
+			//Validar que tiarId no sea null 
+			if (tipoArtefactoDTO.getTiarId() == null) {
+				throw new ZMessManager("El identificador del tipo de artefacto esta nulo o vacío.");
+			}
+			
+			//Validar que el tipo de artefacto exista
+			Optional<TipoArtefacto> tipoArtefactoOpt = tipoArtefactoRepository.findById(tipoArtefactoDTO.getTiarId());
+			
+			if (!tipoArtefactoOpt.isPresent()) {
+				throw new ZMessManager("El tipo de artefacto no fue encontrado.");
+			}
+			
+			TipoArtefacto tipoArtefacto = tipoArtefactoOpt.get();
+			
+			//Metodo que implementa las validaciones
+			validarTipoArtefacto(tipoArtefactoDTO, tipoArtefacto);
+			
+			//Seteo el estado
+			tipoArtefacto.setEstado(Constantes.ESTADO_ACTIVO);
+			
+			tipoArtefactoService.update(tipoArtefacto);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void eliminarTipoArtefacto(TipoArtefactoDTO tipoArtefactoDTO) throws Exception {
+		try {
+			
+			//Validar que TipoArtefactoDTO no sea null 
+			if (tipoArtefactoDTO == null) {
+				throw new ZMessManager("El tipo de artefacto esta nulo o vacío.");
+			}
+			
+			//Validar que tiarId no sea null 
+			if (tipoArtefactoDTO.getTiarId() == null) {
+				throw new ZMessManager("El identificador del tipo de artefacto esta nulo o vacío.");
+			}
+			
+			//Validar que el tipo de artefacto exista
+			Optional<TipoArtefacto> tipoArtefactoOpt = tipoArtefactoRepository.findById(tipoArtefactoDTO.getTiarId());
+			
+			if (!tipoArtefactoOpt.isPresent()) {
+				throw new ZMessManager("El tipo de artefacto no fue encontrado.");
+			}
+			
+			TipoArtefacto tipoArtefacto = tipoArtefactoOpt.get();
+			
+			//Valido que el Tipo de artefacto no tenga artefactos activos asociados
+			List<Artefacto> artefactosList = artefactoService.consultarArtefactosPorTipoArtefacto(tipoArtefacto.getTiarId());
+			
+			if (!artefactosList.isEmpty()) {
+				throw new ZMessManager("El tipo de artefacto tiene artefactos asociados.");
+			}
+			
+			//Seteo el estado
+			tipoArtefacto.setEstado(Constantes.ESTADO_INACTIVO);
+			
+			tipoArtefactoService.update(tipoArtefacto);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public TipoArtefactoDTO consultarTipoArtefacto(Long tiarId) throws Exception {
+		try {
+			
+			//Validar que tiarId no sea null 
+			if (tiarId == null) {
+				throw new ZMessManager("El identificador del artefacto esta nulo o vacío.");
+			}
+			
+			//Validar que el tipo de artefacto exista
+			TipoArtefactoDTO tipoArtefactoDTO = tipoArtefactoRepository.consultarTipoArtefacto(tiarId, Constantes.ESTADO_ACTIVO);
+			
+			return tipoArtefactoDTO;
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());

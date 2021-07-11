@@ -34,8 +34,10 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "*")
 @Slf4j
 public class ArtefactoRestController {
+	
     @Autowired
     private ArtefactoService artefactoService;
+    
     @Autowired
     private ArtefactoMapper artefactoMapper;
 
@@ -103,4 +105,41 @@ public class ArtefactoRestController {
     public ResponseEntity<?> count() {
         return ResponseEntity.ok().body(artefactoService.count());
     }
+    
+    //////////////////////////////////////////////////////////
+    
+    @PostMapping("/crearArtefacto")
+    public ResponseEntity<?> crearArtefacto(@RequestBody ArtefactoDTO artefactoDTO) throws Exception {
+        log.debug("Request to crearArtefacto Artefacto: {}", artefactoDTO);
+        
+        artefactoService.crearArtefacto(artefactoDTO);
+        
+        return ResponseEntity.ok().body(artefactoDTO);
+    }
+    
+    @PostMapping("/actualizarArtefacto")
+    public ResponseEntity<?> actualizarArtefacto(@RequestBody ArtefactoDTO artefactoDTO) throws Exception {
+        log.debug("Request to actualizarArtefacto Artefacto: {}", artefactoDTO);
+        
+        artefactoService.actualizarArtefacto(artefactoDTO);
+        
+        return ResponseEntity.ok().body(artefactoDTO);
+    }
+    
+    @PostMapping("/eliminarArtefacto")
+    public ResponseEntity<?> eliminarArtefacto(@RequestBody ArtefactoDTO artefactoDTO) throws Exception {
+        log.debug("Request to eliminarArtefacto Artefacto: {}", artefactoDTO);
+        
+        artefactoService.eliminarArtefacto(artefactoDTO);
+        
+        return ResponseEntity.ok().body(artefactoDTO);
+    }
+    
+    @PostMapping("/consultarArtefacto")
+    public ResponseEntity<?> consultarArtefacto(@RequestBody Long arteId) throws Exception {
+        log.debug("Request to consultarArtefacto Artefacto: {}", arteId);
+        
+        return ResponseEntity.ok().body(artefactoService.consultarArtefacto(arteId));
+    }
+    
 }

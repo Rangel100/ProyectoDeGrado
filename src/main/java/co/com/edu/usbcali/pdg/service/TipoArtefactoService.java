@@ -12,4 +12,11 @@ import co.com.edu.usbcali.pdg.dto.TipoArtefactoDTO;
 public interface TipoArtefactoService extends GenericService<TipoArtefacto, Long> {
 
 	void crearTipoArtefacto(TipoArtefactoDTO TipoArtefactoDTO) throws Exception;
+
+	TipoArtefactoDTO consultarTipoArtefacto(Long tiarId) throws Exception;
+
+	void eliminarTipoArtefacto(TipoArtefactoDTO tipoArtefactoDTO) throws Exception;
+
+	void actualizarTipoArtefacto(TipoArtefactoDTO tipoArtefactoDTO) throws Exception;
+
 }

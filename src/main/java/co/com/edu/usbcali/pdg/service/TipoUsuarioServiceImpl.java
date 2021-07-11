@@ -36,6 +36,12 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService {
 
 	@Autowired
 	private TipoUsuarioRepository tipoUsuarioRepository;
+	
+	@Autowired
+	private TipoUsuarioService tipoUsuarioService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 
 	@Autowired
 	private Validator validator;
@@ -155,7 +161,7 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService {
 	public void crearTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) throws Exception {
 		try {
 			
-			//Validar que TipoArtefactoDTO no sea null 
+			//Validar que tipoUsuarioDTO no sea null 
 			if (tipoUsuarioDTO == null) {
 				throw new ZMessManager("El tipo de usuario esta nulo o vacío.");
 			}
@@ -175,13 +181,119 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService {
 			throw e;
 		}
 	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void actualizarTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) throws Exception {
+		try {
+			
+			//Validar que tipoUsuarioDTO no sea null 
+			if (tipoUsuarioDTO == null) {
+				throw new ZMessManager("El tipo de usuario esta nulo o vacío.");
+			}
+			
+			//Validar que tiusId no sea null 
+			if (tipoUsuarioDTO.getTiusId() == null) {
+				throw new ZMessManager("El identificador del tipo de usuario esta nulo o vacío.");
+			}
+			
+			//Validar que el tipo de usuario exísta
+			Optional<TipoUsuario> tipoUsuarioOpt = tipoUsuarioRepository.findById(tipoUsuarioDTO.getTiusId());
+			
+			if (!tipoUsuarioOpt.isPresent()) {
+				throw new ZMessManager("El tipo de usuario no fue encontrado.");
+			}
+			
+			TipoUsuario tipoUsuario = tipoUsuarioOpt.get();
+			
+			//Metodo que implementa las validaciones
+			validarTipoUsuario(tipoUsuarioDTO, tipoUsuario);
+			
+			//Seteo el estado
+			tipoUsuario.setEstado(Constantes.ESTADO_ACTIVO);
+			
+			tipoUsuarioService.update(tipoUsuario);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void eliminarTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) throws Exception {
+		try {
+			
+			//Validar que tipoUsuarioDTO no sea null 
+			if (tipoUsuarioDTO == null) {
+				throw new ZMessManager("El tipo de usuario esta nulo o vacío.");
+			}
+			
+			//Validar que tiusId no sea null 
+			if (tipoUsuarioDTO.getTiusId() == null) {
+				throw new ZMessManager("El identificador del tipo de usuario esta nulo o vacío.");
+			}
+			
+			//Validar que el tipo de usuario exísta
+			Optional<TipoUsuario> tipoUsuarioOpt = tipoUsuarioRepository.findById(tipoUsuarioDTO.getTiusId());
+			
+			if (!tipoUsuarioOpt.isPresent()) {
+				throw new ZMessManager("El tipo de usuario no fue encontrado.");
+			}
+			
+			TipoUsuario tipoUsuario = tipoUsuarioOpt.get();
+			
+			//Validar que el tipos de usuario no tenga usuarios asociados
+			List<Usuario> usuariosList = usuarioService.consultarUsuariosPorTipoUsuario(tipoUsuario.getTiusId());
+			
+			if (!usuariosList.isEmpty()) {
+				throw new ZMessManager("El tipo de usuario tiene usuarios asociados.");
+			}
+			
+			//Seteo el estado
+			tipoUsuario.setEstado(Constantes.ESTADO_INACTIVO);
+			
+			tipoUsuarioService.update(tipoUsuario);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public TipoUsuarioDTO consultarTipoUsuario(Long tiusId) throws Exception {
+		try {
+			
+			//Validar que tiusId no sea null 
+			if (tiusId == null) {
+				throw new ZMessManager("El identificador del tipo de usuario esta nulo o vacío.");
+			}
+			
+			TipoUsuarioDTO tipoUsuarioDTO = tipoUsuarioRepository.consultarTipoUsuario(tiusId, Constantes.ESTADO_ACTIVO);
+			
+			return tipoUsuarioDTO;
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
 
 	private void validarTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO, TipoUsuario tipoUsuario) {		
 		//Validar que el nombre no sea null 
 		if (tipoUsuarioDTO.getNombre() != null && !tipoUsuarioDTO.getNombre().isBlank()) {
 			
+			Optional<TipoUsuario> tipoUsuarioOpt = tipoUsuarioRepository.findByNombre(tipoUsuarioDTO.getNombre().toUpperCase());
+			
+			if (tipoUsuarioOpt.isPresent()) {
+				throw new ZMessManager("Ya Exíste un tipo de usuario con ese nombre.");
+			}
+			
 			//Seteo el nombre
-			tipoUsuario.setNombre(tipoUsuarioDTO.getNombre());
+			tipoUsuario.setNombre(tipoUsuarioDTO.getNombre().toUpperCase());
 			
 		} else {
 			throw new ZMessManager("El nombre se encuentra nulo o vacío.");

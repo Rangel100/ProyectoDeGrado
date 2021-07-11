@@ -1,16 +1,9 @@
 package co.com.edu.usbcali.pdg.controller;
 
-import co.com.edu.usbcali.pdg.domain.*;
-import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
-import co.com.edu.usbcali.pdg.mapper.UsuarioMapper;
-import co.com.edu.usbcali.pdg.service.UsuarioService;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import co.com.edu.usbcali.pdg.domain.Usuario;
+import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
+import co.com.edu.usbcali.pdg.mapper.UsuarioMapper;
+import co.com.edu.usbcali.pdg.service.UsuarioService;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -34,8 +31,10 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "*")
 @Slf4j
 public class UsuarioRestController {
+	
     @Autowired
     private UsuarioService usuarioService;
+    
     @Autowired
     private UsuarioMapper usuarioMapper;
 
@@ -100,4 +99,41 @@ public class UsuarioRestController {
     public ResponseEntity<?> count() {
         return ResponseEntity.ok().body(usuarioService.count());
     }
+    
+	////////////////////////////////////////////////
+	    
+	@PostMapping("/crearUsuario")
+	public ResponseEntity<?> crearUsuario(@RequestBody UsuarioDTO usuarioDTO) throws Exception {
+	log.debug("Request to crearUsuario TipoUsuario: {}", usuarioDTO);
+	
+	usuarioService.crearUsuario(usuarioDTO);
+	
+	return ResponseEntity.ok().body(usuarioDTO);
+	}
+	
+	@PostMapping("/actualizarUsuario")
+	public ResponseEntity<?> actualizarUsuario(@RequestBody UsuarioDTO usuarioDTO) throws Exception {
+	log.debug("Request to actualizarUsuario TipoUsuario: {}", usuarioDTO);
+	
+	usuarioService.actualizarUsuario(usuarioDTO);
+	
+	return ResponseEntity.ok().body(usuarioDTO);
+	}
+	
+	@PostMapping("/eliminarUsuario")
+	public ResponseEntity<?> eliminarUsuario(@RequestBody UsuarioDTO usuarioDTO) throws Exception {
+	log.debug("Request to eliminarUsuario TipoUsuario: {}", usuarioDTO);
+	
+	usuarioService.eliminarUsuario(usuarioDTO);
+	
+	return ResponseEntity.ok().body(usuarioDTO);
+	}
+	
+	@PostMapping("/consultarUsuario")
+	public ResponseEntity<?> consultarUsuario(@RequestBody Long usuaId) throws Exception {
+	log.debug("Request to consultarUsuario TipoUsuario: {}", usuaId);
+	
+	return ResponseEntity.ok().body(usuarioService.consultarUsuario(usuaId));
+	}
+	
 }

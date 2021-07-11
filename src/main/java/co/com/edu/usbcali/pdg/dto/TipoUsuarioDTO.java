@@ -23,4 +23,11 @@ public class TipoUsuarioDTO implements Serializable {
 	private String nombre;
 
 	private Long tiusId;
+
+	public TipoUsuarioDTO(String nombre, Long tiusId) {
+		super();
+		this.tiusId = tiusId;
+		this.nombre = nombre;
+	}
+	
 }

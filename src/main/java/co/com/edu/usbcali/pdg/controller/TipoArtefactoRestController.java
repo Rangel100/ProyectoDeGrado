@@ -1,16 +1,9 @@
 package co.com.edu.usbcali.pdg.controller;
 
-import co.com.edu.usbcali.pdg.domain.*;
-import co.com.edu.usbcali.pdg.dto.TipoArtefactoDTO;
-import co.com.edu.usbcali.pdg.mapper.TipoArtefactoMapper;
-import co.com.edu.usbcali.pdg.service.TipoArtefactoService;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import co.com.edu.usbcali.pdg.domain.TipoArtefacto;
+import co.com.edu.usbcali.pdg.dto.TipoArtefactoDTO;
+import co.com.edu.usbcali.pdg.mapper.TipoArtefactoMapper;
+import co.com.edu.usbcali.pdg.service.TipoArtefactoService;
+import lombok.extern.slf4j.Slf4j;
 
 
 /**
@@ -106,4 +103,41 @@ public class TipoArtefactoRestController {
     public ResponseEntity<?> count() {
         return ResponseEntity.ok().body(tipoArtefactoService.count());
     }
+    
+    ////////////////////////////////////////////////
+    
+    @PostMapping("/crearTipoArtefacto")
+    public ResponseEntity<?> crearTipoArtefacto(@RequestBody TipoArtefactoDTO tipoArtefactoDTO) throws Exception {
+        log.debug("Request to crearArtefacto TipoArtefacto: {}", tipoArtefactoDTO);
+        
+        tipoArtefactoService.crearTipoArtefacto(tipoArtefactoDTO);
+        
+        return ResponseEntity.ok().body(tipoArtefactoDTO);
+    }
+    
+    @PostMapping("/actualizarTipoArtefacto")
+    public ResponseEntity<?> actualizarTipoArtefacto(@RequestBody TipoArtefactoDTO tipoArtefactoDTO) throws Exception {
+        log.debug("Request to actualizarTipoArtefacto TipoArtefacto: {}", tipoArtefactoDTO);
+        
+        tipoArtefactoService.actualizarTipoArtefacto(tipoArtefactoDTO);
+        
+        return ResponseEntity.ok().body(tipoArtefactoDTO);
+    }
+    
+    @PostMapping("/eliminarTipoArtefacto")
+    public ResponseEntity<?> eliminarTipoArtefacto(@RequestBody TipoArtefactoDTO tipoArtefactoDTO) throws Exception {
+        log.debug("Request to eliminarTipoArtefacto TipoArtefacto: {}", tipoArtefactoDTO);
+        
+        tipoArtefactoService.eliminarTipoArtefacto(tipoArtefactoDTO);
+        
+        return ResponseEntity.ok().body(tipoArtefactoDTO);
+    }
+    
+    @PostMapping("/consultarTipoArtefacto")
+    public ResponseEntity<?> consultarTipoArtefacto(@RequestBody Long tiarId) throws Exception {
+        log.debug("Request to consultarTipoArtefacto TipoArtefacto: {}", tiarId);
+        
+        return ResponseEntity.ok().body(tipoArtefactoService.consultarTipoArtefacto(tiarId));
+    }
+    
 }

@@ -12,4 +12,11 @@ import co.com.edu.usbcali.pdg.dto.TipoUsuarioDTO;
 public interface TipoUsuarioService extends GenericService<TipoUsuario, Long> {
 
 	void crearTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) throws Exception;
+
+	void actualizarTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) throws Exception;
+
+	void eliminarTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) throws Exception;
+
+	TipoUsuarioDTO consultarTipoUsuario(Long tiusId) throws Exception;
+
 }

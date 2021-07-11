@@ -176,6 +176,99 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 			throw e;
 		}
 	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void actualizarArtefacto(ArtefactoDTO artefactoDTO) throws Exception {
+		try {
+			
+			//Validar que artefactoDTO no sea null 
+			if (artefactoDTO == null) {
+				throw new ZMessManager("El artefacto esta nulo o vacío.");
+			}
+			
+			//Validar que arteId no sea null 
+			if (artefactoDTO.getArteId() == null) {
+				throw new ZMessManager("El identificador del artefacto esta nulo o vacío.");
+			}
+			
+			Optional<Artefacto> artefactoOpt = artefactoRepository.findById(artefactoDTO.getArteId());
+			
+			if (!artefactoOpt.isPresent()) {
+				throw new ZMessManager("El identificador del artefacto esta nulo o vacío.");
+			}
+			
+			Artefacto artefacto = artefactoOpt.get();
+			
+			//Metodo que implementa las validaciones
+			validarArtefacto(artefactoDTO, artefacto);
+			
+			//Seteo el estado
+			artefacto.setEstado(Constantes.ESTADO_ACTIVO);
+			
+			artefactoService.update(artefacto);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void eliminarArtefacto(ArtefactoDTO artefactoDTO) throws Exception {
+		try {
+			
+			//Validar que artefactoDTO no sea null 
+			if (artefactoDTO == null) {
+				throw new ZMessManager("El artefacto esta nulo o vacío.");
+			}
+			
+			//Validar que arteId no sea null 
+			if (artefactoDTO.getArteId() == null) {
+				throw new ZMessManager("El identificador del artefacto esta nulo o vacío.");
+			}
+			
+			//Validar que el artefacto exísta
+			Optional<Artefacto> artefactoOpt = artefactoRepository.findById(artefactoDTO.getArteId());
+			
+			if (!artefactoOpt.isPresent()) {
+				throw new ZMessManager("El identificador del artefacto esta nulo o vacío.");
+			}
+			
+			Artefacto artefacto = artefactoOpt.get();
+			
+			//Seteo el estado inactivo
+			artefacto.setEstado(Constantes.ESTADO_INACTIVO);
+			
+			artefactoService.update(artefacto);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public ArtefactoDTO consultarArtefacto(Long arteId) throws Exception {
+		try {
+			
+			//Validar que arteId no sea null 
+			if (arteId == null) {
+				throw new ZMessManager("El identificador del artefacto esta nulo o vacío.");
+			}
+			
+			//Validar que el artefacto exísta
+			ArtefactoDTO artefactoDTO = artefactoRepository.consultarArtefacto(arteId, Constantes.ESTADO_ACTIVO);
+			
+			return artefactoDTO;
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
 
 	private void validarArtefacto(ArtefactoDTO artefactoDTO, Artefacto artefacto) {
 		//validar que el codigo no sea null
@@ -274,4 +367,21 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 			throw e;
 		}
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Artefacto> consultarArtefactosPorTipoArtefacto(Long tiarId) {
+		log.debug("consultarArtefactosPorTipoArtefacto instances");
+		try {
+			
+			return artefactoRepository.findByTipoArtefacto_tiarIdAndEstado(tiarId, Constantes.ESTADO_ACTIVO);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+
+	}
+	
+	
 }

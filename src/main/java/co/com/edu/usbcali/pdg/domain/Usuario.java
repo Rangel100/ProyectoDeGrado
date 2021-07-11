@@ -41,7 +41,7 @@ import lombok.NoArgsConstructor;
 	@SqlResultSetMapping(name="consultarUsuario", 
 	classes = { @ConstructorResult(targetClass = UsuarioDTO.class,
 	columns = {
-			@ColumnResult(name = "usuaId", type = String.class),
+			@ColumnResult(name = "usuaId", type = Long.class),
 			@ColumnResult(name = "nombre", type = String.class),
 			@ColumnResult(name = "codigo", type = String.class),
 			@ColumnResult(name = "direccion", type = String.class),

@@ -1,5 +1,7 @@
 package co.com.edu.usbcali.pdg.service;
 
+import java.util.List;
+
 import co.com.edu.usbcali.pdg.domain.Usuario;
 import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
 
@@ -18,4 +20,6 @@ public interface UsuarioService extends GenericService<Usuario, Long> {
 	void eliminarUsuario(UsuarioDTO usuarioDTO) throws Exception;
 
 	UsuarioDTO consultarUsuario(Long usuaId) throws Exception;
+
+	List<Usuario> consultarUsuariosPorTipoUsuario(Long tiusId);
 }

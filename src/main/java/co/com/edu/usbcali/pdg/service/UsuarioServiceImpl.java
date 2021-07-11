@@ -192,64 +192,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 
-	private void validarUsuario(UsuarioDTO usuarioDTO, Usuario usuario) {
-		//Validar que el tipo de usuario no sea null 
-		if (usuarioDTO.getTiusId_TipoUsuario() != null) {
-			
-			//Valido que el tipo de usuario exista
-			Optional<TipoUsuario> tipoUsuarioOpt = tipoUsuarioService.findById(usuarioDTO.getTiusId_TipoUsuario());
-			
-			if (!tipoUsuarioOpt.isPresent()) {
-				throw new ZMessManager("El tipo de usuario seleccionado no exíste.");
-			}
-			
-			TipoUsuario tipoUsuario = tipoUsuarioOpt.get();
-			
-			//Seteo el tipo de usuario
-			usuario.setTipoUsuario(tipoUsuario);
-			
-		} else {
-			throw new ZMessManager("El tipo de usuario se encuentra nulo o vacío");
-		}
-		
-		//validar que el codigo no sea null
-		if (usuarioDTO.getCodigo() != null && !usuarioDTO.getCodigo().isBlank()) {
-			
-			//Seteo del codigo
-			usuario.setCodigo(usuarioDTO.getCodigo());
-			
-		} else {
-			throw new ZMessManager("El codigo se encuentra nulo o vacío");
-		}
-		
-		//Validar que el direccion no sea null 
-		if (usuarioDTO.getDireccion() != null && !usuarioDTO.getDireccion().isBlank()) {
-			
-			//Seteo el direccion
-			usuario.setDireccion(usuarioDTO.getDireccion());
-			
-		} else {
-			throw new ZMessManager("La direccion se encuentra nulo o vacío.");
-		}
-		
-		//Validar que el nombre no sea null 
-		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().isBlank()) {
-			
-			//Validar que el apellido no sea null 
-			if (usuarioDTO.getApellido() != null && !usuarioDTO.getApellido().isBlank()) {
-
-				//Seteo el nombre
-				usuario.setNombre(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido());
-				
-			} else {
-				throw new ZMessManager("El nombre se encuentra nulo o vacío.");
-			}
-			
-		} else {
-			throw new ZMessManager("El nombre se encuentra nulo o vacío.");
-		}
-		
-	}
+	
 	
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -364,6 +307,79 @@ public class UsuarioServiceImpl implements UsuarioService {
 			}
 			
 			return usuarioDTO;
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	private void validarUsuario(UsuarioDTO usuarioDTO, Usuario usuario) {
+		//Validar que el tipo de usuario no sea null 
+		if (usuarioDTO.getTiusId_TipoUsuario() != null) {
+			
+			//Valido que el tipo de usuario exista
+			Optional<TipoUsuario> tipoUsuarioOpt = tipoUsuarioService.findById(usuarioDTO.getTiusId_TipoUsuario());
+			
+			if (!tipoUsuarioOpt.isPresent()) {
+				throw new ZMessManager("El tipo de usuario seleccionado no exíste.");
+			}
+			
+			TipoUsuario tipoUsuario = tipoUsuarioOpt.get();
+			
+			//Seteo el tipo de usuario
+			usuario.setTipoUsuario(tipoUsuario);
+			
+		} else {
+			throw new ZMessManager("El tipo de usuario se encuentra nulo o vacío");
+		}
+		
+		//validar que el codigo no sea null
+		if (usuarioDTO.getCodigo() != null && !usuarioDTO.getCodigo().isBlank()) {
+			
+			//Seteo del codigo
+			usuario.setCodigo(usuarioDTO.getCodigo());
+			
+		} else {
+			throw new ZMessManager("El codigo se encuentra nulo o vacío");
+		}
+		
+		//Validar que el direccion no sea null 
+		if (usuarioDTO.getDireccion() != null && !usuarioDTO.getDireccion().isBlank()) {
+			
+			//Seteo el direccion
+			usuario.setDireccion(usuarioDTO.getDireccion());
+			
+		} else {
+			throw new ZMessManager("La direccion se encuentra nulo o vacío.");
+		}
+		
+		//Validar que el nombre no sea null 
+		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().isBlank()) {
+			
+			//Validar que el apellido no sea null 
+			if (usuarioDTO.getApellido() != null && !usuarioDTO.getApellido().isBlank()) {
+
+				//Seteo el nombre
+				usuario.setNombre(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido());
+				
+			} else {
+				throw new ZMessManager("El nombre se encuentra nulo o vacío.");
+			}
+			
+		} else {
+			throw new ZMessManager("El nombre se encuentra nulo o vacío.");
+		}
+		
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Usuario> consultarUsuariosPorTipoUsuario(Long tiusId) {
+		log.debug("consultarUsuariosPorTipoUsuario instances");
+		try {
+			
+			return usuarioRepository.findByTipoUsuario_tiusIdAndEstado(tiusId, Constantes.ESTADO_ACTIVO);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());

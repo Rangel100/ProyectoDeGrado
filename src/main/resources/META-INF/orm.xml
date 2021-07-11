@@ -23,6 +23,55 @@
 	        </query>
 		</named-native-query>
 	</entity>
+	
+	<entity class="co.com.edu.usbcali.pdg.domain.Artefacto">
+		<named-native-query name="Artefacto.consultarArtefacto"
+			result-set-mapping="consultarArtefacto">
+			<query>
+	        <![CDATA[
+				select	arte.arte_id arteId,
+						arte.codigo codigo,
+						arte.url url,
+						arte.tiar_id tiarId_TipoArtefacto
+				from artefacto arte
+				where arte.arte_id = :pArteId
+				and arte.estado = :pEstado
+				group by arte.arte_id
+	        ]]>
+	        </query>
+		</named-native-query>
+	</entity>
+	
+	<entity class="co.com.edu.usbcali.pdg.domain.TipoArtefacto">
+		<named-native-query name="TipoArtefacto.consultarTipoArtefacto"
+			result-set-mapping="consultarTipoArtefacto">
+			<query>
+	        <![CDATA[
+				select 	tiar.tiar_id tiarId,
+						tiar.codigo codigo,
+						tiar.nombre nombre
+				from tipo_artefacto tiar
+				where tiar.tiar_id = :pTiarId
+				and tiar.estado = :pEstado
+	        ]]>
+	        </query>
+		</named-native-query>
+	</entity>
+	
+	<entity class="co.com.edu.usbcali.pdg.domain.TipoUsuario">
+		<named-native-query name="TipoUsuario.consultarTipoUsuario"
+			result-set-mapping="consultarTipoUsuario">
+			<query>
+	        <![CDATA[
+				select 	tius.tius_id tiusId,
+						tius.nombre nombre
+				from tipo_usuario tius
+				where tius.tius_id = :pTiusId
+				and tius.estado = :pEstado
+	        ]]>
+	        </query>
+		</named-native-query>
+	</entity>
     
    
 </entity-mappings>
