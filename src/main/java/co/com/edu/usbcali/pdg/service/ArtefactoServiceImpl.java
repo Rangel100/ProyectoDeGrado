@@ -307,26 +307,27 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 			artefacto.setTipoArtefacto(tipoArtefacto);
 			
 		} else {
-			throw new ZMessManager("El url se encuentra nulo o vacío");
+			throw new ZMessManager("El tipo de artefacto se encuentra nulo o vacío");
 		}
 		
 		//Validar que el usuario no sea null 
-		if (artefactoDTO.getUsuaId_Usuario() != null) {
+		if (artefactoDTO.getCodigoUsuario() != null) {
 			
 			//Valido que el usuario exista
-			Optional<Usuario> usuarioOpt = usuarioService.findById(artefactoDTO.getUsuaId_Usuario());
+			List<Usuario> usuarioList = usuarioService.consultarUsuariosPorCodigo(artefactoDTO.getCodigoUsuario().trim());
 			
-			if (!usuarioOpt.isPresent()) {
+			if (usuarioList.isEmpty()) {
 				throw new ZMessManager("El usuario seleccionado seleccionado no exíste.");
 			}
 			
-			Usuario usuario = usuarioOpt.get();
-			
-			//Seteo el usuario
-			artefacto.setUsuario(usuario);
+			for (Usuario usuario : usuarioList) {
+				
+				//Seteo el usuario
+				artefacto.setUsuario(usuario);
+			}
 			
 		} else {
-			throw new ZMessManager("El url se encuentra nulo o vacío");
+			throw new ZMessManager("El codigo del usuario se encuentra nulo o vacío");
 		}
 		
 	}

@@ -1,5 +1,7 @@
 package co.com.edu.usbcali.pdg.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +20,6 @@ public interface TipoArtefactoRepository extends JpaRepository<TipoArtefacto, Lo
 	@Query(nativeQuery = true)
 	TipoArtefactoDTO consultarTipoArtefacto(@Param("pTiarId") Long tiarId,
 											@Param("pEstado") String estado);
+	
+	List<TipoArtefacto> findByEstado(String estado);
 }

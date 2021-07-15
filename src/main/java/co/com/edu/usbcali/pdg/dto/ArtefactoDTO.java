@@ -29,6 +29,8 @@ public class ArtefactoDTO implements Serializable {
 	private Long tiarId_TipoArtefacto;
 	
 	private Long usuaId_Usuario;
+	
+	private String codigoUsuario;
 
 	public ArtefactoDTO(Long arteId, String codigo, String url, Long tiarId_TipoArtefacto) {
 		super();

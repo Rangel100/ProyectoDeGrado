@@ -1,5 +1,7 @@
 package co.com.edu.usbcali.pdg.service;
 
+import java.util.List;
+
 import co.com.edu.usbcali.pdg.domain.TipoArtefacto;
 import co.com.edu.usbcali.pdg.dto.TipoArtefactoDTO;
 
@@ -18,5 +20,7 @@ public interface TipoArtefactoService extends GenericService<TipoArtefacto, Long
 	void eliminarTipoArtefacto(TipoArtefactoDTO tipoArtefactoDTO) throws Exception;
 
 	void actualizarTipoArtefacto(TipoArtefactoDTO tipoArtefactoDTO) throws Exception;
+
+	List<TipoArtefactoDTO> consultarTipoArtefactosActivos() throws Exception;
 
 }

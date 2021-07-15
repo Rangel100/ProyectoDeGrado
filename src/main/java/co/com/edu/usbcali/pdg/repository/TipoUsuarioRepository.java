@@ -1,5 +1,6 @@
 package co.com.edu.usbcali.pdg.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,7 +22,7 @@ public interface TipoUsuarioRepository extends JpaRepository<TipoUsuario, Long> 
 	TipoUsuarioDTO consultarTipoUsuario(@Param("pTiusId") Long tiusId,
 										@Param("pEstado") String estado);
 	
-//	TipoUsuario findByNombre(String nombre);
-	
 	Optional<TipoUsuario> findByNombre(String nombre);
+	
+	List<TipoUsuario> findByEstado(String estado);
 }

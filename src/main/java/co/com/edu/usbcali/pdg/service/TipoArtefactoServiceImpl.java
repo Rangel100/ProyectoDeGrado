@@ -18,6 +18,7 @@ import co.com.edu.usbcali.pdg.domain.Artefacto;
 import co.com.edu.usbcali.pdg.domain.TipoArtefacto;
 import co.com.edu.usbcali.pdg.dto.TipoArtefactoDTO;
 import co.com.edu.usbcali.pdg.exception.ZMessManager;
+import co.com.edu.usbcali.pdg.mapper.TipoArtefactoMapper;
 import co.com.edu.usbcali.pdg.repository.TipoArtefactoRepository;
 import co.com.edu.usbcali.pdg.utility.Constantes;
 import co.com.edu.usbcali.pdg.utility.Utilities;
@@ -39,6 +40,9 @@ public class TipoArtefactoServiceImpl implements TipoArtefactoService {
 	
 	@Autowired
 	private TipoArtefactoService tipoArtefactoService;
+	
+	@Autowired
+	private TipoArtefactoMapper tipoArtefactoMapper;
 	
 	@Autowired
 	private ArtefactoService artefactoService;
@@ -304,6 +308,18 @@ public class TipoArtefactoServiceImpl implements TipoArtefactoService {
 			throw new ZMessManager("El nombre se encuentra nulo o vacío.");
 		}
 		
+	}
+	
+	@Override
+	public List<TipoArtefactoDTO> consultarTipoArtefactosActivos() throws Exception {
+		try {
+			
+			return tipoArtefactoMapper.listTipoArtefactoToListTipoArtefactoDTO(tipoArtefactoRepository.findByEstado(Constantes.ESTADO_ACTIVO));
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
 	}
 
 }

@@ -140,4 +140,11 @@ public class TipoArtefactoRestController {
         return ResponseEntity.ok().body(tipoArtefactoService.consultarTipoArtefacto(tiarId));
     }
     
+    @GetMapping("/consultarTipoArtefactoActivos")
+	public ResponseEntity<?> consultarTipoArtefactoActivos() throws Exception {
+		log.debug("Request to consultarTipoArtefactoActivos TipoUsuario: {}");
+		
+		return ResponseEntity.ok().body(tipoArtefactoService.consultarTipoArtefactosActivos());
+	}
+    
 }

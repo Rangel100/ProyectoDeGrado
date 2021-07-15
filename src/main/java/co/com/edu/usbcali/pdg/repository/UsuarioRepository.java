@@ -22,4 +22,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 								@Param("pEstado") String estado);
 	
 	List<Usuario> findByTipoUsuario_tiusIdAndEstado(Long tiusId, String estado);
+	
+	List<Usuario> findByCodigo(String codigo);
 }

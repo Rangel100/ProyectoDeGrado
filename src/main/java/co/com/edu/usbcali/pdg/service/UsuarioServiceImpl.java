@@ -191,8 +191,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 			throw e;
 		}
 	}
-
-	
 	
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -337,6 +335,13 @@ public class UsuarioServiceImpl implements UsuarioService {
 		//validar que el codigo no sea null
 		if (usuarioDTO.getCodigo() != null && !usuarioDTO.getCodigo().isBlank()) {
 			
+			//Valido que no existan mas usuarios con ese codigo
+			List<Usuario> usuarioList = usuarioRepository.findByCodigo(usuarioDTO.getCodigo().trim());
+			
+			if (!usuarioList.isEmpty()) {
+				throw new ZMessManager("El codigo ingresado ya se encuentra en uso.");
+			}
+			
 			//Seteo del codigo
 			usuario.setCodigo(usuarioDTO.getCodigo());
 			
@@ -380,6 +385,20 @@ public class UsuarioServiceImpl implements UsuarioService {
 		try {
 			
 			return usuarioRepository.findByTipoUsuario_tiusIdAndEstado(tiusId, Constantes.ESTADO_ACTIVO);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Usuario> consultarUsuariosPorCodigo(String codigo) {
+		log.debug("consultarUsuariosPorCodigo instances");
+		try {
+			
+			return usuarioRepository.findByCodigo(codigo);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());

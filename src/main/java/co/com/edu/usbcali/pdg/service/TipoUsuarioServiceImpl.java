@@ -18,6 +18,7 @@ import co.com.edu.usbcali.pdg.domain.TipoUsuario;
 import co.com.edu.usbcali.pdg.domain.Usuario;
 import co.com.edu.usbcali.pdg.dto.TipoUsuarioDTO;
 import co.com.edu.usbcali.pdg.exception.ZMessManager;
+import co.com.edu.usbcali.pdg.mapper.TipoUsuarioMapper;
 import co.com.edu.usbcali.pdg.repository.TipoUsuarioRepository;
 import co.com.edu.usbcali.pdg.utility.Constantes;
 import co.com.edu.usbcali.pdg.utility.Utilities;
@@ -39,6 +40,9 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService {
 	
 	@Autowired
 	private TipoUsuarioService tipoUsuarioService;
+	
+	@Autowired
+	private TipoUsuarioMapper tipoUsuarioMapper;
 	
 	@Autowired
 	private UsuarioService usuarioService;
@@ -282,7 +286,7 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService {
 		}
 	}
 
-	private void validarTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO, TipoUsuario tipoUsuario) {		
+	private void validarTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO, TipoUsuario tipoUsuario) {
 		//Validar que el nombre no sea null 
 		if (tipoUsuarioDTO.getNombre() != null && !tipoUsuarioDTO.getNombre().isBlank()) {
 			
@@ -299,6 +303,18 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService {
 			throw new ZMessManager("El nombre se encuentra nulo o vacío.");
 		}
 		
+	}
+	
+	@Override
+	public List<TipoUsuarioDTO> consultarTipoUsuarioActivos() throws Exception {
+		try {
+			
+			return tipoUsuarioMapper.listTipoUsuarioToListTipoUsuarioDTO(tipoUsuarioRepository.findByEstado(Constantes.ESTADO_ACTIVO));
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
 	}
 
 }

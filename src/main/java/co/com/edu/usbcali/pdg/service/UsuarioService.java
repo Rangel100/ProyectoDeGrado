@@ -22,4 +22,6 @@ public interface UsuarioService extends GenericService<Usuario, Long> {
 	UsuarioDTO consultarUsuario(Long usuaId) throws Exception;
 
 	List<Usuario> consultarUsuariosPorTipoUsuario(Long tiusId);
+
+	List<Usuario> consultarUsuariosPorCodigo(String codigo);
 }
