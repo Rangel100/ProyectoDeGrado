@@ -45,6 +45,7 @@ import lombok.NoArgsConstructor;
 			@ColumnResult(name = "nombre", type = String.class),
 			@ColumnResult(name = "codigo", type = String.class),
 			@ColumnResult(name = "direccion", type = String.class),
+			@ColumnResult(name = "tiusId_TipoUsuario", type = Long.class),
 			@ColumnResult(name = "artefactosList", type = String.class)
 	}) })
 

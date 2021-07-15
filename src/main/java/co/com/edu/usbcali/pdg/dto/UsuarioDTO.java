@@ -37,12 +37,13 @@ public class UsuarioDTO implements Serializable {
 	
 	private List<ArtefactoDTO> artefactoDTOs;
 
-	public UsuarioDTO(String codigo, String direccion, String nombre, Long usuaId, String artefactosList) {
+	public UsuarioDTO(Long usuaId, String nombre, String codigo, String direccion, Long tiusId_TipoUsuario, String artefactosList) {
 		super();
 		this.usuaId = usuaId;
 		this.nombre = nombre;
 		this.codigo = codigo;
 		this.direccion = direccion;
+		this.tiusId_TipoUsuario = tiusId_TipoUsuario;
 		this.artefactosList = artefactosList;
 	}
 	

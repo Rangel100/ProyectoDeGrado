@@ -13,9 +13,11 @@
 						usua.nombre nombre,
 						usua.codigo codigo,
 						usua.direccion direccion,
+						usua.tius_id tiusId_TipoUsuario,
 						string_agg( '' || arte.arte_id, ',') artefactosList
 				from usuario usua
 				left join artefacto arte on arte.usua_id = usua.usua_id
+				inner join tipo_usuario tius on tius.tius_id = usua.tius_id
 				where usua.usua_id = :pUsuaId
 				and usua.estado = :pEstado
 				group by usua.usua_id 

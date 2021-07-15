@@ -362,16 +362,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 		//Validar que el nombre no sea null 
 		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().isBlank()) {
 			
-			//Validar que el apellido no sea null 
-			if (usuarioDTO.getApellido() != null && !usuarioDTO.getApellido().isBlank()) {
+			//Seteo el nombre
+			usuario.setNombre(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido().trim());
 
-				//Seteo el nombre
-				usuario.setNombre(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido());
-				
-			} else {
-				throw new ZMessManager("El nombre se encuentra nulo o vacío.");
-			}
-			
 		} else {
 			throw new ZMessManager("El nombre se encuentra nulo o vacío.");
 		}
