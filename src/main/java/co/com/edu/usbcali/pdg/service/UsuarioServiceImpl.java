@@ -11,7 +11,6 @@ import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -403,7 +402,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Page<UsuarioDTO> consultarUsuarios(UsuarioDTO usuarioDTO) {
+	public List<UsuarioDTO> consultarUsuarios(UsuarioDTO usuarioDTO) {
 		try {
 			
 			if (usuarioDTO == null) {

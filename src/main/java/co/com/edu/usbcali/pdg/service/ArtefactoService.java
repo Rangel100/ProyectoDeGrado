@@ -25,4 +25,6 @@ public interface ArtefactoService extends GenericService<Artefacto, Long> {
 	ArtefactoDTO consultarArtefacto(Long arteId) throws Exception;
 
 	List<Artefacto> consultarArtefactosPorTipoArtefacto(Long tiarId);
+
+	List<ArtefactoDTO> consultarArtefactosPorUsuario(Long usuaId);
 }

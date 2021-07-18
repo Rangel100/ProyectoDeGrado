@@ -49,6 +49,7 @@ import lombok.NoArgsConstructor;
 			@ColumnResult(name = "tiusId_TipoUsuario", type = Long.class),
 			@ColumnResult(name = "artefactosList", type = String.class)
 	}) }),
+	
 	@SqlResultSetMapping(name="consultarUsuarios", 
 	classes = { @ConstructorResult(targetClass = UsuarioDTO.class,
 	columns = {
@@ -56,7 +57,7 @@ import lombok.NoArgsConstructor;
 			@ColumnResult(name = "nombre", type = String.class),
 			@ColumnResult(name = "codigo", type = String.class),
 			@ColumnResult(name = "direccion", type = String.class),
-			@ColumnResult(name = "nombreTipoUsuario", type = Long.class),
+			@ColumnResult(name = "nombreTipoUsuario", type = String.class)
 	}) }),
 
 })

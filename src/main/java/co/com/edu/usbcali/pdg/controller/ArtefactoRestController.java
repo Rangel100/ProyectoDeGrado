@@ -142,4 +142,11 @@ public class ArtefactoRestController {
         return ResponseEntity.ok().body(artefactoService.consultarArtefacto(arteId));
     }
     
+    @PostMapping("/consultarArtefactosPorUsuario")
+    public ResponseEntity<?> consultarArtefactosPorUsuario(@RequestBody Long usuaid) throws Exception {
+        log.debug("Request to consultarArtefactosPorUsuario Artefacto: {}", usuaid);
+        
+        return ResponseEntity.ok().body(artefactoService.consultarArtefactosPorUsuario(usuaid));
+    }
+    
 }

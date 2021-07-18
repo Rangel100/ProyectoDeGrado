@@ -28,7 +28,8 @@ import lombok.NoArgsConstructor;
  *
  */
 @NamedNativeQueries({
-	@NamedNativeQuery(name = "Artefacto.consultarArtefacto", query = "", resultSetMapping = "consultarArtefacto")
+	@NamedNativeQuery(name = "Artefacto.consultarArtefacto", query = "", resultSetMapping = "consultarArtefacto"),
+	@NamedNativeQuery(name = "Artefacto.consultarArtefactosPorUsuario", query = "", resultSetMapping = "consultarArtefactosPorUsuario"),
 	
 })
 
@@ -40,6 +41,15 @@ import lombok.NoArgsConstructor;
 			@ColumnResult(name = "codigo", type = String.class),
 			@ColumnResult(name = "url", type = String.class),
 			@ColumnResult(name = "tiarId_TipoArtefacto", type = Long.class)
+	}) }),
+	
+	@SqlResultSetMapping(name="consultarArtefactosPorUsuario", 
+	classes = { @ConstructorResult(targetClass = ArtefactoDTO.class,
+	columns = {
+			@ColumnResult(name = "arteId", type = Long.class),
+			@ColumnResult(name = "codigo", type = String.class),
+			@ColumnResult(name = "url", type = String.class),
+			@ColumnResult(name = "nombreTipoArtefacto", type = String.class)
 	}) })
 
 })

@@ -384,5 +384,20 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 
 	}
 	
+	@Override
+	@Transactional(readOnly = true)
+	public List<ArtefactoDTO> consultarArtefactosPorUsuario(Long usuaId) {
+		log.debug("consultarArtefactosPorUsuario instances");
+		try {
+			
+			return artefactoRepository.consultarArtefactosPorUsuario(usuaId, Constantes.ESTADO_ACTIVO);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+
+	}
+	
 	
 }

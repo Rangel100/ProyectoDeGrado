@@ -39,7 +39,8 @@
 				inner join tipo_usuario tius on tius.tius_id = usua.tius_id 
 				where usua.estado = :pEstado
 				and ((:pNombre <> '-1' and upper(usua.nombre) like '%' || upper(:pNombre) || '%') or (:pNombre = '-1'))
-				group by usua.usua_id, tius.nombre  
+				and ((:pCodigo <> '-1' and upper(usua.codigo) like '%' || upper(:pCodigo) || '%') or (:pCodigo = '-1'))
+				group by usua.usua_id, tius.nombre
 	        ]]>
 	        </query>
 		</named-native-query>
@@ -58,6 +59,24 @@
 				where arte.arte_id = :pArteId
 				and arte.estado = :pEstado
 				group by arte.arte_id
+	        ]]>
+	        </query>
+		</named-native-query>
+		
+		<named-native-query name="Artefacto.consultarArtefactosPorUsuario"
+			result-set-mapping="consultarArtefactosPorUsuario">
+			<query>
+	        <![CDATA[
+				select	arte.arte_id arteId,
+						arte.codigo codigo,
+						arte.url url,
+						tiar.nombre nombreTipoArtefacto
+				from artefacto arte
+				inner join usuario usua on arte.usua_id = usua.usua_id
+				inner join tipo_artefacto tiar on arte.tiar_id = tiar.tiar_id
+				where arte.estado = :pEstado
+				and usua.usua_id = :pUsuaId
+				order by arte.arte_id
 	        ]]>
 	        </query>
 		</named-native-query>

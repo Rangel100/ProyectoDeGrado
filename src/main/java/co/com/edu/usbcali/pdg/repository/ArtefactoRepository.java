@@ -24,4 +24,8 @@ public interface ArtefactoRepository extends JpaRepository<Artefacto, Long> {
 									@Param("pEstado") String estado);
 	
 	List<Artefacto> findByTipoArtefacto_tiarIdAndEstado(Long tiarId, String estado);
+	
+	@Query(nativeQuery = true)
+	List<ArtefactoDTO> consultarArtefactosPorUsuario(@Param("pUsuaId") Long usuaId,
+													@Param("pEstado") String estado);
 }
