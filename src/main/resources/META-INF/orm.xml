@@ -24,6 +24,25 @@
 	        ]]>
 	        </query>
 		</named-native-query>
+		
+		<named-native-query name="Usuario.consultarUsuarios"
+			result-set-mapping="consultarUsuarios">
+			<query>
+	        <![CDATA[
+				select 	usua.usua_id usuaId,
+						usua.nombre nombre,
+						usua.codigo codigo,
+						usua.direccion direccion,
+						tius.nombre nombreTipoUsuario
+				from usuario usua
+				left join artefacto arte on arte.usua_id = usua.usua_id
+				inner join tipo_usuario tius on tius.tius_id = usua.tius_id 
+				where usua.estado = :pEstado
+				and ((:pNombre <> '-1' and upper(usua.nombre) like '%' || upper(:pNombre) || '%') or (:pNombre = '-1'))
+				group by usua.usua_id, tius.nombre  
+	        ]]>
+	        </query>
+		</named-native-query>
 	</entity>
 	
 	<entity class="co.com.edu.usbcali.pdg.domain.Artefacto">

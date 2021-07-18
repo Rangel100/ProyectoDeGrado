@@ -136,4 +136,11 @@ public class UsuarioRestController {
 	return ResponseEntity.ok().body(usuarioService.consultarUsuario(usuaId));
 	}
 	
+	@PostMapping("/consultarUsuarios")
+	public ResponseEntity<?> consultarUsuarios(@RequestBody UsuarioDTO usuarioDTO) throws Exception {
+	log.debug("Request to consultarUsuarios TipoUsuario: {}", usuarioDTO);
+	
+	return ResponseEntity.ok().body(usuarioService.consultarUsuarios(usuarioDTO));
+	}
+	
 }

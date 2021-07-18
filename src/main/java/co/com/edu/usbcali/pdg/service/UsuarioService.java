@@ -2,6 +2,8 @@ package co.com.edu.usbcali.pdg.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import co.com.edu.usbcali.pdg.domain.Usuario;
 import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
 
@@ -24,4 +26,6 @@ public interface UsuarioService extends GenericService<Usuario, Long> {
 	List<Usuario> consultarUsuariosPorTipoUsuario(Long tiusId);
 
 	List<Usuario> consultarUsuariosPorCodigo(String codigo);
+
+	Page<UsuarioDTO> consultarUsuarios(UsuarioDTO usuarioDTO);
 }

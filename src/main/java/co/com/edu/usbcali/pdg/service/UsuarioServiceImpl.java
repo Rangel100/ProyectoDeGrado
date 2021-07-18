@@ -11,6 +11,8 @@ import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -392,6 +394,30 @@ public class UsuarioServiceImpl implements UsuarioService {
 		try {
 			
 			return usuarioRepository.findByCodigo(codigo);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Page<UsuarioDTO> consultarUsuarios(UsuarioDTO usuarioDTO) {
+		try {
+			
+			if (usuarioDTO == null) {
+				throw new ZMessManager("El usuario está nulo");
+			}
+
+			//Se crea el pageable para la consulta			
+			Pageable pageable = null;
+			
+			//Se realiza las validciones para los filtros correspondientes
+			String nombre = usuarioDTO.getNombre() == null || usuarioDTO.getNombre().isBlank() ? "-1" : usuarioDTO.getNombre().trim();
+			String codigo = usuarioDTO.getCodigo() == null || usuarioDTO.getCodigo().isBlank() ? "-1" : usuarioDTO.getCodigo().trim();
+		
+			return usuarioRepository.consultarUsuarios(Constantes.ESTADO_ACTIVO, nombre, codigo, pageable);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());

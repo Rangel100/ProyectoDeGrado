@@ -35,6 +35,8 @@ public class UsuarioDTO implements Serializable {
 	
 	private String artefactosList;
 	
+	private String nombreTipoUsuario;
+	
 	private List<ArtefactoDTO> artefactoDTOs;
 
 	public UsuarioDTO(Long usuaId, String nombre, String codigo, String direccion, Long tiusId_TipoUsuario, String artefactosList) {
@@ -45,6 +47,15 @@ public class UsuarioDTO implements Serializable {
 		this.direccion = direccion;
 		this.tiusId_TipoUsuario = tiusId_TipoUsuario;
 		this.artefactosList = artefactosList;
+	}
+	
+	public UsuarioDTO(Long usuaId, String nombre, String codigo, String direccion, String nombreTipoUsuario) {
+		super();
+		this.usuaId = usuaId;
+		this.nombre = nombre;
+		this.codigo = codigo;
+		this.direccion = direccion;
+		this.nombreTipoUsuario = nombreTipoUsuario;
 	}
 	
 }
