@@ -35,6 +35,7 @@ import lombok.NoArgsConstructor;
 @NamedNativeQueries({
 	@NamedNativeQuery(name = "Usuario.consultarUsuario", query = "", resultSetMapping = "consultarUsuario"),
 	@NamedNativeQuery(name = "Usuario.consultarUsuarios", query = "", resultSetMapping = "consultarUsuarios"),
+	@NamedNativeQuery(name = "Usuario.consultarUsuariosPorCodigoOrm", query = "", resultSetMapping = "consultarUsuariosPorCodigoOrm"),
 	
 })
 
@@ -58,6 +59,14 @@ import lombok.NoArgsConstructor;
 			@ColumnResult(name = "codigo", type = String.class),
 			@ColumnResult(name = "direccion", type = String.class),
 			@ColumnResult(name = "nombreTipoUsuario", type = String.class)
+	}) }),
+	
+	@SqlResultSetMapping(name="consultarUsuariosPorCodigoOrm", 
+	classes = { @ConstructorResult(targetClass = UsuarioDTO.class,
+	columns = {
+			@ColumnResult(name = "usuaId", type = Long.class),
+			@ColumnResult(name = "codigo", type = String.class),
+			@ColumnResult(name = "tiusId_TipoUsuario", type = Long.class)
 	}) }),
 
 })

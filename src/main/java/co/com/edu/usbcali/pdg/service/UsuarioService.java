@@ -26,4 +26,6 @@ public interface UsuarioService extends GenericService<Usuario, Long> {
 	List<Usuario> consultarUsuariosPorCodigo(String codigo);
 
 	List<UsuarioDTO> consultarUsuarios(UsuarioDTO usuarioDTO);
+
+	UsuarioDTO consultarUsuariosPorCodigoOrm(String codigo);
 }

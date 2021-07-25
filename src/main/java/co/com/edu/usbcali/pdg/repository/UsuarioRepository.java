@@ -31,4 +31,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 										@Param("pNombre") String nombre, 
 										@Param("pCodigo") String codigo, 
 										Pageable pageable);
+	
+	@Query(nativeQuery = true)
+	UsuarioDTO consultarUsuariosPorCodigoOrm(@Param("pCodigo") String codigo,
+											@Param("pEstado") String estado);
 }

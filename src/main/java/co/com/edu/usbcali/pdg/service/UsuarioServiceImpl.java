@@ -423,5 +423,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 			throw e;
 		}
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public UsuarioDTO consultarUsuariosPorCodigoOrm(String codigo) {
+		log.debug("consultarUsuariosPorCodigoOrm instances");
+		try {
+			
+			return usuarioRepository.consultarUsuariosPorCodigoOrm(codigo, Constantes.ESTADO_ACTIVO);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
 
 }

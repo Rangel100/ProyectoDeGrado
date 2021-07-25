@@ -58,4 +58,11 @@ public class UsuarioDTO implements Serializable {
 		this.nombreTipoUsuario = nombreTipoUsuario;
 	}
 	
+	public UsuarioDTO(Long usuaId, String codigo, Long tiusId_TipoUsuario) {
+		super();
+		this.usuaId = usuaId;
+		this.codigo = codigo;
+		this.tiusId_TipoUsuario = tiusId_TipoUsuario;
+	}
+	
 }

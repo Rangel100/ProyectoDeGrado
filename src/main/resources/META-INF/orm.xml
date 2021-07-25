@@ -44,6 +44,22 @@
 	        ]]>
 	        </query>
 		</named-native-query>
+		
+		<named-native-query name="Usuario.consultarUsuariosPorCodigoOrm"
+			result-set-mapping="consultarUsuariosPorCodigoOrm">
+			<query>
+	        <![CDATA[
+				select 	usua.usua_id usuaId,
+						usua.codigo codigo,
+						tius.tius_id tiusId_TipoUsuario
+				from usuario usua
+				inner join tipo_usuario tius on tius.tius_id = usua.tius_id 
+				where usua.estado = :pEstado
+				and usua.codigo = :pCodigo
+				group by usua.usua_id, tius.tius_id
+	        ]]>
+	        </query>
+		</named-native-query>
 	</entity>
 	
 	<entity class="co.com.edu.usbcali.pdg.domain.Artefacto">

@@ -143,4 +143,11 @@ public class UsuarioRestController {
 	return ResponseEntity.ok().body(usuarioService.consultarUsuarios(usuarioDTO));
 	}
 	
+	@PostMapping("/consultarUsuariosPorCodigoOrm")
+	public ResponseEntity<?> consultarUsuariosPorCodigoOrm(@RequestBody String codigo) throws Exception {
+	log.debug("Request to consultarUsuariosPorCodigoOrm :", codigo);
+	
+	return ResponseEntity.ok().body(usuarioService.consultarUsuariosPorCodigoOrm(codigo));
+	}
+	
 }
