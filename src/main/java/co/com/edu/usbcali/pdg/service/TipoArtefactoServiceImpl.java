@@ -273,7 +273,7 @@ public class TipoArtefactoServiceImpl implements TipoArtefactoService {
 			
 			//Validar que tiarId no sea null 
 			if (tiarId == null) {
-				throw new ZMessManager("El identificador del artefacto esta nulo o vacío.");
+				throw new ZMessManager("El identificador del tipo de artefacto esta nulo o vacío.");
 			}
 			
 			//Validar que el tipo de artefacto exista

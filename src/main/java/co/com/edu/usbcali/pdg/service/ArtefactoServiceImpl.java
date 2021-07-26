@@ -195,7 +195,7 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 			Optional<Artefacto> artefactoOpt = artefactoRepository.findById(artefactoDTO.getArteId());
 			
 			if (!artefactoOpt.isPresent()) {
-				throw new ZMessManager("El identificador del artefacto esta nulo o vacío.");
+				throw new ZMessManager("El artefacto seleccionado no exíste");
 			}
 			
 			Artefacto artefacto = artefactoOpt.get();
@@ -233,7 +233,7 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 			Optional<Artefacto> artefactoOpt = artefactoRepository.findById(artefactoDTO.getArteId());
 			
 			if (!artefactoOpt.isPresent()) {
-				throw new ZMessManager("El identificador del artefacto esta nulo o vacío.");
+				throw new ZMessManager("El artefacto seleccionado no exíste");
 			}
 			
 			Artefacto artefacto = artefactoOpt.get();
@@ -291,7 +291,7 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 			throw new ZMessManager("El url se encuentra nulo o vacío.");
 		}
 		
-		//Validar que el url no sea null 
+		//Validar que el tipo de artefacto no sea null 
 		if (artefactoDTO.getTiarId_TipoArtefacto() != null) {
 			
 			//Valido que el tipo de artefacto exista
@@ -317,7 +317,7 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 			List<Usuario> usuarioList = usuarioService.consultarUsuariosPorCodigo(artefactoDTO.getCodigoUsuario().trim());
 			
 			if (usuarioList.isEmpty()) {
-				throw new ZMessManager("El usuario seleccionado seleccionado no exíste.");
+				throw new ZMessManager("El usuario seleccionado no exíste.");
 			}
 			
 			for (Usuario usuario : usuarioList) {
@@ -372,8 +372,11 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Artefacto> consultarArtefactosPorTipoArtefacto(Long tiarId) {
-		log.debug("consultarArtefactosPorTipoArtefacto instances");
 		try {
+			//Validar que tipo artefacto no sea null 
+			if (tiarId == null) {
+				throw new ZMessManager("El identificador del tipo de artefacto esta nulo o vacío.");
+			}
 			
 			return artefactoRepository.findByTipoArtefacto_tiarIdAndEstado(tiarId, Constantes.ESTADO_ACTIVO);
 			
@@ -387,8 +390,12 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ArtefactoDTO> consultarArtefactosPorUsuario(Long usuaId) {
-		log.debug("consultarArtefactosPorUsuario instances");
 		try {
+			
+			//Validar que tusuaId no sea null 
+			if (usuaId == null) {
+				throw new ZMessManager("El identificador del usuario esta nulo o vacío.");
+			}
 			
 			return artefactoRepository.consultarArtefactosPorUsuario(usuaId, Constantes.ESTADO_ACTIVO);
 			
