@@ -2,7 +2,6 @@ package co.com.edu.usbcali.pdg.repository;
 
 import java.util.List;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,8 +28,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	@Query(nativeQuery = true)
 	List<UsuarioDTO> consultarUsuarios( @Param("pEstado") String estado,
 										@Param("pNombre") String nombre, 
-										@Param("pCodigo") String codigo, 
-										Pageable pageable);
+										@Param("pCodigo") String codigo);
 	
 	@Query(nativeQuery = true)
 	UsuarioDTO consultarUsuariosPorCodigoOrm(@Param("pCodigo") String codigo,

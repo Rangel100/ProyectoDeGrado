@@ -11,7 +11,6 @@ import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -174,7 +173,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			
 			//Validar que usuarioDTO no sea null 
 			if (usuarioDTO == null) {
-				throw new ZMessManager("El artefacto esta nulo o vacío.");
+				throw new ZMessManager("El usuario esta nulo o vacío.");
 			}
 			
 			Usuario usuario = new Usuario();
@@ -375,8 +374,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Usuario> consultarUsuariosPorTipoUsuario(Long tiusId) {
-		log.debug("consultarUsuariosPorTipoUsuario instances");
 		try {
+			//validar que el tiusId no sea null
+			if (tiusId == null) {
+				throw new ZMessManager("El identificador del tipo de usuario se encuentra nulo o vacío.");
+			}
 			
 			return usuarioRepository.findByTipoUsuario_tiusIdAndEstado(tiusId, Constantes.ESTADO_ACTIVO);
 			
@@ -389,8 +391,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Usuario> consultarUsuariosPorCodigo(String codigo) {
-		log.debug("consultarUsuariosPorCodigo instances");
 		try {
+			//validar que el codigo no sea null
+			if (codigo == null) {
+				throw new ZMessManager("El codigo se encuentra nulo o vacío.");
+			}
 			
 			return usuarioRepository.findByCodigo(codigo);
 			
@@ -404,19 +409,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Transactional(readOnly = true)
 	public List<UsuarioDTO> consultarUsuarios(UsuarioDTO usuarioDTO) {
 		try {
-			
+			//validar que el usuarioDTO no sea null
 			if (usuarioDTO == null) {
 				throw new ZMessManager("El usuario está nulo");
 			}
-
-			//Se crea el pageable para la consulta			
-			Pageable pageable = null;
 			
 			//Se realiza las validciones para los filtros correspondientes
 			String nombre = usuarioDTO.getNombre() == null || usuarioDTO.getNombre().isBlank() ? "-1" : usuarioDTO.getNombre().trim();
 			String codigo = usuarioDTO.getCodigo() == null || usuarioDTO.getCodigo().isBlank() ? "-1" : usuarioDTO.getCodigo().trim();
 		
-			return usuarioRepository.consultarUsuarios(Constantes.ESTADO_ACTIVO, nombre, codigo, pageable);
+			return usuarioRepository.consultarUsuarios(Constantes.ESTADO_ACTIVO, nombre, codigo);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -427,8 +429,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	@Transactional(readOnly = true)
 	public UsuarioDTO consultarUsuariosPorCodigoOrm(String codigo) {
-		log.debug("consultarUsuariosPorCodigoOrm instances");
 		try {
+			//validar que el codigo no sea null
+			if (codigo == null) {
+				throw new ZMessManager("El codigo se encuentra nulo o vacío.");
+			}
 			
 			return usuarioRepository.consultarUsuariosPorCodigoOrm(codigo, Constantes.ESTADO_ACTIVO);
 			

@@ -74,6 +74,27 @@ public class UsuarioBuilder {
 		
 		return usuarioDTO;
 	}
+	
+	public static UsuarioDTO getUsuarioDTOSinArteList() {
+		UsuarioDTO usuarioDTO = new UsuarioDTO();
+
+		usuarioDTO.setApellido("Rangel");
+		usuarioDTO.setArtefactosList(null);
+		usuarioDTO.setCodigo("j@j.com");
+		usuarioDTO.setDireccion("Calle 15 # 99-39");
+		usuarioDTO.setEstado(Constantes.ESTADO_ACTIVO);
+		usuarioDTO.setNombre("Jhonatan");
+		usuarioDTO.setNombreTipoUsuario("USUARIO");
+		usuarioDTO.setTiusId_TipoUsuario(1L);
+		usuarioDTO.setUsuaId(1L);
+		
+//		List<ArtefactoDTO> artefactoDTOs = new ArrayList<>();
+//		ArtefactoDTO artefactoDTO = ArtefactoBuilder.getArtefactoDTO();
+//		artefactoDTOs.add(artefactoDTO);
+//		usuarioDTO.setArtefactoDTOs(artefactoDTOs);
+		
+		return usuarioDTO;
+	}
 
 	public static Optional<Usuario> getUsuarioOpt() {
 
