@@ -293,7 +293,7 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService {
 			Optional<TipoUsuario> tipoUsuarioOpt = tipoUsuarioRepository.findByNombre(tipoUsuarioDTO.getNombre().toUpperCase());
 			
 			if (tipoUsuarioOpt.isPresent()) {
-				throw new ZMessManager("Ya Exíste un tipo de usuario con ese nombre.");
+				throw new ZMessManager("Ya exíste un tipo de usuario con ese nombre.");
 			}
 			
 			//Seteo el nombre

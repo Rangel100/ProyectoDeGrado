@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,15 +19,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import co.com.edu.usbcali.pdg.builder.ArtefactoBuilder;
 import co.com.edu.usbcali.pdg.builder.TipoArtefactoBuilder;
-import co.com.edu.usbcali.pdg.builder.UsuarioBuilder;
 import co.com.edu.usbcali.pdg.domain.Artefacto;
 import co.com.edu.usbcali.pdg.domain.TipoArtefacto;
-import co.com.edu.usbcali.pdg.domain.Usuario;
-import co.com.edu.usbcali.pdg.dto.ArtefactoDTO;
 import co.com.edu.usbcali.pdg.dto.TipoArtefactoDTO;
-import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
 import co.com.edu.usbcali.pdg.mapper.TipoArtefactoMapper;
-import co.com.edu.usbcali.pdg.repository.ArtefactoRepository;
 import co.com.edu.usbcali.pdg.repository.TipoArtefactoRepository;
 
 

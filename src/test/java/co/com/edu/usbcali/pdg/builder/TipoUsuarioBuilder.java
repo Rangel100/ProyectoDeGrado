@@ -55,4 +55,13 @@ public class TipoUsuarioBuilder {
 
 		return OptionalReturn;
 	}
+	
+	public static Optional<TipoUsuario> getUsuarioOptVacio() {
+
+		TipoUsuario tipoUsuario = new TipoUsuario();
+
+		Optional<TipoUsuario> OptionalReturn = Optional.of(tipoUsuario);
+
+		return OptionalReturn;
+	}
 }
