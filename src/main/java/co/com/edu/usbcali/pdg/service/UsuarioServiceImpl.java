@@ -335,11 +335,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 		//validar que el codigo no sea null
 		if (usuarioDTO.getCodigo() != null && !usuarioDTO.getCodigo().isBlank()) {
 			
-			//Valido que no existan mas usuarios con ese codigo
-			List<Usuario> usuarioList = usuarioRepository.findByCodigo(usuarioDTO.getCodigo().trim());
-			
-			if (!usuarioList.isEmpty()) {
-				throw new ZMessManager("El codigo ingresado ya se encuentra en uso.");
+			//Validar si el correo es diferente para crear o actualizar
+			if (!usuarioDTO.getCodigo().equals(usuario.getCodigo())) {
+				
+				//Valido que no existan mas usuarios con ese codigo
+				List<Usuario> usuarioList = usuarioRepository.findByCodigo(usuarioDTO.getCodigo().trim());
+				
+				if (!usuarioList.isEmpty()) {
+					throw new ZMessManager("El codigo ingresado ya se encuentra en uso.");
+				}
+				
 			}
 			
 			//Seteo del codigo
@@ -362,8 +367,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 		//Validar que el nombre no sea null 
 		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().isBlank()) {
 			
-			//Seteo el nombre
-			usuario.setNombre(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido().trim());
+			//Validar si tra apellido
+			if (usuarioDTO.getApellido() != null) {
+				usuario.setNombre(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido().trim());
+			}else {
+				
+				//Seteo el nombre
+				usuario.setNombre(usuarioDTO.getNombre());
+			}
+			
 
 		} else {
 			throw new ZMessManager("El nombre se encuentra nulo o vacío.");

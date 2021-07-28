@@ -26,7 +26,7 @@ public class TipoArtefactoDTO implements Serializable {
 	
 	private Long tiarId;
 
-	public TipoArtefactoDTO(String codigo, String nombre, Long tiarId) {
+	public TipoArtefactoDTO(Long tiarId, String codigo, String nombre) {
 		super();
 		this.tiarId = tiarId;
 		this.codigo = codigo;
