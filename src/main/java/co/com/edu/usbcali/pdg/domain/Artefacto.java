@@ -40,7 +40,8 @@ import lombok.NoArgsConstructor;
 			@ColumnResult(name = "arteId", type = Long.class),
 			@ColumnResult(name = "codigo", type = String.class),
 			@ColumnResult(name = "url", type = String.class),
-			@ColumnResult(name = "tiarId_TipoArtefacto", type = Long.class)
+			@ColumnResult(name = "tiarId_TipoArtefacto", type = Long.class),
+			@ColumnResult(name = "codigoUsuario", type = String.class),
 	}) }),
 	
 	@SqlResultSetMapping(name="consultarArtefactosPorUsuario", 

@@ -70,11 +70,13 @@
 				select	arte.arte_id arteId,
 						arte.codigo codigo,
 						arte.url url,
-						arte.tiar_id tiarId_TipoArtefacto
+						arte.tiar_id tiarId_TipoArtefacto,
+						usua.codigo codigoUsuario
 				from artefacto arte
+				inner join usuario usua on usua.usua_id = arte.usua_id 
 				where arte.arte_id = :pArteId
 				and arte.estado = :pEstado
-				group by arte.arte_id
+				group by arte.arte_id, usua.codigo
 	        ]]>
 	        </query>
 		</named-native-query>
