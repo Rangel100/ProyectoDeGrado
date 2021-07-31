@@ -1,4 +1,4 @@
-package co.com.edu.usbcali.pdg.service;
+package co.com.edu.usbcali.pdg.entity.service;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
 * www.zathuracode.org
 *
 */
-public interface UsuarioService {
+public interface ZatUsuarioService extends GenericService<Usuario, Long> {
 
 	void crearUsuario(UsuarioDTO usuarioDTO) throws Exception;
 

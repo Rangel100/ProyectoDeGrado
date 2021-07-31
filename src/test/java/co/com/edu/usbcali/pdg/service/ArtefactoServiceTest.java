@@ -25,6 +25,8 @@ import co.com.edu.usbcali.pdg.domain.TipoArtefacto;
 import co.com.edu.usbcali.pdg.domain.Usuario;
 import co.com.edu.usbcali.pdg.dto.ArtefactoDTO;
 import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
+import co.com.edu.usbcali.pdg.entity.service.ZatArtefactoService;
+import co.com.edu.usbcali.pdg.entity.service.ZatTipoArtefactoService;
 import co.com.edu.usbcali.pdg.repository.ArtefactoRepository;
 
 
@@ -43,7 +45,13 @@ class ArtefactoServiceTest {
 	ArtefactoService artefactoService;
 	
 	@Mock
+	ZatArtefactoService zatArtefactoService;
+	
+	@Mock
 	TipoArtefactoService tipoArtefactoService;
+	
+	@Mock
+	ZatTipoArtefactoService zatTipoArtefactoService;
 	
 	@Mock
 	UsuarioService usuarioService;
@@ -163,7 +171,7 @@ class ArtefactoServiceTest {
 			// Arrange
 			ArtefactoDTO artefactoDTO = ArtefactoBuilder.getArtefactoDTO();
 			
-			when(tipoArtefactoService.findById(any())).thenReturn(Optional.empty());
+			when(zatTipoArtefactoService.findById(any())).thenReturn(Optional.empty());
 			
 			String messageExpected = "El tipo de artefacto seleccionado no exíste.";
 			
@@ -184,7 +192,7 @@ class ArtefactoServiceTest {
 			artefactoDTO.setCodigoUsuario(null);
 			Optional<TipoArtefacto> tipoArtefactoOpt = TipoArtefactoBuilder.getTipoArtefactoOpt();
 			
-			when(tipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
+			when(zatTipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
 			
 			String messageExpected = "El codigo del usuario se encuentra nulo o vacío";
 			
@@ -205,7 +213,7 @@ class ArtefactoServiceTest {
 			Optional<TipoArtefacto> tipoArtefactoOpt = TipoArtefactoBuilder.getTipoArtefactoOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			
-			when(tipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
+			when(zatTipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
 			
 			when(usuarioService.consultarUsuariosPorCodigo(any())).thenReturn(usuarios);
 			
@@ -230,7 +238,7 @@ class ArtefactoServiceTest {
 			Usuario usuario = UsuarioBuilder.getUsuario();
 			usuarios.add(usuario);
 			
-			when(tipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
+			when(zatTipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
 			
 			when(usuarioService.consultarUsuariosPorCodigo(any())).thenReturn(usuarios);
 			
@@ -414,7 +422,7 @@ class ArtefactoServiceTest {
 			
 			when(artefactoRepository.findById(any())).thenReturn(artefactoOpt);
 			
-			when(tipoArtefactoService.findById(any())).thenReturn(Optional.empty());
+			when(zatTipoArtefactoService.findById(any())).thenReturn(Optional.empty());
 			
 			String messageExpected = "El tipo de artefacto seleccionado no exíste.";
 			
@@ -438,7 +446,7 @@ class ArtefactoServiceTest {
 			
 			when(artefactoRepository.findById(any())).thenReturn(artefactoOpt);
 			
-			when(tipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
+			when(zatTipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
 			
 			String messageExpected = "El codigo del usuario se encuentra nulo o vacío";
 			
@@ -462,7 +470,7 @@ class ArtefactoServiceTest {
 			
 			when(artefactoRepository.findById(any())).thenReturn(artefactoOpt);
 			
-			when(tipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
+			when(zatTipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
 			
 			when(usuarioService.consultarUsuariosPorCodigo(any())).thenReturn(usuarios);
 			
@@ -490,7 +498,7 @@ class ArtefactoServiceTest {
 			
 			when(artefactoRepository.findById(any())).thenReturn(artefactoOpt);
 			
-			when(tipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
+			when(zatTipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
 			
 			when(usuarioService.consultarUsuariosPorCodigo(any())).thenReturn(usuarios);
 			
@@ -498,7 +506,7 @@ class ArtefactoServiceTest {
 			artefactoServiceImpl.actualizarArtefacto(artefactoDTO);
 
 			// Assert
-			verify(artefactoService).update(any());
+			verify(zatArtefactoService).update(any());
 			
 		}
 		
@@ -572,7 +580,7 @@ class ArtefactoServiceTest {
 			artefactoServiceImpl.eliminarArtefacto(artefactoDTO);
 
 			// Assert
-			verify(artefactoService).update(any());
+			verify(zatArtefactoService).update(any());
 			
 		}
 	}
@@ -666,7 +674,7 @@ class ArtefactoServiceTest {
 			artefactoServiceImpl.eliminarArtefactosPorUsuario(usuarioDTO);
 
 			// Assert
-			verify(artefactoService).update(any());
+			verify(zatArtefactoService).update(any());
 			
 		}
 		

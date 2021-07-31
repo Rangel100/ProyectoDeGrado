@@ -22,6 +22,7 @@ import co.com.edu.usbcali.pdg.builder.TipoArtefactoBuilder;
 import co.com.edu.usbcali.pdg.domain.Artefacto;
 import co.com.edu.usbcali.pdg.domain.TipoArtefacto;
 import co.com.edu.usbcali.pdg.dto.TipoArtefactoDTO;
+import co.com.edu.usbcali.pdg.entity.service.ZatTipoArtefactoService;
 import co.com.edu.usbcali.pdg.mapper.TipoArtefactoMapper;
 import co.com.edu.usbcali.pdg.repository.TipoArtefactoRepository;
 
@@ -39,6 +40,9 @@ class TipoArtefactoServiceTest {
 	
 	@Mock
 	TipoArtefactoService tipoArtefactoService;
+	
+	@Mock
+	ZatTipoArtefactoService zatTipoArtefactoService;
 	
 	@Mock
 	ArtefactoService artefactoService;
@@ -308,7 +312,7 @@ class TipoArtefactoServiceTest {
 			tipoArtefactoServiceImpl.actualizarTipoArtefacto(tipoArtefactoDTO);
 			
 			// Assert
-			verify(tipoArtefactoService).update(any());
+			verify(zatTipoArtefactoService).update(any());
 			
 		}
 		
@@ -411,7 +415,7 @@ class TipoArtefactoServiceTest {
 			tipoArtefactoServiceImpl.eliminarTipoArtefacto(tipoArtefactoDTO);
 			
 			// Assert
-			verify(tipoArtefactoService).update(any());
+			verify(zatTipoArtefactoService).update(any());
 			
 		}
 	}

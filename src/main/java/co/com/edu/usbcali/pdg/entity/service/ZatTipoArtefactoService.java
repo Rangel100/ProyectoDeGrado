@@ -1,7 +1,8 @@
-package co.com.edu.usbcali.pdg.service;
+package co.com.edu.usbcali.pdg.entity.service;
 
 import java.util.List;
 
+import co.com.edu.usbcali.pdg.domain.TipoArtefacto;
 import co.com.edu.usbcali.pdg.dto.TipoArtefactoDTO;
 
 
@@ -10,7 +11,7 @@ import co.com.edu.usbcali.pdg.dto.TipoArtefactoDTO;
 * www.zathuracode.org
 *
 */
-public interface TipoArtefactoService {
+public interface ZatTipoArtefactoService extends GenericService<TipoArtefacto, Long> {
 
 	void crearTipoArtefacto(TipoArtefactoDTO TipoArtefactoDTO) throws Exception;
 

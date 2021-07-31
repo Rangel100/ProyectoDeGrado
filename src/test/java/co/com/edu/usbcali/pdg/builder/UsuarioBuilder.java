@@ -59,7 +59,7 @@ public class UsuarioBuilder {
 
 		usuarioDTO.setApellido("Rangel");
 		usuarioDTO.setArtefactosList("1,2,3");
-		usuarioDTO.setCodigo("j@j.com");
+		usuarioDTO.setCodigo("j@jh.com");
 		usuarioDTO.setDireccion("Calle 15 # 99-39");
 		usuarioDTO.setEstado(Constantes.ESTADO_ACTIVO);
 		usuarioDTO.setNombre("Jhonatan");

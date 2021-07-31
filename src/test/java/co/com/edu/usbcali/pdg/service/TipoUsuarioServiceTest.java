@@ -22,6 +22,7 @@ import co.com.edu.usbcali.pdg.builder.UsuarioBuilder;
 import co.com.edu.usbcali.pdg.domain.TipoUsuario;
 import co.com.edu.usbcali.pdg.domain.Usuario;
 import co.com.edu.usbcali.pdg.dto.TipoUsuarioDTO;
+import co.com.edu.usbcali.pdg.entity.service.ZatTipoUsuarioService;
 import co.com.edu.usbcali.pdg.mapper.TipoUsuarioMapper;
 import co.com.edu.usbcali.pdg.repository.TipoUsuarioRepository;
 
@@ -39,6 +40,9 @@ class TipoUsuarioServiceTest {
 	
 	@Mock
 	TipoUsuarioService tipoUsuarioService;
+	
+	@Mock
+	ZatTipoUsuarioService zatTipoUsuarioService;
 	
 	@Mock
 	UsuarioService usuarioService;
@@ -274,7 +278,7 @@ class TipoUsuarioServiceTest {
 		tipoUsuarioServiceImpl.actualizarTipoUsuario(tipoUsuarioDTO);
 	
 		// Assert
-		verify(tipoUsuarioService).update(any());
+		verify(zatTipoUsuarioService).update(any());
 			
 		}
 		
@@ -377,7 +381,7 @@ class TipoUsuarioServiceTest {
 			tipoUsuarioServiceImpl.eliminarTipoUsuario(tipoUsuarioDTO);
 			
 			// Assert
-			verify(tipoUsuarioService).update(any());
+			verify(zatTipoUsuarioService).update(any());
 			
 		}
 	}

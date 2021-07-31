@@ -1,8 +1,13 @@
-package co.com.edu.usbcali.pdg.service;
+package co.com.edu.usbcali.pdg.entity.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -15,13 +20,11 @@ import co.com.edu.usbcali.pdg.domain.TipoUsuario;
 import co.com.edu.usbcali.pdg.domain.Usuario;
 import co.com.edu.usbcali.pdg.dto.ArtefactoDTO;
 import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
-import co.com.edu.usbcali.pdg.entity.service.ZatArtefactoService;
-import co.com.edu.usbcali.pdg.entity.service.ZatTipoUsuarioService;
-import co.com.edu.usbcali.pdg.entity.service.ZatUsuarioService;
 import co.com.edu.usbcali.pdg.exception.ZMessManager;
 import co.com.edu.usbcali.pdg.mapper.ArtefactoMapper;
 import co.com.edu.usbcali.pdg.repository.UsuarioRepository;
 import co.com.edu.usbcali.pdg.utility.Constantes;
+import co.com.edu.usbcali.pdg.utility.Utilities;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -33,25 +36,135 @@ import lombok.extern.slf4j.Slf4j;
 @Scope("singleton")
 @Service
 @Slf4j
-public class UsuarioServiceImpl implements UsuarioService {
+public class ZatUsuarioServiceImpl implements ZatUsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
-	private ZatUsuarioService zatUsuarioService;
+	private ZatUsuarioService usuarioService;
 	
 	@Autowired
-	private ZatTipoUsuarioService zatTipoUsuarioService;
+	private ZatTipoUsuarioService tipoUsuarioService;
 	
 	@Autowired
-	private ArtefactoService artefactoService;
-	
-	@Autowired
-	private ZatArtefactoService zatArtefactoService;
+	private ZatArtefactoService artefactoService;
 	
 	@Autowired
 	private ArtefactoMapper artefactoMapper;
+
+	@Autowired
+	private Validator validator;
+
+	@Override
+	public void validate(Usuario usuario) throws ConstraintViolationException {
+
+		Set<ConstraintViolation<Usuario>> constraintViolations = validator.validate(usuario);
+		if (!constraintViolations.isEmpty()) {
+			throw new ConstraintViolationException(constraintViolations);
+		}
+
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Long count() {
+		return usuarioRepository.count();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Usuario> findAll() {
+		log.debug("finding all Usuario instances");
+		return usuarioRepository.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public Usuario save(Usuario entity) throws Exception {
+		log.debug("saving Usuario instance");
+
+		if (entity == null) {
+			throw new ZMessManager().new NullEntityExcepcion("Usuario");
+		}
+
+		validate(entity);
+
+		if (usuarioRepository.existsById(entity.getUsuaId())) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
+
+		return usuarioRepository.save(entity);
+
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void delete(Usuario entity) throws Exception {
+		log.debug("deleting Usuario instance");
+
+		if (entity == null) {
+			throw new ZMessManager().new NullEntityExcepcion("Usuario");
+		}
+
+		if (entity.getUsuaId() == null) {
+			throw new ZMessManager().new EmptyFieldException("usuaId");
+		}
+
+		if (usuarioRepository.existsById(entity.getUsuaId()) == false) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
+
+		findById(entity.getUsuaId()).ifPresent(entidad -> {
+			List<Artefacto> artefactos = entidad.getArtefactos();
+			if (Utilities.validationsList(artefactos) == true) {
+				throw new ZMessManager().new DeletingException("artefactos");
+			}
+		});
+
+		usuarioRepository.deleteById(entity.getUsuaId());
+		log.debug("delete Usuario successful");
+
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void deleteById(Long id) throws Exception {
+		log.debug("deleting Usuario instance");
+		if (id == null) {
+			throw new ZMessManager().new EmptyFieldException("usuaId");
+		}
+		if (usuarioRepository.existsById(id)) {
+			delete(usuarioRepository.findById(id).get());
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public Usuario update(Usuario entity) throws Exception {
+
+		log.debug("updating Usuario instance");
+
+		if (entity == null) {
+			throw new ZMessManager().new NullEntityExcepcion("Usuario");
+		}
+
+		validate(entity);
+
+		if (usuarioRepository.existsById(entity.getUsuaId()) == false) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
+
+		return usuarioRepository.save(entity);
+
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Usuario> findById(Long usuaId) {
+		log.debug("getting Usuario instance");
+		return usuarioRepository.findById(usuaId);
+	}
 	
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -109,7 +222,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			//Seteo el estado
 			usuario.setEstado(Constantes.ESTADO_ACTIVO);
 			
-			zatUsuarioService.update(usuario);
+			usuarioService.update(usuario);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -144,7 +257,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			//Seteo el estado inactivo
 			usuario.setEstado(Constantes.ESTADO_INACTIVO);
 			
-			zatUsuarioService.update(usuario);
+			usuarioService.update(usuario);
 			
 			//inactivo los artefactos que el usuario tenga registrados
 			artefactoService.eliminarArtefactosPorUsuario(usuarioDTO);
@@ -175,7 +288,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 				
 				for (int i = 0; i < artefactosList.length; i++) {
 					
-					Optional<Artefacto> artefactoOpt =  zatArtefactoService.findById(Long.parseLong(artefactosList[i]));
+					Optional<Artefacto> artefactoOpt =  artefactoService.findById(Long.parseLong(artefactosList[i]));
 					
 					if (!artefactoOpt.isPresent()) {
 						throw new ZMessManager("El artefacto no exíste.");
@@ -204,7 +317,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if (usuarioDTO.getTiusId_TipoUsuario() != null) {
 			
 			//Valido que el tipo de usuario exista
-			Optional<TipoUsuario> tipoUsuarioOpt = zatTipoUsuarioService.findById(usuarioDTO.getTiusId_TipoUsuario());
+			Optional<TipoUsuario> tipoUsuarioOpt = tipoUsuarioService.findById(usuarioDTO.getTiusId_TipoUsuario());
 			
 			if (!tipoUsuarioOpt.isPresent()) {
 				throw new ZMessManager("El tipo de usuario seleccionado no exíste.");

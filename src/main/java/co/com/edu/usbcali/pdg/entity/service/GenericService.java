@@ -1,4 +1,4 @@
-package  co.com.edu.usbcali.pdg.service;
+package  co.com.edu.usbcali.pdg.entity.service;
 
 import java.util.List;
 import java.util.Optional;

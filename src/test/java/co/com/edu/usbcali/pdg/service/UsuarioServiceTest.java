@@ -25,6 +25,9 @@ import co.com.edu.usbcali.pdg.domain.TipoUsuario;
 import co.com.edu.usbcali.pdg.domain.Usuario;
 import co.com.edu.usbcali.pdg.dto.ArtefactoDTO;
 import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
+import co.com.edu.usbcali.pdg.entity.service.ZatArtefactoService;
+import co.com.edu.usbcali.pdg.entity.service.ZatTipoUsuarioService;
+import co.com.edu.usbcali.pdg.entity.service.ZatUsuarioService;
 import co.com.edu.usbcali.pdg.mapper.ArtefactoMapper;
 import co.com.edu.usbcali.pdg.repository.UsuarioRepository;
 
@@ -41,10 +44,19 @@ class UsuarioServiceTest {
 	UsuarioService usuarioService;
 	
 	@Mock
+	ZatUsuarioService zatUsuarioService;
+	
+	@Mock
 	TipoUsuarioService tipoUsuarioService;
 	
 	@Mock
+	ZatTipoUsuarioService zatTipoUsuarioService;
+	
+	@Mock
 	ArtefactoService artefactoService;
+	
+	@Mock
+	ZatArtefactoService zatArtefactoService;
 	
 	@Mock
 	ArtefactoMapper artefactoMapper;
@@ -92,7 +104,7 @@ class UsuarioServiceTest {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(Optional.empty());
+			when(zatTipoUsuarioService.findById(any())).thenReturn(Optional.empty());
 			
 			String messageExpected = "El tipo de usuario seleccionado no exíste.";
 			
@@ -113,7 +125,7 @@ class UsuarioServiceTest {
 			usuarioDTO.setCodigo(null);
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			String messageExpected = "El codigo se encuentra nulo o vacío";
 			
@@ -134,7 +146,7 @@ class UsuarioServiceTest {
 			usuarioDTO.setCodigo("");
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			String messageExpected = "El codigo se encuentra nulo o vacío";
 			
@@ -157,7 +169,7 @@ class UsuarioServiceTest {
 			Usuario usuario = UsuarioBuilder.getUsuario();
 			usuarios.add(usuario);
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
@@ -181,7 +193,7 @@ class UsuarioServiceTest {
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
@@ -205,7 +217,7 @@ class UsuarioServiceTest {
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
@@ -229,7 +241,7 @@ class UsuarioServiceTest {
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
@@ -253,7 +265,7 @@ class UsuarioServiceTest {
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
@@ -270,13 +282,72 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		void debeCrearUsuarioApellidoSeaNull() throws Exception {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setApellido(null);
+			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
+			List<Usuario> usuarios = new ArrayList<>();
+			
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
+			
+			// Act
+			usuarioServiceImpl.crearUsuario(usuarioDTO);
+			
+			// Assert
+			verify(usuarioRepository).save(any());
+			
+		}
+		
+		@Test
+		void debeCrearUsuarioApellidoSeaVacio() throws Exception {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setApellido("");
+			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
+			List<Usuario> usuarios = new ArrayList<>();
+			
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
+			
+			// Act
+			usuarioServiceImpl.crearUsuario(usuarioDTO);
+			
+			// Assert
+			verify(usuarioRepository).save(any());
+			
+		}
+		
+		@Test
+		void debeCrearUsuarioConApellido() throws Exception {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
+			List<Usuario> usuarios = new ArrayList<>();
+			
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
+			
+			// Act
+			usuarioServiceImpl.crearUsuario(usuarioDTO);
+			
+			// Assert
+			verify(usuarioRepository).save(any());
+			
+		}
+		
+		@Test
 		void debeCrearUsuario() throws Exception {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
@@ -290,7 +361,7 @@ class UsuarioServiceTest {
 		
 	}
 	
-	@Nested	
+	@Nested
 	class actualizarUsuarioTests {
 		
 		@Test
@@ -376,7 +447,7 @@ class UsuarioServiceTest {
 			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(Optional.empty());
+			when(zatTipoUsuarioService.findById(any())).thenReturn(Optional.empty());
 			
 			String messageExpected = "El tipo de usuario seleccionado no exíste.";
 			
@@ -400,7 +471,7 @@ class UsuarioServiceTest {
 			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			String messageExpected = "El codigo se encuentra nulo o vacío";
 			
@@ -424,7 +495,7 @@ class UsuarioServiceTest {
 			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			String messageExpected = "El codigo se encuentra nulo o vacío";
 			
@@ -442,15 +513,15 @@ class UsuarioServiceTest {
 		void debeLanzarExeptionCodigoYaExista() {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			Usuario usuario = UsuarioBuilder.getUsuario();
 			usuarios.add(usuario);
-			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
 			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
@@ -470,16 +541,17 @@ class UsuarioServiceTest {
 		void debeLanzarExeptionDireccionSeaNull() {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setCodigo("j@j.com");
 			usuarioDTO.setDireccion(null);
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
-			List<Usuario> usuarios = new ArrayList<>();
+//			List<Usuario> usuarios = new ArrayList<>();
 			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
 			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
-			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
+//			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
 			String messageExpected = "La direccion se encuentra nulo o vacío.";
 			
@@ -504,7 +576,7 @@ class UsuarioServiceTest {
 			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
@@ -531,7 +603,7 @@ class UsuarioServiceTest {
 			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
@@ -558,7 +630,7 @@ class UsuarioServiceTest {
 			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
@@ -575,7 +647,53 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
-		void debeCrearUsuario() throws Exception {
+		void debeActualizarUsuarioApellidoSeaNull() throws Exception {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setApellido(null);
+			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
+			List<Usuario> usuarios = new ArrayList<>();
+			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
+			
+			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
+			
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
+			
+			// Act
+			usuarioServiceImpl.actualizarUsuario(usuarioDTO);
+			
+			// Assert
+			verify(zatUsuarioService).update(any());
+			
+		}
+		
+		@Test
+		void debeActualizarUsuarioApellidoSeaVacio() throws Exception {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setApellido("");
+			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
+			List<Usuario> usuarios = new ArrayList<>();
+			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
+			
+			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
+			
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
+			
+			// Act
+			usuarioServiceImpl.actualizarUsuario(usuarioDTO);
+			
+			// Assert
+			verify(zatUsuarioService).update(any());
+			
+		}
+		
+		@Test
+		void debeActualizarUsuarioConApellido() throws Exception {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
@@ -584,7 +702,7 @@ class UsuarioServiceTest {
 			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
-			when(tipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
 			
@@ -592,7 +710,29 @@ class UsuarioServiceTest {
 			usuarioServiceImpl.actualizarUsuario(usuarioDTO);
 			
 			// Assert
-			verify(usuarioService).update(any());
+			verify(zatUsuarioService).update(any());
+			
+		}
+		
+		@Test
+		void debeActualizarUsuario() throws Exception {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
+			List<Usuario> usuarios = new ArrayList<>();
+			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
+			
+			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
+			
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
+			
+			// Act
+			usuarioServiceImpl.actualizarUsuario(usuarioDTO);
+			
+			// Assert
+			verify(zatUsuarioService).update(any());
 			
 		}
 		
@@ -668,7 +808,7 @@ class UsuarioServiceTest {
 			usuarioServiceImpl.eliminarUsuario(usuarioDTO);
 			
 			// Assert
-			verify(usuarioService).update(any());
+			verify(zatUsuarioService).update(any());
 			verify(artefactoService).eliminarArtefactosPorUsuario(any());		
 			
 		}
@@ -719,7 +859,7 @@ class UsuarioServiceTest {
 			
 			when(usuarioRepository.consultarUsuario(any(),any())).thenReturn(usuarioDTO);
 			
-			when(artefactoService.findById(any())).thenReturn(Optional.empty());
+//			when(zatUsuarioService.findById(any())).thenReturn(Optional.empty());
 			
 			String messageExpected = "El artefacto no exíste.";
 			
@@ -743,7 +883,7 @@ class UsuarioServiceTest {
 			
 			when(usuarioRepository.consultarUsuario(any(),any())).thenReturn(usuarioDTO);
 			
-			when(artefactoService.findById(any())).thenReturn(artefactoOpt);
+			when(zatArtefactoService.findById(any())).thenReturn(artefactoOpt);
 			
 			when(artefactoMapper.artefactoToArtefactoDTO(any())).thenReturn(artefactoDTO);
 			
