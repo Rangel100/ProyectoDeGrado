@@ -1,94 +1,272 @@
-2021-07-04 17:12:07.212  INFO 16112 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.1 on DESKTOP-006TEM5 with PID 16112 (C:\Users\jhonatan\Documents\PDG\WorkSpace-back\pdg\target\classes started by jhonatan in C:\Users\jhonatan\Documents\PDG\WorkSpace-back\pdg)
-2021-07-04 17:12:07.217  INFO 16112 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
-2021-07-04 17:12:08.703  INFO 16112 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-07-04 17:12:08.785  INFO 16112 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 72 ms. Found 4 JPA repository interfaces.
-2021-07-04 17:12:09.396  INFO 16112 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
-2021-07-04 17:12:09.407  INFO 16112 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2021-07-04 17:12:09.407  INFO 16112 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
-2021-07-04 17:12:09.534  INFO 16112 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2021-07-04 17:12:09.535  INFO 16112 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2263 ms
-2021-07-04 17:12:09.781  INFO 16112 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2021-07-04 17:12:09.964  INFO 16112 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2021-07-04 17:12:10.021  INFO 16112 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-07-04 17:12:10.081  INFO 16112 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.27.Final
-2021-07-04 17:12:10.245  INFO 16112 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2021-07-04 17:12:10.551  INFO 16112 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2021-07-04 17:12:11.280  INFO 16112 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2021-07-04 17:12:11.291  INFO 16112 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2021-07-04 17:12:11.698  WARN 16112 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2021-07-04 17:12:12.090  INFO 16112 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-2021-07-04 17:12:12.157  INFO 16112 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : createRestApi
-2021-07-04 17:12:12.161  INFO 16112 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : apiInfo
-2021-07-04 17:12:12.352  INFO 16112 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6c79a7c1, org.springframework.security.web.context.SecurityContextPersistenceFilter@39d4f046, org.springframework.security.web.header.HeaderWriterFilter@13ac1657, org.springframework.web.filter.CorsFilter@5d160056, org.springframework.security.web.authentication.logout.LogoutFilter@1e8c9083, co.com.edu.usbcali.pdg.security.JWTAuthenticationFilter@2c555efb, co.com.edu.usbcali.pdg.security.JWTAuthorizationFilter@17796f47, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6e2764c9, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@5cbf9aee, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@369f85c6, org.springframework.security.web.session.SessionManagementFilter@1a557a52, org.springframework.security.web.access.ExceptionTranslationFilter@54e39504, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@758e6acd]
-2021-07-04 17:12:12.447  INFO 16112 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2021-07-04 17:12:12.738  INFO 16112 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path ''
-2021-07-04 17:12:13.161  INFO 16112 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Started SpringBootRunner in 6.387 seconds (JVM running for 7.303)
-2021-07-04 17:12:13.859  INFO 16112 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2021-07-04 17:12:13.859  INFO 16112 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2021-07-04 17:12:13.860  INFO 16112 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2021-07-04 17:20:23.195  INFO 16112 --- [RMI TCP Connection(19)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2021-07-04 17:20:23.220  INFO 16112 --- [RMI TCP Connection(19)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
-2021-07-04 17:20:23.226  INFO 16112 --- [RMI TCP Connection(19)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2021-07-04 17:20:23.227  INFO 16112 --- [RMI TCP Connection(19)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2021-07-04 17:20:23.229  INFO 16112 --- [RMI TCP Connection(19)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2021-07-04 18:21:07.047  INFO 11420 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.1 on DESKTOP-006TEM5 with PID 11420 (C:\Users\jhonatan\Documents\PDG\WorkSpace-back\pdg\target\classes started by jhonatan in C:\Users\jhonatan\Documents\PDG\WorkSpace-back\pdg)
-2021-07-04 18:21:07.051  INFO 11420 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
-2021-07-04 18:21:08.063  INFO 11420 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-07-04 18:21:08.136  INFO 11420 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 64 ms. Found 4 JPA repository interfaces.
-2021-07-04 18:21:08.665  INFO 11420 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
-2021-07-04 18:21:08.675  INFO 11420 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2021-07-04 18:21:08.676  INFO 11420 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
-2021-07-04 18:21:08.785  INFO 11420 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2021-07-04 18:21:08.785  INFO 11420 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1696 ms
-2021-07-04 18:21:08.988  INFO 11420 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2021-07-04 18:21:10.001  INFO 11420 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2021-07-04 18:21:10.051  INFO 11420 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-07-04 18:21:10.108  INFO 11420 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.27.Final
-2021-07-04 18:21:10.230  INFO 11420 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2021-07-04 18:21:10.501  INFO 11420 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2021-07-04 18:21:11.126  INFO 11420 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2021-07-04 18:21:11.134  INFO 11420 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2021-07-04 18:21:11.528  WARN 11420 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2021-07-04 18:21:11.848  INFO 11420 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-2021-07-04 18:21:11.891  INFO 11420 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : createRestApi
-2021-07-04 18:21:11.893  INFO 11420 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : apiInfo
-2021-07-04 18:21:12.035  INFO 11420 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2b592f17, org.springframework.security.web.context.SecurityContextPersistenceFilter@718b9d56, org.springframework.security.web.header.HeaderWriterFilter@2aaed928, org.springframework.web.filter.CorsFilter@3884e858, org.springframework.security.web.authentication.logout.LogoutFilter@6179af64, co.com.edu.usbcali.pdg.security.JWTAuthenticationFilter@46c7c593, co.com.edu.usbcali.pdg.security.JWTAuthorizationFilter@6a4c4261, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@51751265, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3299e315, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@88fe9a8, org.springframework.security.web.session.SessionManagementFilter@b7b26c6, org.springframework.security.web.access.ExceptionTranslationFilter@4a5a8c6f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@138a51d5]
-2021-07-04 18:21:12.119  INFO 11420 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2021-07-04 18:21:12.344  INFO 11420 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path ''
-2021-07-04 18:21:12.728  INFO 11420 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Started SpringBootRunner in 6.038 seconds (JVM running for 6.812)
-2021-07-04 18:21:13.032  INFO 11420 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2021-07-04 18:21:13.033  INFO 11420 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2021-07-04 18:21:13.034  INFO 11420 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-2021-07-04 18:24:57.528  INFO 11420 --- [RMI TCP Connection(12)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
-2021-07-04 18:24:57.567  INFO 11420 --- [RMI TCP Connection(12)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
-2021-07-04 18:24:57.572  INFO 11420 --- [RMI TCP Connection(12)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
-2021-07-04 18:24:57.573  INFO 11420 --- [RMI TCP Connection(12)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2021-07-04 18:24:57.738  INFO 11420 --- [RMI TCP Connection(12)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2021-07-04 18:25:05.083  INFO 1088 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.1 on DESKTOP-006TEM5 with PID 1088 (C:\Users\jhonatan\Documents\PDG\WorkSpace-back\pdg\target\classes started by jhonatan in C:\Users\jhonatan\Documents\PDG\WorkSpace-back\pdg)
-2021-07-04 18:25:05.087  INFO 1088 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
-2021-07-04 18:25:06.134  INFO 1088 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2021-07-04 18:25:06.202  INFO 1088 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 61 ms. Found 4 JPA repository interfaces.
-2021-07-04 18:25:06.742  INFO 1088 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
-2021-07-04 18:25:06.752  INFO 1088 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2021-07-04 18:25:06.752  INFO 1088 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
-2021-07-04 18:25:06.855  INFO 1088 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2021-07-04 18:25:06.855  INFO 1088 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1730 ms
-2021-07-04 18:25:07.068  INFO 1088 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2021-07-04 18:25:08.129  INFO 1088 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2021-07-04 18:25:08.188  INFO 1088 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2021-07-04 18:25:08.255  INFO 1088 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.27.Final
-2021-07-04 18:25:08.408  INFO 1088 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
-2021-07-04 18:25:08.694  INFO 1088 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
-2021-07-04 18:25:09.316  INFO 1088 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
-2021-07-04 18:25:09.324  INFO 1088 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2021-07-04 18:25:09.729  WARN 1088 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2021-07-04 18:25:10.039  INFO 1088 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
-2021-07-04 18:25:10.082  INFO 1088 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : createRestApi
-2021-07-04 18:25:10.085  INFO 1088 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : apiInfo
-2021-07-04 18:25:10.232  INFO 1088 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@1651bd68, org.springframework.security.web.context.SecurityContextPersistenceFilter@6aeb769d, org.springframework.security.web.header.HeaderWriterFilter@36003e90, org.springframework.web.filter.CorsFilter@44a25dc7, org.springframework.security.web.authentication.logout.LogoutFilter@427946b9, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7234db3, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3db48e6, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3fc064cb, org.springframework.security.web.session.SessionManagementFilter@77e42cbf, org.springframework.security.web.access.ExceptionTranslationFilter@393aac93]
-2021-07-04 18:25:10.312  INFO 1088 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
-2021-07-04 18:25:10.567  INFO 1088 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path ''
-2021-07-04 18:25:10.959  INFO 1088 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Started SpringBootRunner in 6.218 seconds (JVM running for 6.995)
-2021-07-04 18:25:13.341  INFO 1088 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2021-07-04 18:25:13.342  INFO 1088 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2021-07-04 18:25:13.343  INFO 1088 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2021-08-23 08:16:40.630  INFO 39148 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.2 on LAPTOP-H2F53KT7 with PID 39148 (C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack\target\classes started by scarv in C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack)
+2021-08-23 08:16:40.643  INFO 39148 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
+2021-08-23 08:16:41.436  WARN 39148 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+2021-08-23 08:16:41.475 ERROR 39148 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:189) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:336) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[spring-boot-2.4.2.jar:2.4.2]
+	at co.com.edu.usbcali.pdg.SpringBootRunner.main(SpringBootRunner.java:15) ~[classes/:na]
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:132) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:296) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:207) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:175) ~[spring-context-5.3.3.jar:5.3.3]
+	... 14 common frames omitted
+
+2021-08-23 08:18:00.095  INFO 14096 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.2 on LAPTOP-H2F53KT7 with PID 14096 (C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack\target\classes started by scarv in C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack)
+2021-08-23 08:18:00.104  INFO 14096 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
+2021-08-23 08:18:00.419  WARN 14096 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+2021-08-23 08:18:00.770 ERROR 14096 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:189) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:336) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[spring-boot-2.4.2.jar:2.4.2]
+	at co.com.edu.usbcali.pdg.SpringBootRunner.main(SpringBootRunner.java:15) ~[classes/:na]
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:132) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:296) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:207) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:175) ~[spring-context-5.3.3.jar:5.3.3]
+	... 14 common frames omitted
+
+2021-08-23 18:23:19.732  INFO 57164 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.2 on LAPTOP-H2F53KT7 with PID 57164 (C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack\target\classes started by scarv in C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack)
+2021-08-23 18:23:19.735  INFO 57164 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
+2021-08-23 18:23:19.991  WARN 57164 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+2021-08-23 18:23:20.231 ERROR 57164 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:189) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:336) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[spring-boot-2.4.2.jar:2.4.2]
+	at co.com.edu.usbcali.pdg.SpringBootRunner.main(SpringBootRunner.java:15) ~[classes/:na]
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:132) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:296) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:207) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:175) ~[spring-context-5.3.3.jar:5.3.3]
+	... 14 common frames omitted
+
+2021-08-23 18:24:34.049  INFO 29180 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.2 on LAPTOP-H2F53KT7 with PID 29180 (C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack\target\classes started by scarv in C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack)
+2021-08-23 18:24:34.056  INFO 29180 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
+2021-08-23 18:24:34.294  WARN 29180 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+2021-08-23 18:24:34.584 ERROR 29180 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:189) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:336) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[spring-boot-2.4.2.jar:2.4.2]
+	at co.com.edu.usbcali.pdg.SpringBootRunner.main(SpringBootRunner.java:15) ~[classes/:na]
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:132) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:296) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:207) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:175) ~[spring-context-5.3.3.jar:5.3.3]
+	... 14 common frames omitted
+
+2021-08-23 18:28:37.991  INFO 34752 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.2 on LAPTOP-H2F53KT7 with PID 34752 (C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack\target\classes started by scarv in C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack)
+2021-08-23 18:28:37.997  INFO 34752 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
+2021-08-23 18:28:38.596  WARN 34752 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'userApplicationDetailsServiceImpl' for bean class [co.com.edu.usbcali.pdg.service.UserApplicationDetailsServiceImpl] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.entity.service.UserApplicationDetailsServiceImpl]
+2021-08-23 18:28:38.623 ERROR 34752 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'userApplicationDetailsServiceImpl' for bean class [co.com.edu.usbcali.pdg.service.UserApplicationDetailsServiceImpl] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.entity.service.UserApplicationDetailsServiceImpl]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:189) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:336) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[spring-boot-2.4.2.jar:2.4.2]
+	at co.com.edu.usbcali.pdg.SpringBootRunner.main(SpringBootRunner.java:15) ~[classes/:na]
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'userApplicationDetailsServiceImpl' for bean class [co.com.edu.usbcali.pdg.service.UserApplicationDetailsServiceImpl] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.entity.service.UserApplicationDetailsServiceImpl]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:132) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:296) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:207) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:175) ~[spring-context-5.3.3.jar:5.3.3]
+	... 14 common frames omitted
+
+2021-08-23 18:29:30.855  INFO 32072 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.2 on LAPTOP-H2F53KT7 with PID 32072 (C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack\target\classes started by scarv in C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack)
+2021-08-23 18:29:30.860  INFO 32072 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
+2021-08-23 18:29:31.068  WARN 32072 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+2021-08-23 18:29:31.277 ERROR 32072 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:189) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:336) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[spring-boot-2.4.2.jar:2.4.2]
+	at co.com.edu.usbcali.pdg.SpringBootRunner.main(SpringBootRunner.java:15) ~[classes/:na]
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'generalExceptionHandler' for bean class [co.com.edu.usbcali.pdg.entity.controller.GeneralExceptionHandler] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.controller.GeneralExceptionHandler]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:132) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:296) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:207) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:175) ~[spring-context-5.3.3.jar:5.3.3]
+	... 14 common frames omitted
+
+2021-08-23 18:33:17.244  INFO 37536 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.2 on LAPTOP-H2F53KT7 with PID 37536 (C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack\target\classes started by scarv in C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack)
+2021-08-23 18:33:17.248  INFO 37536 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
+2021-08-23 18:33:17.464  WARN 37536 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'userApplicationDetailsServiceImpl' for bean class [co.com.edu.usbcali.pdg.service.UserApplicationDetailsServiceImpl] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.entity.service.UserApplicationDetailsServiceImpl]
+2021-08-23 18:33:17.678 ERROR 37536 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanDefinitionStoreException: Failed to parse configuration class [co.com.edu.usbcali.pdg.SpringBootRunner]; nested exception is org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'userApplicationDetailsServiceImpl' for bean class [co.com.edu.usbcali.pdg.service.UserApplicationDetailsServiceImpl] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.entity.service.UserApplicationDetailsServiceImpl]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:189) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.processConfigBeanDefinitions(ConfigurationClassPostProcessor.java:336) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassPostProcessor.postProcessBeanDefinitionRegistry(ConfigurationClassPostProcessor.java:252) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanDefinitionRegistryPostProcessors(PostProcessorRegistrationDelegate.java:285) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:99) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:751) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:569) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:144) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:767) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:759) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:426) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:326) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1311) ~[spring-boot-2.4.2.jar:2.4.2]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1300) ~[spring-boot-2.4.2.jar:2.4.2]
+	at co.com.edu.usbcali.pdg.SpringBootRunner.main(SpringBootRunner.java:15) ~[classes/:na]
+Caused by: org.springframework.context.annotation.ConflictingBeanDefinitionException: Annotation-specified bean name 'userApplicationDetailsServiceImpl' for bean class [co.com.edu.usbcali.pdg.service.UserApplicationDetailsServiceImpl] conflicts with existing, non-compatible bean definition of same name and class [co.com.edu.usbcali.pdg.entity.service.UserApplicationDetailsServiceImpl]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.checkCandidate(ClassPathBeanDefinitionScanner.java:349) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ClassPathBeanDefinitionScanner.doScan(ClassPathBeanDefinitionScanner.java:287) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ComponentScanAnnotationParser.parse(ComponentScanAnnotationParser.java:132) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.doProcessConfigurationClass(ConfigurationClassParser.java:296) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.processConfigurationClass(ConfigurationClassParser.java:250) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:207) ~[spring-context-5.3.3.jar:5.3.3]
+	at org.springframework.context.annotation.ConfigurationClassParser.parse(ConfigurationClassParser.java:175) ~[spring-context-5.3.3.jar:5.3.3]
+	... 14 common frames omitted
+
+2021-08-23 18:34:39.818  INFO 40540 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.2 on LAPTOP-H2F53KT7 with PID 40540 (C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack\target\classes started by scarv in C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack)
+2021-08-23 18:34:39.824  INFO 40540 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
+2021-08-23 18:34:41.028  INFO 40540 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-08-23 18:34:41.126  INFO 40540 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 88 ms. Found 4 JPA repository interfaces.
+2021-08-23 18:34:41.725  INFO 40540 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
+2021-08-23 18:34:41.735  INFO 40540 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-23 18:34:41.735  INFO 40540 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-08-23 18:34:41.850  INFO 40540 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-23 18:34:41.850  INFO 40540 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1983 ms
+2021-08-23 18:34:42.069  INFO 40540 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-08-23 18:34:43.246  INFO 40540 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-08-23 18:34:43.303  INFO 40540 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-08-23 18:34:43.360  INFO 40540 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.27.Final
+2021-08-23 18:34:43.498  INFO 40540 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-08-23 18:34:43.795  INFO 40540 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2021-08-23 18:34:44.488  INFO 40540 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-08-23 18:34:44.507  INFO 40540 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-08-23 18:34:45.121  WARN 40540 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-08-23 18:34:45.499  INFO 40540 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-08-23 18:34:45.551  INFO 40540 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : createRestApi
+2021-08-23 18:34:45.554  INFO 40540 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : apiInfo
+2021-08-23 18:34:45.708  INFO 40540 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@54c2cfc9, org.springframework.security.web.context.SecurityContextPersistenceFilter@2c5e2a44, org.springframework.security.web.header.HeaderWriterFilter@47a05ad8, org.springframework.web.filter.CorsFilter@3d9dc84d, org.springframework.security.web.authentication.logout.LogoutFilter@524945e2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@4caca86d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4075c0d8, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@73625632, org.springframework.security.web.session.SessionManagementFilter@64e6cdad, org.springframework.security.web.access.ExceptionTranslationFilter@e50e308]
+2021-08-23 18:34:45.806  INFO 40540 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-23 18:34:46.083  INFO 40540 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path ''
+2021-08-23 18:34:46.604  INFO 40540 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Started SpringBootRunner in 7.179 seconds (JVM running for 7.975)
+2021-08-23 18:35:18.936  INFO 40540 --- [RMI TCP Connection(9)-127.0.0.1] inMXBeanRegistrar$SpringApplicationAdmin : Application shutdown requested.
+2021-08-23 18:35:18.964  INFO 40540 --- [RMI TCP Connection(9)-127.0.0.1] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-08-23 18:35:18.971  INFO 40540 --- [RMI TCP Connection(9)-127.0.0.1] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-08-23 18:35:18.973  INFO 40540 --- [RMI TCP Connection(9)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2021-08-23 18:35:19.149  INFO 40540 --- [RMI TCP Connection(9)-127.0.0.1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2021-08-23 18:35:26.145  INFO 49212 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.2 on LAPTOP-H2F53KT7 with PID 49212 (C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack\target\classes started by scarv in C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack)
+2021-08-23 18:35:26.151  INFO 49212 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
+2021-08-23 18:35:27.369  INFO 49212 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-08-23 18:35:27.471  INFO 49212 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 93 ms. Found 4 JPA repository interfaces.
+2021-08-23 18:35:28.074  INFO 49212 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
+2021-08-23 18:35:28.084  INFO 49212 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-08-23 18:35:28.084  INFO 49212 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-08-23 18:35:28.197  INFO 49212 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-08-23 18:35:28.197  INFO 49212 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2001 ms
+2021-08-23 18:35:28.422  INFO 49212 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-08-23 18:35:29.464  INFO 49212 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-08-23 18:35:29.521  INFO 49212 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-08-23 18:35:29.574  INFO 49212 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.27.Final
+2021-08-23 18:35:29.702  INFO 49212 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-08-23 18:35:29.989  INFO 49212 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2021-08-23 18:35:30.664  INFO 49212 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-08-23 18:35:30.682  INFO 49212 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-08-23 18:35:31.296  WARN 49212 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-08-23 18:35:31.665  INFO 49212 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-08-23 18:35:31.718  INFO 49212 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : createRestApi
+2021-08-23 18:35:31.721  INFO 49212 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : apiInfo
+2021-08-23 18:35:31.875  INFO 49212 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3a2b1f24, org.springframework.security.web.context.SecurityContextPersistenceFilter@21d30ba5, org.springframework.security.web.header.HeaderWriterFilter@2cc9a5a2, org.springframework.web.filter.CorsFilter@72d2470, org.springframework.security.web.authentication.logout.LogoutFilter@64a74723, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7671922b, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@58dd584a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1314ccc1, org.springframework.security.web.session.SessionManagementFilter@35ab0bf3, org.springframework.security.web.access.ExceptionTranslationFilter@7c8537e9]
+2021-08-23 18:35:31.958  INFO 49212 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-08-23 18:35:32.227  INFO 49212 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path ''
+2021-08-23 18:35:32.749  INFO 49212 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Started SpringBootRunner in 7.001 seconds (JVM running for 7.802)
