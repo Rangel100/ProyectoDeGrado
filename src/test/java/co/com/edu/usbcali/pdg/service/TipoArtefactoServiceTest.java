@@ -1,5 +1,6 @@
 package co.com.edu.usbcali.pdg.service;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -13,6 +14,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -25,6 +28,7 @@ import co.com.edu.usbcali.pdg.dto.TipoArtefactoDTO;
 import co.com.edu.usbcali.pdg.entity.service.ZatTipoArtefactoService;
 import co.com.edu.usbcali.pdg.mapper.TipoArtefactoMapper;
 import co.com.edu.usbcali.pdg.repository.TipoArtefactoRepository;
+import co.com.edu.usbcali.pdg.utility.Constantes;
 
 
 
@@ -52,6 +56,9 @@ class TipoArtefactoServiceTest {
 	
 	@Mock
 	UsuarioService usuarioService;
+	
+	@Captor
+	ArgumentCaptor<TipoArtefacto> tipoArtefactoCaptor;
 	
 	@Nested
 	class crearTipoArtefactoTests {
@@ -150,12 +157,24 @@ class TipoArtefactoServiceTest {
 			// Arrange
 			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
 			
+			TipoArtefacto tipoArtefactoEnviado;
+			
 			// Act
 			tipoArtefactoServiceImpl.crearTipoArtefacto(tipoArtefactoDTO);
 			
 			// Assert
-			verify(tipoArtefactoRepository).save(any());
+			verify(tipoArtefactoRepository).save(tipoArtefactoCaptor.capture());
+			tipoArtefactoEnviado = tipoArtefactoCaptor.getValue();
 			
+			assertAll(
+					
+					() -> assertEquals(tipoArtefactoDTO.getCodigo(), tipoArtefactoEnviado.getCodigo()),
+					
+					() -> assertEquals(tipoArtefactoDTO.getNombre(), tipoArtefactoEnviado.getNombre()),
+			
+					() -> assertEquals(Constantes.ESTADO_ACTIVO, tipoArtefactoEnviado.getEstado())
+					
+					);
 		}
 		
 	}
@@ -306,13 +325,24 @@ class TipoArtefactoServiceTest {
 			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
 			Optional<TipoArtefacto> tipoArtefactoOpt = TipoArtefactoBuilder.getTipoArtefactoOpt();
 			
+			TipoArtefacto tipoArtefactoEnviado;
+			
 			when(tipoArtefactoRepository.findById(any())).thenReturn(tipoArtefactoOpt);
 			
 			// Act
 			tipoArtefactoServiceImpl.actualizarTipoArtefacto(tipoArtefactoDTO);
 			
 			// Assert
-			verify(zatTipoArtefactoService).update(any());
+			verify(zatTipoArtefactoService).update(tipoArtefactoCaptor.capture());
+			tipoArtefactoEnviado = tipoArtefactoCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(tipoArtefactoDTO.getCodigo(), tipoArtefactoEnviado.getCodigo()),
+					
+					() -> assertEquals(tipoArtefactoDTO.getNombre(), tipoArtefactoEnviado.getNombre())
+					
+					);
 			
 		}
 		
@@ -407,6 +437,8 @@ class TipoArtefactoServiceTest {
 			Optional<TipoArtefacto> tipoArtefactoOpt = TipoArtefactoBuilder.getTipoArtefactoOpt();
 			List<Artefacto> artefactos = new ArrayList<>();
 			
+			TipoArtefacto tipoArtefactoEnviado;
+			
 			when(tipoArtefactoRepository.findById(any())).thenReturn(tipoArtefactoOpt);
 			
 			when(artefactoService.consultarArtefactosPorTipoArtefacto(any())).thenReturn(artefactos);
@@ -415,7 +447,14 @@ class TipoArtefactoServiceTest {
 			tipoArtefactoServiceImpl.eliminarTipoArtefacto(tipoArtefactoDTO);
 			
 			// Assert
-			verify(zatTipoArtefactoService).update(any());
+			verify(zatTipoArtefactoService).update(tipoArtefactoCaptor.capture());
+			tipoArtefactoEnviado = tipoArtefactoCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(Constantes.ESTADO_INACTIVO, tipoArtefactoEnviado.getEstado())
+					
+					);
 			
 		}
 	}
