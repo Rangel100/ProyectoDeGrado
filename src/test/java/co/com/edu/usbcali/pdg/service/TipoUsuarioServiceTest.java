@@ -1,5 +1,6 @@
 package co.com.edu.usbcali.pdg.service;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -13,18 +14,22 @@ import java.util.Optional;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import co.com.edu.usbcali.pdg.builder.TipoUsuarioBuilder;
 import co.com.edu.usbcali.pdg.builder.UsuarioBuilder;
+import co.com.edu.usbcali.pdg.domain.Artefacto;
 import co.com.edu.usbcali.pdg.domain.TipoUsuario;
 import co.com.edu.usbcali.pdg.domain.Usuario;
 import co.com.edu.usbcali.pdg.dto.TipoUsuarioDTO;
 import co.com.edu.usbcali.pdg.entity.service.ZatTipoUsuarioService;
 import co.com.edu.usbcali.pdg.mapper.TipoUsuarioMapper;
 import co.com.edu.usbcali.pdg.repository.TipoUsuarioRepository;
+import co.com.edu.usbcali.pdg.utility.Constantes;
 
 
 
@@ -49,6 +54,9 @@ class TipoUsuarioServiceTest {
 	
 	@Mock
 	TipoUsuarioMapper tipoUsuarioMapper;
+	
+	@Captor
+	ArgumentCaptor<TipoUsuario> tipoUsuarioCaptor;
 	
 	@Nested	
 	class crearTipoUsuarioTests {
@@ -131,13 +139,23 @@ class TipoUsuarioServiceTest {
 		// Arrange
 		TipoUsuarioDTO tipoUsuarioDTO = TipoUsuarioBuilder.getTipoUsuarioDTO();
 		
+		TipoUsuario tipoUsuarioEnviado;
 		when(tipoUsuarioRepository.findByNombre(any())).thenReturn(Optional.empty());
 		
 		// Act
 		tipoUsuarioServiceImpl.crearTipoUsuario(tipoUsuarioDTO);
 	
 		// Assert
-		verify(tipoUsuarioRepository).save(any());
+		verify(tipoUsuarioRepository).save(tipoUsuarioCaptor.capture());
+		tipoUsuarioEnviado = tipoUsuarioCaptor.getValue();
+		
+		assertAll(
+				
+				() -> assertEquals(tipoUsuarioDTO.getNombre(), tipoUsuarioEnviado.getNombre()),
+				
+				() -> assertEquals(Constantes.ESTADO_ACTIVO, tipoUsuarioEnviado.getEstado())
+				
+				);
 			
 		}
 		
@@ -270,6 +288,8 @@ class TipoUsuarioServiceTest {
 		TipoUsuarioDTO tipoUsuarioDTO = TipoUsuarioBuilder.getTipoUsuarioDTO();
 		Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 		
+		TipoUsuario tipoUsuarioEnviado;
+		
 		when(tipoUsuarioRepository.findById(any())).thenReturn(tipoUsuarioOpt);
 		
 		when(tipoUsuarioRepository.findByNombre(any())).thenReturn(Optional.empty());
@@ -278,7 +298,14 @@ class TipoUsuarioServiceTest {
 		tipoUsuarioServiceImpl.actualizarTipoUsuario(tipoUsuarioDTO);
 	
 		// Assert
-		verify(zatTipoUsuarioService).update(any());
+		verify(zatTipoUsuarioService).update(tipoUsuarioCaptor.capture());
+		tipoUsuarioEnviado = tipoUsuarioCaptor.getValue();
+		
+		assertAll(
+				
+				() -> assertEquals(tipoUsuarioDTO.getNombre(), tipoUsuarioEnviado.getNombre())
+				
+				);
 			
 		}
 		
@@ -373,6 +400,8 @@ class TipoUsuarioServiceTest {
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			
+			TipoUsuario tipoUsuarioEnviado;
+			
 			when(tipoUsuarioRepository.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioService.consultarUsuariosPorTipoUsuario(any())).thenReturn(usuarios);
@@ -381,7 +410,14 @@ class TipoUsuarioServiceTest {
 			tipoUsuarioServiceImpl.eliminarTipoUsuario(tipoUsuarioDTO);
 			
 			// Assert
-			verify(zatTipoUsuarioService).update(any());
+			verify(zatTipoUsuarioService).update(tipoUsuarioCaptor.capture());
+			tipoUsuarioEnviado = tipoUsuarioCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(Constantes.ESTADO_INACTIVO, tipoUsuarioEnviado.getEstado())
+					
+					);
 			
 		}
 	}

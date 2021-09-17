@@ -95,9 +95,6 @@ public class TipoArtefactoServiceImpl implements TipoArtefactoService {
 			//Metodo que implementa las validaciones
 			validarTipoArtefacto(tipoArtefactoDTO, tipoArtefacto);
 			
-			//Seteo el estado
-			tipoArtefacto.setEstado(Constantes.ESTADO_ACTIVO);
-			
 			zatTipoArtefactoService.update(tipoArtefacto);
 			
 		} catch (Exception e) {

@@ -110,9 +110,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 			//Metodo que implementa las validaciones
 			validarUsuario(usuarioDTO, usuario);
 			
-			//Seteo el estado
-			usuario.setEstado(Constantes.ESTADO_ACTIVO);
-			
 			zatUsuarioService.update(usuario);
 			
 		} catch (Exception e) {

@@ -1,8 +1,11 @@
 package co.com.edu.usbcali.pdg.service;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -13,6 +16,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -30,6 +35,7 @@ import co.com.edu.usbcali.pdg.entity.service.ZatTipoUsuarioService;
 import co.com.edu.usbcali.pdg.entity.service.ZatUsuarioService;
 import co.com.edu.usbcali.pdg.mapper.ArtefactoMapper;
 import co.com.edu.usbcali.pdg.repository.UsuarioRepository;
+import co.com.edu.usbcali.pdg.utility.Constantes;
 
 @ExtendWith(MockitoExtension.class)
 class UsuarioServiceTest {
@@ -60,6 +66,9 @@ class UsuarioServiceTest {
 	
 	@Mock
 	ArtefactoMapper artefactoMapper;
+	
+	@Captor
+	ArgumentCaptor<Usuario> usuarioCaptor;
 	
 	@Nested
 	class crearUsuarioTests {
@@ -289,6 +298,8 @@ class UsuarioServiceTest {
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			
+			Usuario usuarioEnviado;
+			
 			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
@@ -297,7 +308,22 @@ class UsuarioServiceTest {
 			usuarioServiceImpl.crearUsuario(usuarioDTO);
 			
 			// Assert
-			verify(usuarioRepository).save(any());
+			verify(usuarioRepository).save(usuarioCaptor.capture());
+			usuarioEnviado = usuarioCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(tipoUsuarioOpt.get(), usuarioEnviado.getTipoUsuario()),
+					
+					() -> assertEquals(usuarioDTO.getCodigo(), usuarioEnviado.getCodigo()),
+					
+					() -> assertEquals(usuarioDTO.getDireccion(), usuarioEnviado.getDireccion()),
+					
+					() -> assertEquals(usuarioDTO.getNombre(), usuarioEnviado.getNombre()),
+					
+					() -> assertEquals(Constantes.ESTADO_ACTIVO, usuarioEnviado.getEstado())
+					
+					);
 			
 		}
 		
@@ -309,6 +335,8 @@ class UsuarioServiceTest {
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			
+			Usuario usuarioEnviado;
+			
 			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
@@ -317,7 +345,22 @@ class UsuarioServiceTest {
 			usuarioServiceImpl.crearUsuario(usuarioDTO);
 			
 			// Assert
-			verify(usuarioRepository).save(any());
+			verify(usuarioRepository).save(usuarioCaptor.capture());
+			usuarioEnviado = usuarioCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(tipoUsuarioOpt.get(), usuarioEnviado.getTipoUsuario()),
+					
+					() -> assertEquals(usuarioDTO.getCodigo(), usuarioEnviado.getCodigo()),
+					
+					() -> assertEquals(usuarioDTO.getDireccion(), usuarioEnviado.getDireccion()),
+					
+					() -> assertEquals(usuarioDTO.getNombre(), usuarioEnviado.getNombre()),
+					
+					() -> assertEquals(Constantes.ESTADO_ACTIVO, usuarioEnviado.getEstado())
+					
+					);
 			
 		}
 		
@@ -328,6 +371,8 @@ class UsuarioServiceTest {
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			
+			Usuario usuarioEnviado;
+			
 			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
@@ -336,7 +381,22 @@ class UsuarioServiceTest {
 			usuarioServiceImpl.crearUsuario(usuarioDTO);
 			
 			// Assert
-			verify(usuarioRepository).save(any());
+			verify(usuarioRepository).save(usuarioCaptor.capture());
+			usuarioEnviado = usuarioCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(tipoUsuarioOpt.get(), usuarioEnviado.getTipoUsuario()),
+					
+					() -> assertEquals(usuarioDTO.getCodigo(), usuarioEnviado.getCodigo()),
+					
+					() -> assertEquals(usuarioDTO.getDireccion(), usuarioEnviado.getDireccion()),
+					
+					() -> assertEquals(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido(), usuarioEnviado.getNombre()),
+					
+					() -> assertEquals(Constantes.ESTADO_ACTIVO, usuarioEnviado.getEstado())
+					
+					);
 			
 		}
 		
@@ -347,6 +407,8 @@ class UsuarioServiceTest {
 			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
 			List<Usuario> usuarios = new ArrayList<>();
 			
+			Usuario usuarioEnviado;
+	
 			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
 			
 			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
@@ -355,7 +417,22 @@ class UsuarioServiceTest {
 			usuarioServiceImpl.crearUsuario(usuarioDTO);
 			
 			// Assert
-			verify(usuarioRepository).save(any());
+			verify(usuarioRepository).save(usuarioCaptor.capture());
+			usuarioEnviado = usuarioCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(tipoUsuarioOpt.get(), usuarioEnviado.getTipoUsuario()),
+					
+					() -> assertEquals(usuarioDTO.getCodigo(), usuarioEnviado.getCodigo()),
+					
+					() -> assertEquals(usuarioDTO.getDireccion(), usuarioEnviado.getDireccion()),
+					
+					() -> assertEquals(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido(), usuarioEnviado.getNombre()),
+					
+					() -> assertEquals(Constantes.ESTADO_ACTIVO, usuarioEnviado.getEstado())
+					
+					);
 			
 		}
 		
@@ -655,6 +732,8 @@ class UsuarioServiceTest {
 			List<Usuario> usuarios = new ArrayList<>();
 			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
 			
+			Usuario usuarioEnviado;
+			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
 			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
@@ -665,8 +744,20 @@ class UsuarioServiceTest {
 			usuarioServiceImpl.actualizarUsuario(usuarioDTO);
 			
 			// Assert
-			verify(zatUsuarioService).update(any());
+			verify(zatUsuarioService).update(usuarioCaptor.capture());
+			usuarioEnviado = usuarioCaptor.getValue();
 			
+			assertAll(
+					
+					() -> assertEquals(tipoUsuarioOpt.get(), usuarioEnviado.getTipoUsuario()),
+					
+					() -> assertEquals(usuarioDTO.getCodigo(), usuarioEnviado.getCodigo()),
+					
+					() -> assertEquals(usuarioDTO.getDireccion(), usuarioEnviado.getDireccion()),
+					
+					() -> assertEquals(usuarioDTO.getNombre(), usuarioEnviado.getNombre())
+										
+					);
 		}
 		
 		@Test
@@ -678,6 +769,8 @@ class UsuarioServiceTest {
 			List<Usuario> usuarios = new ArrayList<>();
 			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
 			
+			Usuario usuarioEnviado;
+			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
 			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
@@ -688,7 +781,20 @@ class UsuarioServiceTest {
 			usuarioServiceImpl.actualizarUsuario(usuarioDTO);
 			
 			// Assert
-			verify(zatUsuarioService).update(any());
+			verify(zatUsuarioService).update(usuarioCaptor.capture());
+			usuarioEnviado = usuarioCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(tipoUsuarioOpt.get(), usuarioEnviado.getTipoUsuario()),
+					
+					() -> assertEquals(usuarioDTO.getCodigo(), usuarioEnviado.getCodigo()),
+					
+					() -> assertEquals(usuarioDTO.getDireccion(), usuarioEnviado.getDireccion()),
+					
+					() -> assertEquals(usuarioDTO.getNombre(), usuarioEnviado.getNombre())
+										
+					);
 			
 		}
 		
@@ -700,6 +806,8 @@ class UsuarioServiceTest {
 			List<Usuario> usuarios = new ArrayList<>();
 			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
 			
+			Usuario usuarioEnviado;
+			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
 			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
@@ -710,7 +818,20 @@ class UsuarioServiceTest {
 			usuarioServiceImpl.actualizarUsuario(usuarioDTO);
 			
 			// Assert
-			verify(zatUsuarioService).update(any());
+			verify(zatUsuarioService).update(usuarioCaptor.capture());
+			usuarioEnviado = usuarioCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(tipoUsuarioOpt.get(), usuarioEnviado.getTipoUsuario()),
+					
+					() -> assertEquals(usuarioDTO.getCodigo(), usuarioEnviado.getCodigo()),
+					
+					() -> assertEquals(usuarioDTO.getDireccion(), usuarioEnviado.getDireccion()),
+					
+					() -> assertEquals(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido(), usuarioEnviado.getNombre())
+										
+					);
 			
 		}
 		
@@ -722,6 +843,8 @@ class UsuarioServiceTest {
 			List<Usuario> usuarios = new ArrayList<>();
 			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
 			
+			Usuario usuarioEnviado;
+			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
 			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
@@ -732,7 +855,20 @@ class UsuarioServiceTest {
 			usuarioServiceImpl.actualizarUsuario(usuarioDTO);
 			
 			// Assert
-			verify(zatUsuarioService).update(any());
+			verify(zatUsuarioService).update(usuarioCaptor.capture());
+			usuarioEnviado = usuarioCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(tipoUsuarioOpt.get(), usuarioEnviado.getTipoUsuario()),
+					
+					() -> assertEquals(usuarioDTO.getCodigo(), usuarioEnviado.getCodigo()),
+					
+					() -> assertEquals(usuarioDTO.getDireccion(), usuarioEnviado.getDireccion()),
+					
+					() -> assertEquals(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido(), usuarioEnviado.getNombre())
+										
+					);
 			
 		}
 		
@@ -802,14 +938,23 @@ class UsuarioServiceTest {
 			usuarioDTO.setTiusId_TipoUsuario(null);
 			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
 			
+			Usuario usuarioEnviado;
+			
 			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
 			
 			// Act
 			usuarioServiceImpl.eliminarUsuario(usuarioDTO);
 			
 			// Assert
-			verify(zatUsuarioService).update(any());
-			verify(artefactoService).eliminarArtefactosPorUsuario(any());		
+			verify(artefactoService).eliminarArtefactosPorUsuario(any());
+			verify(zatUsuarioService).update(usuarioCaptor.capture());
+			usuarioEnviado = usuarioCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(Constantes.ESTADO_INACTIVO, usuarioEnviado.getEstado())
+								
+					);
 			
 		}
 		
@@ -880,6 +1025,8 @@ class UsuarioServiceTest {
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
 			Optional<Artefacto> artefactoOpt = ArtefactoBuilder.getArtefactoOpt();
 			ArtefactoDTO artefactoDTO = ArtefactoBuilder.getArtefactoDTO();
+			List<ArtefactoDTO> artefactoDTOs = new ArrayList<>();
+			artefactoDTOs.add(artefactoDTO);
 			
 			when(usuarioRepository.consultarUsuario(any(),any())).thenReturn(usuarioDTO);
 			
@@ -892,6 +1039,7 @@ class UsuarioServiceTest {
 			
 			// Assert
 			assertEquals(usuarioDTO, usuarioDTOResult);
+			assertNotNull(usuarioDTOResult.getArtefactoDTOs());
 			
 		}
 		
@@ -1006,7 +1154,7 @@ class UsuarioServiceTest {
 			UsuarioDTO usuarioDTO2 = UsuarioBuilder.getUsuarioDTO();
 			usuarioDTOs.add(usuarioDTO2);
 			
-			when(usuarioRepository.consultarUsuarios(any(),any(),any())).thenReturn(usuarioDTOs);
+			when(usuarioRepository.consultarUsuarios(any(),eq("-1"),any())).thenReturn(usuarioDTOs);
 			
 			// Act
 			List<UsuarioDTO> usuarioDTOsReuslt = usuarioServiceImpl.consultarUsuarios(usuarioDTO);
@@ -1025,7 +1173,7 @@ class UsuarioServiceTest {
 			UsuarioDTO usuarioDTO2 = UsuarioBuilder.getUsuarioDTO();
 			usuarioDTOs.add(usuarioDTO2);
 			
-			when(usuarioRepository.consultarUsuarios(any(),any(),any())).thenReturn(usuarioDTOs);
+			when(usuarioRepository.consultarUsuarios(any(),eq("-1"),any())).thenReturn(usuarioDTOs);
 			
 			// Act
 			List<UsuarioDTO> usuarioDTOsReuslt = usuarioServiceImpl.consultarUsuarios(usuarioDTO);
@@ -1044,7 +1192,7 @@ class UsuarioServiceTest {
 			UsuarioDTO usuarioDTO2 = UsuarioBuilder.getUsuarioDTO();
 			usuarioDTOs.add(usuarioDTO2);
 			
-			when(usuarioRepository.consultarUsuarios(any(),any(),any())).thenReturn(usuarioDTOs);
+			when(usuarioRepository.consultarUsuarios(any(), any(), eq("-1"))).thenReturn(usuarioDTOs);
 			
 			// Act
 			List<UsuarioDTO> usuarioDTOsReuslt = usuarioServiceImpl.consultarUsuarios(usuarioDTO);
@@ -1063,7 +1211,7 @@ class UsuarioServiceTest {
 			UsuarioDTO usuarioDTO2 = UsuarioBuilder.getUsuarioDTO();
 			usuarioDTOs.add(usuarioDTO2);
 			
-			when(usuarioRepository.consultarUsuarios(any(),any(),any())).thenReturn(usuarioDTOs);
+			when(usuarioRepository.consultarUsuarios(any(), any(), eq("-1"))).thenReturn(usuarioDTOs);
 			
 			// Act
 			List<UsuarioDTO> usuarioDTOsReuslt = usuarioServiceImpl.consultarUsuarios(usuarioDTO);

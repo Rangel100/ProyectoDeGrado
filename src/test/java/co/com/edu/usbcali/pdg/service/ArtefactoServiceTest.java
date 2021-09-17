@@ -1,5 +1,6 @@
 package co.com.edu.usbcali.pdg.service;
 
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -13,6 +14,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -28,6 +31,7 @@ import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
 import co.com.edu.usbcali.pdg.entity.service.ZatArtefactoService;
 import co.com.edu.usbcali.pdg.entity.service.ZatTipoArtefactoService;
 import co.com.edu.usbcali.pdg.repository.ArtefactoRepository;
+import co.com.edu.usbcali.pdg.utility.Constantes;
 
 
 
@@ -55,6 +59,9 @@ class ArtefactoServiceTest {
 	
 	@Mock
 	UsuarioService usuarioService;
+	
+	@Captor
+	ArgumentCaptor<Artefacto> artefactoCaptor;
 	
 	@Nested
 	class crearArtefactoTests {
@@ -238,6 +245,8 @@ class ArtefactoServiceTest {
 			Usuario usuario = UsuarioBuilder.getUsuario();
 			usuarios.add(usuario);
 			
+			Artefacto artefactoEnviado;
+			
 			when(zatTipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
 			
 			when(usuarioService.consultarUsuariosPorCodigo(any())).thenReturn(usuarios);
@@ -246,7 +255,22 @@ class ArtefactoServiceTest {
 			artefactoServiceImpl.crearArtefacto(artefactoDTO);
 
 			// Assert
-			verify(artefactoRepository).save(any());
+			verify(artefactoRepository).save(artefactoCaptor.capture());
+			artefactoEnviado = artefactoCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(artefactoDTO.getCodigo(), artefactoEnviado.getCodigo()),
+					
+					() -> assertEquals(artefactoDTO.getUrl(), artefactoEnviado.getUrl()),
+					
+					() -> assertEquals(tipoArtefactoOpt.get(), artefactoEnviado.getTipoArtefacto()),
+					
+					() -> assertEquals(usuario, artefactoEnviado.getUsuario()),
+					
+					() -> assertEquals(Constantes.ESTADO_ACTIVO, artefactoEnviado.getEstado())
+					
+					);
 			
 		}
 		
@@ -496,6 +520,8 @@ class ArtefactoServiceTest {
 			usuarios.add(usuario);
 			Optional<Artefacto> artefactoOpt = ArtefactoBuilder.getArtefactoOpt();
 			
+			Artefacto artefactoEnviado;
+			
 			when(artefactoRepository.findById(any())).thenReturn(artefactoOpt);
 			
 			when(zatTipoArtefactoService.findById(any())).thenReturn(tipoArtefactoOpt);
@@ -506,7 +532,20 @@ class ArtefactoServiceTest {
 			artefactoServiceImpl.actualizarArtefacto(artefactoDTO);
 
 			// Assert
-			verify(zatArtefactoService).update(any());
+			verify(zatArtefactoService).update(artefactoCaptor.capture());
+			artefactoEnviado = artefactoCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(artefactoDTO.getCodigo(), artefactoEnviado.getCodigo()),
+					
+					() -> assertEquals(artefactoDTO.getUrl(), artefactoEnviado.getUrl()),
+					
+					() -> assertEquals(tipoArtefactoOpt.get(), artefactoEnviado.getTipoArtefacto()),
+					
+					() -> assertEquals(usuario, artefactoEnviado.getUsuario())
+					
+					);
 			
 		}
 		
@@ -574,13 +613,22 @@ class ArtefactoServiceTest {
 			ArtefactoDTO artefactoDTO = ArtefactoBuilder.getArtefactoDTO();
 			Optional<Artefacto> artefactoOpt = ArtefactoBuilder.getArtefactoOpt();
 			
+			Artefacto artefactoEnviado;
+			
 			when(artefactoRepository.findById(any())).thenReturn(artefactoOpt);
 			
 			// Act
 			artefactoServiceImpl.eliminarArtefacto(artefactoDTO);
 
 			// Assert
-			verify(zatArtefactoService).update(any());
+			verify(zatArtefactoService).update(artefactoCaptor.capture());
+			artefactoEnviado = artefactoCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(Constantes.ESTADO_INACTIVO, artefactoEnviado.getEstado())
+					
+					);
 			
 		}
 	}
@@ -668,13 +716,22 @@ class ArtefactoServiceTest {
 			Artefacto artefacto = ArtefactoBuilder.getArtefacto();
 			artefactos.add(artefacto);
 			
+			Artefacto artefactoEnviado;
+			
 			when(artefactoRepository.findByUsuario_usuaId(any())).thenReturn(artefactos);
 			
 			// Act
 			artefactoServiceImpl.eliminarArtefactosPorUsuario(usuarioDTO);
 
 			// Assert
-			verify(zatArtefactoService).update(any());
+			verify(zatArtefactoService).update(artefactoCaptor.capture());
+			artefactoEnviado = artefactoCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(Constantes.ESTADO_INACTIVO, artefactoEnviado.getEstado())
+					
+					);
 			
 		}
 		

@@ -95,9 +95,6 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 			//Metodo que implementa las validaciones
 			validarArtefacto(artefactoDTO, artefacto);
 			
-			//Seteo el estado
-			artefacto.setEstado(Constantes.ESTADO_ACTIVO);
-			
 			zatArtefactoService.update(artefacto);
 			
 		} catch (Exception e) {

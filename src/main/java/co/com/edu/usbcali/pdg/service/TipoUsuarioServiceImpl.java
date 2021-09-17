@@ -95,9 +95,6 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService {
 			//Metodo que implementa las validaciones
 			validarTipoUsuario(tipoUsuarioDTO, tipoUsuario);
 			
-			//Seteo el estado
-			tipoUsuario.setEstado(Constantes.ESTADO_ACTIVO);
-			
 			zatTipoUsuarioService.update(tipoUsuario);
 			
 		} catch (Exception e) {
