@@ -82,4 +82,13 @@ public class UsuarioRestController {
 	return ResponseEntity.ok().body(usuarioService.validarUsuarioYContraseñaCorrecta(usuarioDTO));
 	}
 	
+	@PostMapping("/actualizarEnviarContraseña")
+	public ResponseEntity<?> actualizarEnviarContraseña(@RequestBody String correo) throws Exception {
+	log.debug("Request to actualizarEnviarContraseña :", correo);
+	
+	usuarioService.actualizarEnviarContraseña(correo);
+	
+	return ResponseEntity.ok().body(correo);
+	}
+	
 }

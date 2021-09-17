@@ -138,11 +138,11 @@ public class Utilities {
 	}
 	
 	/**
-	 * Método para valida emails
-	 * @author Camilo Andrés Cifuentes Grass
+	 * Mï¿½todo para valida emails
+	 * @author Camilo Andrï¿½s Cifuentes Grass
 	 * @version 2018/01/17
 	 * @param sEmail el email a verificar
-	 * @return true si es un email válido, false en caso que no sea así.
+	 * @return true si es un email vï¿½lido, false en caso que no sea asï¿½.
 	 */
 	public static boolean isValidEmail(String sEmail) {
 		boolean isValid = false;
@@ -391,7 +391,7 @@ public class Utilities {
 	
 	/**
 	 * @author Camilo Puente
-	 * @author Frank Edward Daza González
+	 * @author Frank Edward Daza Gonzï¿½lez
 	 * @date Nov 1, 2017
 	 * @param lblName
 	 * @param locale
@@ -445,7 +445,7 @@ public class Utilities {
 	/**
 	 * Retorna una fecha inicial con horas, minutos y segundos: 00:00:00
 	 * 
-	 * @author Frank Edward Daza González
+	 * @author Frank Edward Daza Gonzï¿½lez
 	 * @date Nov 20, 2017
 	 * @param date
 	 * @return Date
@@ -464,7 +464,7 @@ public class Utilities {
 	/**
 	 * Retorna una fecha final con horas, minutos y segundos: 23:59:59
 	 * 
-	 * @author Frank Edward Daza González
+	 * @author Frank Edward Daza Gonzï¿½lez
 	 * @date Nov 20, 2017
 	 * @param date
 	 * @return Date
@@ -481,7 +481,7 @@ public class Utilities {
 	}
 
 	/**
-	 * Funcíón para redondear un número double a los decimales que le ingresen
+	 * Funcï¿½ï¿½n para redondear un nï¿½mero double a los decimales que le ingresen
 	 * 
 	 * @author Camilo Delgado
 	 * @version Mar 23, 2018
@@ -503,7 +503,7 @@ public class Utilities {
     }
 
 	/**
-	 * Función para obtener el número que sea múltiplo de "multiploDe"
+	 * Funciï¿½n para obtener el nï¿½mero que sea mï¿½ltiplo de "multiploDe"
 	 * y mayor que "mayorQue"
 	 *
 	 * @author Camilo Delgado

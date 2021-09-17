@@ -1,7 +1,6 @@
 package co.com.edu.usbcali.pdg.service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +22,7 @@ import co.com.edu.usbcali.pdg.exception.ZMessManager;
 import co.com.edu.usbcali.pdg.mapper.ArtefactoMapper;
 import co.com.edu.usbcali.pdg.repository.UsuarioRepository;
 import co.com.edu.usbcali.pdg.utility.Constantes;
+import co.com.edu.usbcali.pdg.utility.SendMail;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -53,6 +53,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Autowired
 	private ArtefactoMapper artefactoMapper;
+	
+	@Autowired
+	private SendMail sendMail;
 	
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -392,6 +395,46 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 	}
 	
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void actualizarEnviarContraseña(String correo) throws Exception {
+		try {
+			
+			//Validar que correo no sea null 
+			if (correo == null) {
+				throw new ZMessManager("El correo esta nulo o vacío.");
+			}
+			
+			//Validar que el usuario exísta
+			List<Usuario> usuarioList = usuarioRepository.findByCodigo(correo.trim());
+			
+			if (usuarioList.isEmpty()) {
+				throw new ZMessManager("El usuario no fue encontrado.");
+			}
+			
+			Usuario usuario = usuarioList.get(0);
+			
+			//Se genera una nuevo password
+			String nuevoPass = generarPassword();
+			
+			//Se encripta el password
+			String pass = encriptarPss(nuevoPass);
+			
+			//Se asigna el password al usuario
+			usuario.setPss(pass);
+			
+			zatUsuarioService.update(usuario);
+			
+			//Se envia el correo el password nuevo
+			sendMail.sendNewPassword(correo, nuevoPass);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	
 	private String encriptarPss(String pss) {
 		
 		char array[] = pss.toCharArray();
@@ -420,6 +463,19 @@ public class UsuarioServiceImpl implements UsuarioService {
 		String encriptado  = String.valueOf(array);
 		
 		return encriptado;
+	}
+	
+	private String generarPassword() {
+		char[] caracteres = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+				'q', 'r', 's', 't', 'u', 'w', 'x', 'y', 'z', '1', '2', '3', '3', '5', '6', '7', '8', '9', '0' };
+
+		String password = "";
+		for (int i = 0; i < 8; i++) {
+			char caracter = caracteres[(int) (Math.random() * 35)];
+			password += String.valueOf(caracter);
+		}
+		
+		return password;
 	}
 
 }
