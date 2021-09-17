@@ -1,6 +1,7 @@
 package co.com.edu.usbcali.pdg.service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +68,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 			
 			//Metodo que implementa las validaciones
 			validarUsuario(usuarioDTO, usuario);
+			
+			//encriptar contraseña
+			usuario.setPss(encriptarPss(usuario.getPss()));
 			
 			//Seteo el estado
 			usuario.setEstado(Constantes.ESTADO_ACTIVO);
@@ -251,6 +255,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 			throw new ZMessManager("La direccion se encuentra nulo o vacío.");
 		}
 		
+		//Validar que la contraseña no sea null 
+		if (usuarioDTO.getPss() != null && !usuarioDTO.getPss().isBlank()) {
+			
+			//Seteo la contraseña
+			usuario.setPss(usuarioDTO.getPss());
+			
+		} else {
+			throw new ZMessManager("La contraseña se encuentra nulo o vacío.");
+		}
+		
 		//Validar que el nombre no sea null 
 		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().isBlank()) {
 			
@@ -280,6 +294,45 @@ public class UsuarioServiceImpl implements UsuarioService {
 			}
 			
 			return usuarioRepository.findByTipoUsuario_tiusIdAndEstado(tiusId, Constantes.ESTADO_ACTIVO);
+			
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
+		}
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public boolean validarUsuarioYContraseñaCorrecta(UsuarioDTO usuarioDTO) {
+		try {
+			//validar que el tiusId no sea null
+			if (usuarioDTO == null) {
+				throw new ZMessManager("El objeto usuario viene vacio o null");
+			}
+			
+			if(usuarioDTO.getPss() == null || usuarioDTO.getPss().trim().isBlank()) {
+				throw new ZMessManager("La contraseña no puede ser vacia");
+			}
+			
+			if(usuarioDTO.getCodigo() == null || usuarioDTO.getCodigo().trim().isBlank()) {
+				throw new ZMessManager("El codigo no puede ser vacia");
+			}
+			
+			List<Usuario> usuarioConsultado = consultarUsuariosPorCodigo(usuarioDTO.getCodigo());
+			
+			if(usuarioConsultado.get(0) != null) {
+				
+				String pssDesencriptado = desencriptarPss(usuarioConsultado.get(0).getPss());
+				
+				if(pssDesencriptado.trim().toLowerCase().equals(usuarioDTO.getPss().toLowerCase())) {
+					return true;
+				}else {
+					return false;
+				}
+				
+			}else {
+				return false;
+			}
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -340,6 +393,36 @@ public class UsuarioServiceImpl implements UsuarioService {
 			log.error(e.getMessage());
 			throw e;
 		}
+	}
+	
+	private String encriptarPss(String pss) {
+		
+		char array[] = pss.toCharArray();
+		
+		for (int i = 0; i < array.length; i++) {
+			
+			array[i] = (char)(array[i] + (char)7);
+			
+		}
+		
+		String encriptado  = String.valueOf(array);
+		
+		return encriptado;
+	}
+	
+	private String desencriptarPss(String pss) {
+		
+		char array[] = pss.toCharArray();
+		
+		for (int i = 0; i < array.length; i++) {
+			
+			array[i] = (char)(array[i] - (char)7);
+			
+		}
+		
+		String encriptado  = String.valueOf(array);
+		
+		return encriptado;
 	}
 
 }

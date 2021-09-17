@@ -75,4 +75,11 @@ public class UsuarioRestController {
 	return ResponseEntity.ok().body(usuarioService.consultarUsuariosPorCodigoOrm(codigo));
 	}
 	
+	@PostMapping("/validarUsuarioYContraseñaCorrecta")
+	public ResponseEntity<?> validarUsuarioYContraseñaCorrecta(@RequestBody UsuarioDTO usuarioDTO) throws Exception {
+	log.debug("Request to validarUsuarioYContraseñaCorrecta :", usuarioDTO);
+	
+	return ResponseEntity.ok().body(usuarioService.validarUsuarioYContraseñaCorrecta(usuarioDTO));
+	}
+	
 }

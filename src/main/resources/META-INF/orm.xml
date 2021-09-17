@@ -51,6 +51,7 @@
 	        <![CDATA[
 				select 	usua.usua_id usuaId,
 						usua.codigo codigo,
+						usua.nombre nombre,
 						tius.tius_id tiusId_TipoUsuario
 				from usuario usua
 				inner join tipo_usuario tius on tius.tius_id = usua.tius_id 
@@ -88,7 +89,8 @@
 				select	arte.arte_id arteId,
 						arte.codigo codigo,
 						arte.url url,
-						tiar.nombre nombreTipoArtefacto
+						tiar.nombre nombreTipoArtefacto,
+						usua.usua_id usuaId
 				from artefacto arte
 				inner join usuario usua on arte.usua_id = usua.usua_id
 				inner join tipo_artefacto tiar on arte.tiar_id = tiar.tiar_id

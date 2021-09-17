@@ -43,12 +43,13 @@ public class ArtefactoDTO implements Serializable {
 		this.codigoUsuario = codigoUsuario;
 	}
 	
-	public ArtefactoDTO(Long arteId, String codigo, String url, String nombreTipoArtefacto) {
+	public ArtefactoDTO(Long arteId, String codigo, String url, String nombreTipoArtefacto, Long usuaId) {
 		super();
 		this.arteId = arteId;
 		this.codigo = codigo;
 		this.url = url;
 		this.nombreTipoArtefacto = nombreTipoArtefacto;
+		this.usuaId_Usuario = usuaId;
 	}
 	
 }

@@ -50,7 +50,8 @@ import lombok.NoArgsConstructor;
 			@ColumnResult(name = "arteId", type = Long.class),
 			@ColumnResult(name = "codigo", type = String.class),
 			@ColumnResult(name = "url", type = String.class),
-			@ColumnResult(name = "nombreTipoArtefacto", type = String.class)
+			@ColumnResult(name = "nombreTipoArtefacto", type = String.class),
+			@ColumnResult(name = "usuaId", type = Long.class)
 	}) })
 
 })

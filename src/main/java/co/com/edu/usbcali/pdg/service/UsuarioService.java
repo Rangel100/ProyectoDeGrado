@@ -28,4 +28,6 @@ public interface UsuarioService {
 	List<UsuarioDTO> consultarUsuarios(UsuarioDTO usuarioDTO);
 
 	UsuarioDTO consultarUsuariosPorCodigoOrm(String codigo);
+
+	boolean validarUsuarioYContraseñaCorrecta(UsuarioDTO usuarioDTO);
 }

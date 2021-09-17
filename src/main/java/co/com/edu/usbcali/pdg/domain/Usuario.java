@@ -66,6 +66,7 @@ import lombok.NoArgsConstructor;
 	columns = {
 			@ColumnResult(name = "usuaId", type = Long.class),
 			@ColumnResult(name = "codigo", type = String.class),
+			@ColumnResult(name = "nombre", type = String.class),
 			@ColumnResult(name = "tiusId_TipoUsuario", type = Long.class)
 	}) }),
 
@@ -105,6 +106,9 @@ public class Usuario implements java.io.Serializable {
 	@NotNull
 	@Column(name = "nombre")
 	private String nombre;
+	
+	@Column(name = "pss")
+	private String pss;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario")
 	private List<Artefacto> artefactos = new ArrayList<>();
