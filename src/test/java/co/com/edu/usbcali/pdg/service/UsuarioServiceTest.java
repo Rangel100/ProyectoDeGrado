@@ -2,6 +2,7 @@ package co.com.edu.usbcali.pdg.service;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -22,6 +23,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import co.com.edu.usbcali.pdg.builder.ArtefactoBuilder;
 import co.com.edu.usbcali.pdg.builder.TipoUsuarioBuilder;
@@ -37,6 +39,7 @@ import co.com.edu.usbcali.pdg.entity.service.ZatUsuarioService;
 import co.com.edu.usbcali.pdg.mapper.ArtefactoMapper;
 import co.com.edu.usbcali.pdg.repository.UsuarioRepository;
 import co.com.edu.usbcali.pdg.utility.Constantes;
+import co.com.edu.usbcali.pdg.utility.SendMail;
 
 @ExtendWith(MockitoExtension.class)
 class UsuarioServiceTest {
@@ -67,6 +70,9 @@ class UsuarioServiceTest {
 	
 	@Mock
 	ArtefactoMapper artefactoMapper;
+	
+	@Mock
+	SendMail sendMail;
 	
 	@Captor
 	ArgumentCaptor<Usuario> usuarioCaptor;
@@ -244,7 +250,54 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
-		@Disabled
+		void debeLanzarExeptionPssEsNull() {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setPss(null);
+			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
+			List<Usuario> usuarios = new ArrayList<>();
+			
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
+			
+			String messageExpected = "La contraseña se encuentra nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				usuarioServiceImpl.crearUsuario(usuarioDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionPssEstaVacio() {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setPss("");
+			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
+			List<Usuario> usuarios = new ArrayList<>();
+			
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
+			
+			String messageExpected = "La contraseña se encuentra nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				usuarioServiceImpl.crearUsuario(usuarioDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
 		void debeLanzarExeptionNombreSeaNull() {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -325,6 +378,8 @@ class UsuarioServiceTest {
 					
 					() -> assertEquals(usuarioDTO.getNombre(), usuarioEnviado.getNombre()),
 					
+					() -> assertNotEquals(usuarioDTO.getPss(), usuarioEnviado.getPss()),
+					
 					() -> assertEquals(Constantes.ESTADO_ACTIVO, usuarioEnviado.getEstado())
 					
 					);
@@ -363,6 +418,8 @@ class UsuarioServiceTest {
 					
 					() -> assertEquals(usuarioDTO.getNombre(), usuarioEnviado.getNombre()),
 					
+					() -> assertNotEquals(usuarioDTO.getPss(), usuarioEnviado.getPss()),
+					
 					() -> assertEquals(Constantes.ESTADO_ACTIVO, usuarioEnviado.getEstado())
 					
 					);
@@ -400,6 +457,8 @@ class UsuarioServiceTest {
 					
 					() -> assertEquals(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido(), usuarioEnviado.getNombre()),
 					
+					() -> assertNotEquals(usuarioDTO.getPss(), usuarioEnviado.getPss()),
+					
 					() -> assertEquals(Constantes.ESTADO_ACTIVO, usuarioEnviado.getEstado())
 					
 					);
@@ -436,6 +495,8 @@ class UsuarioServiceTest {
 					() -> assertEquals(usuarioDTO.getDireccion(), usuarioEnviado.getDireccion()),
 					
 					() -> assertEquals(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido(), usuarioEnviado.getNombre()),
+					
+					() -> assertNotEquals(usuarioDTO.getPss(), usuarioEnviado.getPss()),
 					
 					() -> assertEquals(Constantes.ESTADO_ACTIVO, usuarioEnviado.getEstado())
 					
@@ -677,7 +738,60 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
-		@Disabled
+		void debeLanzarExeptionPssEsNull() {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setPss(null);
+			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
+			List<Usuario> usuarios = new ArrayList<>();
+			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
+			
+			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
+			
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
+			
+			String messageExpected = "La contraseña se encuentra nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				usuarioServiceImpl.actualizarUsuario(usuarioDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionPssSeaVacio() {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setPss("");
+			Optional<TipoUsuario> tipoUsuarioOpt = TipoUsuarioBuilder.getUsuarioOpt();
+			List<Usuario> usuarios = new ArrayList<>();
+			Optional<Usuario> usuarioOpt = UsuarioBuilder.getUsuarioOpt();
+			
+			when(usuarioRepository.findById(any())).thenReturn(usuarioOpt);
+			
+			when(zatTipoUsuarioService.findById(any())).thenReturn(tipoUsuarioOpt);
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarios);
+			
+			String messageExpected = "La contraseña se encuentra nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				usuarioServiceImpl.actualizarUsuario(usuarioDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
 		void debeLanzarExeptionNombreSeaNull() {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -1287,6 +1401,76 @@ class UsuarioServiceTest {
 			
 			// Assert
 			assertEquals(usuarioDTO, usuarioDTOResult);
+			
+		}
+		
+	}
+	
+	@Nested	
+	class actualizarEnviarContraseñaTests {
+		
+		@Test
+		void debeLanzarExeptionCorreoSeaNull() {
+			// Arrange
+			String correo = null;
+			
+			String messageExpected = "El correo esta nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				usuarioServiceImpl.actualizarEnviarContraseña(correo);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionUsuarioNoExista() {
+			// Arrange
+			String correo = "correo@correo.com";
+			List<Usuario> usuarioList = new ArrayList<>();
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarioList);
+			
+			String messageExpected = "El usuario no fue encontrado.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				usuarioServiceImpl.actualizarEnviarContraseña(correo);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeActualizarYEnviarCorreo() throws Exception {
+			// Arrange
+			String correo = "j@j.com";
+			List<Usuario> usuarioList = new ArrayList<>();
+			Usuario usuario = UsuarioBuilder.getUsuario();
+			usuarioList.add(usuario);
+			
+			Usuario usuarioEnviado;
+			
+			when(usuarioRepository.findByCodigo(any())).thenReturn(usuarioList);
+			
+			// Act
+			usuarioServiceImpl.actualizarEnviarContraseña(correo);
+			
+			// Assert
+			verify(zatUsuarioService).update(usuarioCaptor.capture());
+			verify(sendMail).sendNewPassword(eq(correo), any());
+			usuarioEnviado = usuarioCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(correo, usuarioEnviado.getCodigo())
+					
+					);
 			
 		}
 		

@@ -38,6 +38,7 @@ public class UsuarioBuilder {
 		usuario.setEstado(Constantes.ESTADO_ACTIVO);
 		usuario.setNombre("Jhonatan");
 		usuario.setUsuaId(1L);
+		usuario.setPss("12dad13");
 		
 //		TipoUsuario tipoUsuario = TipoUsuarioBuilder.getTipoUsuario();
 		TipoUsuario tipoUsuario = new TipoUsuario();
@@ -66,6 +67,7 @@ public class UsuarioBuilder {
 		usuarioDTO.setNombreTipoUsuario("USUARIO");
 		usuarioDTO.setTiusId_TipoUsuario(1L);
 		usuarioDTO.setUsuaId(1L);
+		usuarioDTO.setPss("123456");
 		
 		List<ArtefactoDTO> artefactoDTOs = new ArrayList<>();
 		ArtefactoDTO artefactoDTO = ArtefactoBuilder.getArtefactoDTO();

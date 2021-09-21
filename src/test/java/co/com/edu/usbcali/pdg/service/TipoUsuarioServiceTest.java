@@ -22,7 +22,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import co.com.edu.usbcali.pdg.builder.TipoUsuarioBuilder;
 import co.com.edu.usbcali.pdg.builder.UsuarioBuilder;
-import co.com.edu.usbcali.pdg.domain.Artefacto;
 import co.com.edu.usbcali.pdg.domain.TipoUsuario;
 import co.com.edu.usbcali.pdg.domain.Usuario;
 import co.com.edu.usbcali.pdg.dto.TipoUsuarioDTO;
