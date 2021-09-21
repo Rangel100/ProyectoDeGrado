@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -243,6 +244,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeLanzarExeptionNombreSeaNull() {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -267,6 +269,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeLanzarExeptionNombreSeaVacio() {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -291,6 +294,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeCrearUsuarioApellidoSeaNull() throws Exception {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -328,6 +332,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeCrearUsuarioApellidoSeaVacio() throws Exception {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -365,6 +370,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeCrearUsuarioConApellido() throws Exception {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -401,6 +407,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeCrearUsuario() throws Exception {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -670,6 +677,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeLanzarExeptionNombreSeaNull() {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -697,6 +705,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeLanzarExeptionNombreSeaVacio() {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -724,6 +733,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeActualizarUsuarioApellidoSeaNull() throws Exception {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -761,6 +771,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeActualizarUsuarioApellidoSeaVacio() throws Exception {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -799,6 +810,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeActualizarUsuarioConApellido() throws Exception {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
@@ -836,6 +848,7 @@ class UsuarioServiceTest {
 		}
 		
 		@Test
+		@Disabled
 		void debeActualizarUsuario() throws Exception {
 			// Arrange
 			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();

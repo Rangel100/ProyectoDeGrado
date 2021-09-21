@@ -23,6 +23,7 @@ import co.com.edu.usbcali.pdg.exception.ZMessManager;
 import co.com.edu.usbcali.pdg.mapper.ArtefactoMapper;
 import co.com.edu.usbcali.pdg.repository.UsuarioRepository;
 import co.com.edu.usbcali.pdg.utility.Constantes;
+import co.com.edu.usbcali.pdg.utility.PasswordGenerator;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -53,6 +54,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Autowired
 	private ArtefactoMapper artefactoMapper;
+	
+	@Autowired
+	private PasswordGenerator pssG;
 	
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -319,9 +323,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 			
 			if(usuarioConsultado.get(0) != null) {
 				
-				String pssDesencriptado = desencriptarPss(usuarioConsultado.get(0).getPss());
+				String pssEncriptado = encriptarPss(usuarioDTO.getPss());
 				
-				if(pssDesencriptado.trim().toLowerCase().equals(usuarioDTO.getPss().toLowerCase())) {
+				if(usuarioConsultado.get(0).getPss().toLowerCase().equals(pssEncriptado.toLowerCase())) {
 					return true;
 				}else {
 					return false;
@@ -394,32 +398,29 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	private String encriptarPss(String pss) {
 		
-		char array[] = pss.toCharArray();
+		Optional<String> stringOpt = pssG.hashPassword(pss);
 		
-		for (int i = 0; i < array.length; i++) {
-			
-			array[i] = (char)(array[i] + (char)7);
-			
+		if(!stringOpt.isPresent()) {
+			throw new ZMessManager("Error al encriptar la contraseña");
 		}
+		String pssEncript = stringOpt.get();
 		
-		String encriptado  = String.valueOf(array);
-		
-		return encriptado;
+		return pssEncript;
 	}
 	
-	private String desencriptarPss(String pss) {
-		
-		char array[] = pss.toCharArray();
-		
-		for (int i = 0; i < array.length; i++) {
-			
-			array[i] = (char)(array[i] - (char)7);
-			
-		}
-		
-		String encriptado  = String.valueOf(array);
-		
-		return encriptado;
-	}
+//	private String desencriptarPss(String pss) {
+//		
+//		char array[] = pss.toCharArray();
+//		
+//		for (int i = 0; i < array.length; i++) {
+//			
+//			array[i] = (char)(array[i] - (char)7);
+//			
+//		}
+//		
+//		String encriptado  = String.valueOf(array);
+//		
+//		return encriptado;
+//	}
 
 }
