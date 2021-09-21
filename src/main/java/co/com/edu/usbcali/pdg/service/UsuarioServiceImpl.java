@@ -60,7 +60,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	private PasswordGenerator pssG;
 	
 	@Autowired
-	private SendMailFactory sendMail;
+	private SendMail sendMail;
 	
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
