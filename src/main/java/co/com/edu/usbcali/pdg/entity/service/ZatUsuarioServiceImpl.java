@@ -333,7 +333,7 @@ public class ZatUsuarioServiceImpl implements ZatUsuarioService {
 		}
 		
 		//validar que el codigo no sea null
-		if (usuarioDTO.getCodigo() != null && !usuarioDTO.getCodigo().isBlank()) {
+		if (usuarioDTO.getCodigo() != null && !usuarioDTO.getCodigo().isEmpty()) {
 			
 			//Validar si el correo es diferente para crear o actualizar
 			if (!usuarioDTO.getCodigo().equals(usuario.getCodigo())) {
@@ -355,7 +355,7 @@ public class ZatUsuarioServiceImpl implements ZatUsuarioService {
 		}
 		
 		//Validar que el direccion no sea null 
-		if (usuarioDTO.getDireccion() != null && !usuarioDTO.getDireccion().isBlank()) {
+		if (usuarioDTO.getDireccion() != null && !usuarioDTO.getDireccion().isEmpty()) {
 			
 			//Seteo el direccion
 			usuario.setDireccion(usuarioDTO.getDireccion());
@@ -365,10 +365,10 @@ public class ZatUsuarioServiceImpl implements ZatUsuarioService {
 		}
 		
 		//Validar que el nombre no sea null 
-		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().isBlank()) {
+		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().isEmpty()) {
 			
 			//Validar si trae apellido
-			if (usuarioDTO.getApellido() != null && !usuarioDTO.getApellido().isBlank()) {
+			if (usuarioDTO.getApellido() != null && !usuarioDTO.getApellido().isEmpty()) {
 				usuario.setNombre(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido().trim());
 			}else {
 				
@@ -427,8 +427,8 @@ public class ZatUsuarioServiceImpl implements ZatUsuarioService {
 			}
 			
 			//Se realiza las validciones para los filtros correspondientes
-			String nombre = usuarioDTO.getNombre() == null || usuarioDTO.getNombre().isBlank() ? "-1" : usuarioDTO.getNombre().trim();
-			String codigo = usuarioDTO.getCodigo() == null || usuarioDTO.getCodigo().isBlank() ? "-1" : usuarioDTO.getCodigo().trim();
+			String nombre = usuarioDTO.getNombre() == null || usuarioDTO.getNombre().isEmpty() ? "-1" : usuarioDTO.getNombre().trim();
+			String codigo = usuarioDTO.getCodigo() == null || usuarioDTO.getCodigo().isEmpty() ? "-1" : usuarioDTO.getCodigo().trim();
 		
 			return usuarioRepository.consultarUsuarios(Constantes.ESTADO_ACTIVO, nombre, codigo);
 			
