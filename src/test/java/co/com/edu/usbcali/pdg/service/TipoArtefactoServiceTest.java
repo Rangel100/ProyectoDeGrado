@@ -1,99 +1,520 @@
 package co.com.edu.usbcali.pdg.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.DisplayName;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import co.com.edu.usbcali.pdg.builder.ArtefactoBuilder;
+import co.com.edu.usbcali.pdg.builder.TipoArtefactoBuilder;
+import co.com.edu.usbcali.pdg.domain.Artefacto;
+import co.com.edu.usbcali.pdg.domain.TipoArtefacto;
+import co.com.edu.usbcali.pdg.dto.TipoArtefactoDTO;
+import co.com.edu.usbcali.pdg.entity.service.ZatTipoArtefactoService;
+import co.com.edu.usbcali.pdg.mapper.TipoArtefactoMapper;
+import co.com.edu.usbcali.pdg.repository.TipoArtefactoRepository;
+import co.com.edu.usbcali.pdg.utility.Constantes;
 
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 
-/**
-* @author Zathura Code Generator Version 9.0 http://zathuracode.org
-* www.zathuracode.org
-*
-*/
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class TipoArtefactoServiceTest {
-    @Autowired
-    private TipoArtefactoService tipoArtefactoService;
 
-    @Test
-    @DisplayName("findAll")
-    public void findAll() {
-        //Arrange
+@ExtendWith(MockitoExtension.class)
+class TipoArtefactoServiceTest {
 
-        //Act
+	@InjectMocks
+	TipoArtefactoServiceImpl tipoArtefactoServiceImpl;
+	
+	@Mock
+	TipoArtefactoRepository tipoArtefactoRepository;
+	
+	@Mock
+	TipoArtefactoService tipoArtefactoService;
+	
+	@Mock
+	ZatTipoArtefactoService zatTipoArtefactoService;
+	
+	@Mock
+	ArtefactoService artefactoService;
+	
+	@Mock
+	TipoArtefactoMapper tipoArtefactoMapper;
+	
+	@Mock
+	UsuarioService usuarioService;
+	
+	@Captor
+	ArgumentCaptor<TipoArtefacto> tipoArtefactoCaptor;
+	
+	@Nested
+	class crearTipoArtefactoTests {
+		
+		@Test
+		void debeLanzarExeptionTipoArtefactoDTOSeaNull() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = null;
+			
+			String messageExpected = "El tipo de artefacto esta nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.crearTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionCodigoSeaNull() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			tipoArtefactoDTO.setCodigo(null);
+			
+			String messageExpected = "El codigo se encuentra nulo o vacío";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.crearTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionCodigoSeaVacio() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			tipoArtefactoDTO.setCodigo("");
+			
+			String messageExpected = "El codigo se encuentra nulo o vacío";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.crearTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionNombreSeaNull() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			tipoArtefactoDTO.setNombre(null);
+			
+			String messageExpected = "El nombre se encuentra nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.crearTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionNombreSeaVacio() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			tipoArtefactoDTO.setNombre("");
+			
+			String messageExpected = "El nombre se encuentra nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.crearTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeCrearTipoArtefacto() throws Exception {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			
+			TipoArtefacto tipoArtefactoEnviado;
+			
+			// Act
+			tipoArtefactoServiceImpl.crearTipoArtefacto(tipoArtefactoDTO);
+			
+			// Assert
+			verify(tipoArtefactoRepository).save(tipoArtefactoCaptor.capture());
+			tipoArtefactoEnviado = tipoArtefactoCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(tipoArtefactoDTO.getCodigo(), tipoArtefactoEnviado.getCodigo()),
+					
+					() -> assertEquals(tipoArtefactoDTO.getNombre(), tipoArtefactoEnviado.getNombre()),
+			
+					() -> assertEquals(Constantes.ESTADO_ACTIVO, tipoArtefactoEnviado.getEstado())
+					
+					);
+		}
+		
+	}
+	
+	@Nested
+	class actualizarTipoArtefactoTests {
+		
+		@Test
+		void debeLanzarExeptionTipoArtefactoDTOSeaNull() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = null;
+			
+			String messageExpected = "El tipo de artefacto esta nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.actualizarTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionTiarIdSeaNull() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			tipoArtefactoDTO.setTiarId(null);
+			
+			String messageExpected = "El identificador del tipo de artefacto esta nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.actualizarTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionTipoArtefactoNoExista() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			
+			when(tipoArtefactoRepository.findById(any())).thenReturn(Optional.empty());
+			
+			String messageExpected = "El tipo de artefacto no fue encontrado.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.actualizarTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionCodigoSeaNull() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			tipoArtefactoDTO.setCodigo(null);
+			Optional<TipoArtefacto> tipoArtefactoOpt = TipoArtefactoBuilder.getTipoArtefactoOpt();
+			
+			when(tipoArtefactoRepository.findById(any())).thenReturn(tipoArtefactoOpt);
+			
+			String messageExpected = "El codigo se encuentra nulo o vacío";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.actualizarTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionCodigoSeaVacio() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			tipoArtefactoDTO.setCodigo("");
+			Optional<TipoArtefacto> tipoArtefactoOpt = TipoArtefactoBuilder.getTipoArtefactoOpt();
+			
+			when(tipoArtefactoRepository.findById(any())).thenReturn(tipoArtefactoOpt);
+			
+			String messageExpected = "El codigo se encuentra nulo o vacío";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.actualizarTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionNombreSeaNull() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			tipoArtefactoDTO.setNombre(null);
+			Optional<TipoArtefacto> tipoArtefactoOpt = TipoArtefactoBuilder.getTipoArtefactoOpt();
+			
+			when(tipoArtefactoRepository.findById(any())).thenReturn(tipoArtefactoOpt);
+			
+			String messageExpected = "El nombre se encuentra nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.actualizarTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionNombreSeaVacio() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			tipoArtefactoDTO.setNombre("");
+			Optional<TipoArtefacto> tipoArtefactoOpt = TipoArtefactoBuilder.getTipoArtefactoOpt();
+			
+			when(tipoArtefactoRepository.findById(any())).thenReturn(tipoArtefactoOpt);
+			String messageExpected = "El nombre se encuentra nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.actualizarTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeActualizarTipoArtefacto() throws Exception {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			Optional<TipoArtefacto> tipoArtefactoOpt = TipoArtefactoBuilder.getTipoArtefactoOpt();
+			
+			TipoArtefacto tipoArtefactoEnviado;
+			
+			when(tipoArtefactoRepository.findById(any())).thenReturn(tipoArtefactoOpt);
+			
+			// Act
+			tipoArtefactoServiceImpl.actualizarTipoArtefacto(tipoArtefactoDTO);
+			
+			// Assert
+			verify(zatTipoArtefactoService).update(tipoArtefactoCaptor.capture());
+			tipoArtefactoEnviado = tipoArtefactoCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(tipoArtefactoDTO.getCodigo(), tipoArtefactoEnviado.getCodigo()),
+					
+					() -> assertEquals(tipoArtefactoDTO.getNombre(), tipoArtefactoEnviado.getNombre())
+					
+					);
+			
+		}
+		
+	}
+	
+	@Nested
+	class eliminarTipoArtefactoTests {
+		
+		@Test
+		void debeLanzarExeptionArtefactoDTOSeaNull() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = null;
+			
+			String messageExpected = "El tipo de artefacto esta nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.eliminarTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionArteIdSeaNull() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			tipoArtefactoDTO.setTiarId(null);
+			
+			String messageExpected = "El identificador del tipo de artefacto esta nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.eliminarTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionTipoArtefactoNoExista() {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			
+			when(tipoArtefactoRepository.findById(any())).thenReturn(Optional.empty());
+			
+			String messageExpected = "El tipo de artefacto no fue encontrado.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.eliminarTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionSiTieneArtefactosAsociados() throws Exception {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			Optional<TipoArtefacto> tipoArtefactoOpt = TipoArtefactoBuilder.getTipoArtefactoOpt();
+			List<Artefacto> artefactos = new ArrayList<>();
+			Artefacto artefacto = ArtefactoBuilder.getArtefacto();
+			artefactos.add(artefacto);
+			
+			when(tipoArtefactoRepository.findById(any())).thenReturn(tipoArtefactoOpt);
+			
+			when(artefactoService.consultarArtefactosPorTipoArtefacto(any())).thenReturn(artefactos);
+			
+			String messageExpected = "El tipo de artefacto tiene artefactos asociados.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.eliminarTipoArtefacto(tipoArtefactoDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeEliminarTipoArtefacto() throws Exception {
+			// Arrange
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			Optional<TipoArtefacto> tipoArtefactoOpt = TipoArtefactoBuilder.getTipoArtefactoOpt();
+			List<Artefacto> artefactos = new ArrayList<>();
+			
+			TipoArtefacto tipoArtefactoEnviado;
+			
+			when(tipoArtefactoRepository.findById(any())).thenReturn(tipoArtefactoOpt);
+			
+			when(artefactoService.consultarArtefactosPorTipoArtefacto(any())).thenReturn(artefactos);
+			
+			// Act
+			tipoArtefactoServiceImpl.eliminarTipoArtefacto(tipoArtefactoDTO);
+			
+			// Assert
+			verify(zatTipoArtefactoService).update(tipoArtefactoCaptor.capture());
+			tipoArtefactoEnviado = tipoArtefactoCaptor.getValue();
+			
+			assertAll(
+					
+					() -> assertEquals(Constantes.ESTADO_INACTIVO, tipoArtefactoEnviado.getEstado())
+					
+					);
+			
+		}
+	}
+	
+	@Nested
+	class consultarTipoArtefactoTests {
+		
+		@Test
+		void debeLanzarExeptionTiarIdSeaNull() {
+			// Arrange
+			Long tiarId = null;
+			
+			String messageExpected = "El identificador del tipo de artefacto esta nulo o vacío.";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				tipoArtefactoServiceImpl.consultarTipoArtefacto(tiarId);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeConsultarArtefacto() throws Exception {
+			// Arrange
+			Long tiarId = 1L;
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			
+			when(tipoArtefactoRepository.consultarTipoArtefacto(any(), any())).thenReturn(tipoArtefactoDTO);
+			
+			// Act
+			TipoArtefactoDTO tipoArtefactoDTOResult = tipoArtefactoServiceImpl.consultarTipoArtefacto(tiarId);
 
-        //Assert
-        assertNotNull(tipoArtefactoService);
-    }
+			// Assert
+			assertEquals(tipoArtefactoDTO, tipoArtefactoDTOResult);
+			
+		}
+	}
+	
+	@Nested
+	class consultarTipoArtefactosActivosTests {
+		
+		@Test
+		void debeConsultarArtefacto() throws Exception {
+			// Arrange
+			List<TipoArtefactoDTO> tipoArtefactoDTOs = new ArrayList<>();
+			TipoArtefactoDTO tipoArtefactoDTO = TipoArtefactoBuilder.getTipoArtefactoDTO();
+			tipoArtefactoDTOs.add(tipoArtefactoDTO);
+			
+			when(tipoArtefactoMapper.listTipoArtefactoToListTipoArtefactoDTO(any())).thenReturn(tipoArtefactoDTOs);
+			
+			// Act
+			List<TipoArtefactoDTO> tipoArtefactoDTOResult = tipoArtefactoServiceImpl.consultarTipoArtefactosActivos();
 
-    @Test
-    @DisplayName("save")
-    public void save() throws Exception {
-        //Arrange
+			// Assert
+			assertEquals(tipoArtefactoDTOs, tipoArtefactoDTOResult);
+			
+		}
+	}
 
-        //Act
-
-        //Assert
-        assertNotNull(tipoArtefactoService);
-    }
-
-    @Test
-    @DisplayName("delete")
-    public void delete() throws Exception {
-        //Arrange
-
-        //Act
-
-        //Assert
-        assertNotNull(tipoArtefactoService);
-    }
-
-    @Test
-    @DisplayName("deleteById")
-    public void deleteById() throws Exception {
-        //Arrange
-
-        //Act
-
-        //Assert
-        assertNotNull(tipoArtefactoService);
-    }
-
-    @Test
-    @DisplayName("update")
-    public void update() throws Exception {
-        //Arrange
-
-        //Act
-
-        //Assert
-        assertNotNull(tipoArtefactoService);
-    }
-
-    @Test
-    @DisplayName("findById")
-    public void findById() throws Exception {
-        //Arrange
-
-        //Act
-
-        //Assert
-        assertNotNull(tipoArtefactoService);
-    }
-
-    @Test
-    @DisplayName("count")
-    public void count() throws Exception {
-        //Arrange
-
-        //Act
-
-        //Assert
-        assertNotNull(tipoArtefactoService);
-    }
 }

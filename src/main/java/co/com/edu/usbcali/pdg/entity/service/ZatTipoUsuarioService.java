@@ -1,7 +1,8 @@
-package co.com.edu.usbcali.pdg.service;
+package co.com.edu.usbcali.pdg.entity.service;
 
 import java.util.List;
 
+import co.com.edu.usbcali.pdg.domain.TipoUsuario;
 import co.com.edu.usbcali.pdg.dto.TipoUsuarioDTO;
 
 
@@ -10,7 +11,7 @@ import co.com.edu.usbcali.pdg.dto.TipoUsuarioDTO;
 * www.zathuracode.org
 *
 */
-public interface TipoUsuarioService {
+public interface ZatTipoUsuarioService extends GenericService<TipoUsuario, Long> {
 
 	void crearTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO) throws Exception;
 

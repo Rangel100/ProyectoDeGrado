@@ -1,4 +1,4 @@
-package co.com.edu.usbcali.pdg.controller;
+package co.com.edu.usbcali.pdg.entity.controller;
 
 import java.time.Instant;
 import java.util.Collections;

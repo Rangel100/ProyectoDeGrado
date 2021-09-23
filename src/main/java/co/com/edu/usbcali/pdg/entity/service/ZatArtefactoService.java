@@ -1,4 +1,4 @@
-package co.com.edu.usbcali.pdg.service;
+package co.com.edu.usbcali.pdg.entity.service;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
 * www.zathuracode.org
 *
 */
-public interface ArtefactoService {
+public interface ZatArtefactoService extends GenericService<Artefacto, Long> {
 
 	void crearArtefacto(ArtefactoDTO artefactoDTO) throws Exception;
 

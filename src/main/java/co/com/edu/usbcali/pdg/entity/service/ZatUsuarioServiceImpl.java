@@ -1,10 +1,14 @@
-package co.com.edu.usbcali.pdg.service;
+package co.com.edu.usbcali.pdg.entity.service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-import org.apache.naming.factory.SendMailFactory;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -16,15 +20,11 @@ import co.com.edu.usbcali.pdg.domain.TipoUsuario;
 import co.com.edu.usbcali.pdg.domain.Usuario;
 import co.com.edu.usbcali.pdg.dto.ArtefactoDTO;
 import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
-import co.com.edu.usbcali.pdg.entity.service.ZatArtefactoService;
-import co.com.edu.usbcali.pdg.entity.service.ZatTipoUsuarioService;
-import co.com.edu.usbcali.pdg.entity.service.ZatUsuarioService;
 import co.com.edu.usbcali.pdg.exception.ZMessManager;
 import co.com.edu.usbcali.pdg.mapper.ArtefactoMapper;
 import co.com.edu.usbcali.pdg.repository.UsuarioRepository;
 import co.com.edu.usbcali.pdg.utility.Constantes;
-import co.com.edu.usbcali.pdg.utility.PasswordGenerator;
-import co.com.edu.usbcali.pdg.utility.SendMail;
+import co.com.edu.usbcali.pdg.utility.Utilities;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -36,31 +36,135 @@ import lombok.extern.slf4j.Slf4j;
 @Scope("singleton")
 @Service
 @Slf4j
-public class UsuarioServiceImpl implements UsuarioService {
+public class ZatUsuarioServiceImpl implements ZatUsuarioService {
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
-	private ZatUsuarioService zatUsuarioService;
+	private ZatUsuarioService usuarioService;
 	
 	@Autowired
-	private ZatTipoUsuarioService zatTipoUsuarioService;
+	private ZatTipoUsuarioService tipoUsuarioService;
 	
 	@Autowired
-	private ArtefactoService artefactoService;
-	
-	@Autowired
-	private ZatArtefactoService zatArtefactoService;
+	private ZatArtefactoService artefactoService;
 	
 	@Autowired
 	private ArtefactoMapper artefactoMapper;
-	
-//	@Autowired
-//	private PasswordGenerator pssG;
-	
+
 	@Autowired
-	private SendMail sendMail;
+	private Validator validator;
+
+	@Override
+	public void validate(Usuario usuario) throws ConstraintViolationException {
+
+		Set<ConstraintViolation<Usuario>> constraintViolations = validator.validate(usuario);
+		if (!constraintViolations.isEmpty()) {
+			throw new ConstraintViolationException(constraintViolations);
+		}
+
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Long count() {
+		return usuarioRepository.count();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Usuario> findAll() {
+		log.debug("finding all Usuario instances");
+		return usuarioRepository.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public Usuario save(Usuario entity) throws Exception {
+		log.debug("saving Usuario instance");
+
+		if (entity == null) {
+			throw new ZMessManager().new NullEntityExcepcion("Usuario");
+		}
+
+		validate(entity);
+
+		if (usuarioRepository.existsById(entity.getUsuaId())) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
+
+		return usuarioRepository.save(entity);
+
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void delete(Usuario entity) throws Exception {
+		log.debug("deleting Usuario instance");
+
+		if (entity == null) {
+			throw new ZMessManager().new NullEntityExcepcion("Usuario");
+		}
+
+		if (entity.getUsuaId() == null) {
+			throw new ZMessManager().new EmptyFieldException("usuaId");
+		}
+
+		if (usuarioRepository.existsById(entity.getUsuaId()) == false) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
+
+		findById(entity.getUsuaId()).ifPresent(entidad -> {
+			List<Artefacto> artefactos = entidad.getArtefactos();
+			if (Utilities.validationsList(artefactos) == true) {
+				throw new ZMessManager().new DeletingException("artefactos");
+			}
+		});
+
+		usuarioRepository.deleteById(entity.getUsuaId());
+		log.debug("delete Usuario successful");
+
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public void deleteById(Long id) throws Exception {
+		log.debug("deleting Usuario instance");
+		if (id == null) {
+			throw new ZMessManager().new EmptyFieldException("usuaId");
+		}
+		if (usuarioRepository.existsById(id)) {
+			delete(usuarioRepository.findById(id).get());
+		}
+	}
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+	public Usuario update(Usuario entity) throws Exception {
+
+		log.debug("updating Usuario instance");
+
+		if (entity == null) {
+			throw new ZMessManager().new NullEntityExcepcion("Usuario");
+		}
+
+		validate(entity);
+
+		if (usuarioRepository.existsById(entity.getUsuaId()) == false) {
+			throw new ZMessManager(ZMessManager.ENTITY_WITHSAMEKEY);
+		}
+
+		return usuarioRepository.save(entity);
+
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Optional<Usuario> findById(Long usuaId) {
+		log.debug("getting Usuario instance");
+		return usuarioRepository.findById(usuaId);
+	}
 	
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
@@ -76,9 +180,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 			
 			//Metodo que implementa las validaciones
 			validarUsuario(usuarioDTO, usuario);
-			
-			//encriptar contraseña
-			usuario.setPss(encriptarPss(usuario.getPss()));
 			
 			//Seteo el estado
 			usuario.setEstado(Constantes.ESTADO_ACTIVO);
@@ -118,7 +219,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 			//Metodo que implementa las validaciones
 			validarUsuario(usuarioDTO, usuario);
 			
-			zatUsuarioService.update(usuario);
+			//Seteo el estado
+			usuario.setEstado(Constantes.ESTADO_ACTIVO);
+			
+			usuarioService.update(usuario);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -153,7 +257,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 			//Seteo el estado inactivo
 			usuario.setEstado(Constantes.ESTADO_INACTIVO);
 			
-			zatUsuarioService.update(usuario);
+			usuarioService.update(usuario);
 			
 			//inactivo los artefactos que el usuario tenga registrados
 			artefactoService.eliminarArtefactosPorUsuario(usuarioDTO);
@@ -184,7 +288,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 				
 				for (int i = 0; i < artefactosList.length; i++) {
 					
-					Optional<Artefacto> artefactoOpt =  zatArtefactoService.findById(Long.parseLong(artefactosList[i]));
+					Optional<Artefacto> artefactoOpt =  artefactoService.findById(Long.parseLong(artefactosList[i]));
 					
 					if (!artefactoOpt.isPresent()) {
 						throw new ZMessManager("El artefacto no exíste.");
@@ -213,7 +317,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if (usuarioDTO.getTiusId_TipoUsuario() != null) {
 			
 			//Valido que el tipo de usuario exista
-			Optional<TipoUsuario> tipoUsuarioOpt = zatTipoUsuarioService.findById(usuarioDTO.getTiusId_TipoUsuario());
+			Optional<TipoUsuario> tipoUsuarioOpt = tipoUsuarioService.findById(usuarioDTO.getTiusId_TipoUsuario());
 			
 			if (!tipoUsuarioOpt.isPresent()) {
 				throw new ZMessManager("El tipo de usuario seleccionado no exíste.");
@@ -260,16 +364,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 			throw new ZMessManager("La direccion se encuentra nulo o vacío.");
 		}
 		
-		//Validar que la contraseña no sea null 
-		if (usuarioDTO.getPss() != null && !usuarioDTO.getPss().isBlank()) {
-			
-			//Seteo la contraseña
-			usuario.setPss(usuarioDTO.getPss());
-			
-		} else {
-			throw new ZMessManager("La contraseña se encuentra nulo o vacío.");
-		}
-		
 		//Validar que el nombre no sea null 
 		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().isBlank()) {
 			
@@ -299,45 +393,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 			}
 			
 			return usuarioRepository.findByTipoUsuario_tiusIdAndEstado(tiusId, Constantes.ESTADO_ACTIVO);
-			
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			throw e;
-		}
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public boolean validarUsuarioYContraseñaCorrecta(UsuarioDTO usuarioDTO) {
-		try {
-			//validar que el tiusId no sea null
-			if (usuarioDTO == null) {
-				throw new ZMessManager("El objeto usuario viene vacio o null");
-			}
-			
-			if(usuarioDTO.getPss() == null || usuarioDTO.getPss().trim().isBlank()) {
-				throw new ZMessManager("La contraseña no puede ser vacia");
-			}
-			
-			if(usuarioDTO.getCodigo() == null || usuarioDTO.getCodigo().trim().isBlank()) {
-				throw new ZMessManager("El codigo no puede ser vacia");
-			}
-			
-			List<Usuario> usuarioConsultado = consultarUsuariosPorCodigo(usuarioDTO.getCodigo());
-			
-			if(usuarioConsultado.get(0) != null) {
-				
-				String pssEncriptado = encriptarPss(usuarioDTO.getPss());
-				
-				if(usuarioConsultado.get(0).getPss().toLowerCase().equals(pssEncriptado.toLowerCase())) {
-					return true;
-				}else {
-					return false;
-				}
-				
-			}else {
-				return false;
-			}
 			
 		} catch (Exception e) {
 			log.error(e.getMessage());
@@ -398,72 +453,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 			log.error(e.getMessage());
 			throw e;
 		}
-	}
-	
-	@Override
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
-	public void actualizarEnviarContraseña(String correo) throws Exception {
-		try {
-			
-			//Validar que correo no sea null 
-			if (correo == null) {
-				throw new ZMessManager("El correo esta nulo o vacío.");
-			}
-			
-			//Validar que el usuario exísta
-			List<Usuario> usuarioList = usuarioRepository.findByCodigo(correo.trim());
-			
-			if (usuarioList.isEmpty()) {
-				throw new ZMessManager("El usuario no fue encontrado.");
-			}
-			
-			Usuario usuario = usuarioList.get(0);
-			
-			//Se genera una nuevo password
-			String nuevoPass = generarPassword();
-			
-			//Se encripta el password
-			String pass = encriptarPss(nuevoPass);
-			
-			//Se asigna el password al usuario
-			usuario.setPss(pass);
-			
-			zatUsuarioService.update(usuario);
-			
-			//Se envia el correo el password nuevo
-			sendMail.sendNewPassword(correo, nuevoPass);
-			
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			throw e;
-		}
-	}
-	
-	
-	private String encriptarPss(String pss) {
-		
-		Optional<String> stringOpt = PasswordGenerator.hashPassword(pss);
-		
-		if(!stringOpt.isPresent()) {
-			throw new ZMessManager("Error al encriptar la contraseña");
-		}
-		String pssEncript = stringOpt.get();
-		
-		return pssEncript;
-	}
-
-	
-	private String generarPassword() {
-		char[] caracteres = new char[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-				'q', 'r', 's', 't', 'u', 'w', 'x', 'y', 'z', '1', '2', '3', '3', '5', '6', '7', '8', '9', '0' };
-
-		String password = "";
-		for (int i = 0; i < 8; i++) {
-			char caracter = caracteres[(int) (Math.random() * 35)];
-			password += String.valueOf(caracter);
-		}
-		
-		return password;
 	}
 
 }
