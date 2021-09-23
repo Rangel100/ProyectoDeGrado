@@ -1,9 +1,6 @@
 package co.com.edu.usbcali.pdg.entity.service;
 
-import java.util.List;
-
 import co.com.edu.usbcali.pdg.domain.Usuario;
-import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
 
 
 /**
@@ -12,20 +9,5 @@ import co.com.edu.usbcali.pdg.dto.UsuarioDTO;
 *
 */
 public interface ZatUsuarioService extends GenericService<Usuario, Long> {
-
-	void crearUsuario(UsuarioDTO usuarioDTO) throws Exception;
-
-	void actualizarUsuario(UsuarioDTO usuarioDTO) throws Exception;
-
-	void eliminarUsuario(UsuarioDTO usuarioDTO) throws Exception;
-
-	UsuarioDTO consultarUsuario(Long usuaId) throws Exception;
-
-	List<Usuario> consultarUsuariosPorTipoUsuario(Long tiusId);
-
-	List<Usuario> consultarUsuariosPorCodigo(String codigo);
-
-	List<UsuarioDTO> consultarUsuarios(UsuarioDTO usuarioDTO);
-
-	UsuarioDTO consultarUsuariosPorCodigoOrm(String codigo);
+	
 }

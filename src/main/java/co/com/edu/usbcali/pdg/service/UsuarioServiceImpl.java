@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.naming.factory.SendMailFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -229,7 +228,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		
 		//validar que el codigo no sea null
-		if (usuarioDTO.getCodigo() != null && !usuarioDTO.getCodigo().isEmpty()) {
+		if (usuarioDTO.getCodigo() != null && !usuarioDTO.getCodigo().trim().isEmpty()) {
 			
 			//Validar si el correo es diferente para crear o actualizar
 			if (!usuarioDTO.getCodigo().equals(usuario.getCodigo())) {
@@ -251,7 +250,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		
 		//Validar que el direccion no sea null 
-		if (usuarioDTO.getDireccion() != null && !usuarioDTO.getDireccion().isEmpty()) {
+		if (usuarioDTO.getDireccion() != null && !usuarioDTO.getDireccion().trim().isEmpty()) {
 			
 			//Seteo el direccion
 			usuario.setDireccion(usuarioDTO.getDireccion());
@@ -261,7 +260,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		
 		//Validar que la contraseña no sea null 
-		if (usuarioDTO.getPss() != null && !usuarioDTO.getPss().isEmpty()) {
+		if (usuarioDTO.getPss() != null && !usuarioDTO.getPss().trim().isEmpty()) {
 			
 			//Seteo la contraseña
 			usuario.setPss(usuarioDTO.getPss());
@@ -271,10 +270,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		
 		//Validar que el nombre no sea null 
-		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().isEmpty()) {
+		if (usuarioDTO.getNombre() != null && !usuarioDTO.getNombre().trim().isEmpty()) {
 			
 			//Validar si trae apellido
-			if (usuarioDTO.getApellido() != null && !usuarioDTO.getApellido().isEmpty()) {
+			if (usuarioDTO.getApellido() != null && !usuarioDTO.getApellido().trim().isEmpty()) {
 				usuario.setNombre(usuarioDTO.getNombre() + " " + usuarioDTO.getApellido().trim());
 			}else {
 				
@@ -315,7 +314,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 				throw new ZMessManager("El objeto usuario viene vacio o null");
 			}
 			
-			if(usuarioDTO.getPss() == null || usuarioDTO.getPss().trim().isEmpty()) {
+			if(usuarioDTO.getPss() == null || usuarioDTO.getPss().trim().trim().isEmpty()) {
 				throw new ZMessManager("La contraseña no puede ser vacia");
 			}
 			
@@ -372,8 +371,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 			}
 			
 			//Se realiza las validciones para los filtros correspondientes
-			String nombre = usuarioDTO.getNombre() == null || usuarioDTO.getNombre().isEmpty() ? "-1" : usuarioDTO.getNombre().trim();
-			String codigo = usuarioDTO.getCodigo() == null || usuarioDTO.getCodigo().isEmpty() ? "-1" : usuarioDTO.getCodigo().trim();
+			String nombre = usuarioDTO.getNombre() == null || usuarioDTO.getNombre().trim().isEmpty() ? "-1" : usuarioDTO.getNombre().trim();
+			String codigo = usuarioDTO.getCodigo() == null || usuarioDTO.getCodigo().trim().isEmpty() ? "-1" : usuarioDTO.getCodigo().trim();
 		
 			return usuarioRepository.consultarUsuarios(Constantes.ESTADO_ACTIVO, nombre, codigo);
 			

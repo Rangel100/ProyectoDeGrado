@@ -88,7 +88,10 @@ public class UsuarioRestController {
 	
 	usuarioService.actualizarEnviarContraseña(correo);
 	
-	return ResponseEntity.ok().body(correo);
+	UsuarioDTO usu= new UsuarioDTO();
+	usu.setCodigo(correo);
+	
+	return ResponseEntity.ok().body(usu);
 	}
 	
 }
