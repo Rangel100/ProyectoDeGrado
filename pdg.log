@@ -1716,3 +1716,31 @@ co.com.edu.usbcali.pdg.exception.ZMessManager: El usuario no fue encontrado.
 	at java.base/java.lang.Thread.run(Thread.java:832) ~[na:na]
 
 2021-09-22 23:30:07.286 ERROR 9808 --- [http-nio-9090-exec-6] c.c.e.u.p.e.c.GeneralExceptionHandler    : errors El usuario no fue encontrado. for path uri=/api/v1/usuario/actualizarEnviarContrase%C3%B1a
+2021-09-23 00:47:11.415  INFO 756 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Starting SpringBootRunner using Java 15.0.2 on LAPTOP-H2F53KT7 with PID 756 (C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack\target\classes started by scarv in C:\Users\scarv\Desktop\Universidad\pdg\ProyectoDeGradoBack)
+2021-09-23 00:47:11.424  INFO 756 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : No active profile set, falling back to default profiles: default
+2021-09-23 00:47:13.222  INFO 756 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-09-23 00:47:13.371  INFO 756 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 136 ms. Found 4 JPA repository interfaces.
+2021-09-23 00:47:14.257  INFO 756 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9090 (http)
+2021-09-23 00:47:14.272  INFO 756 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2021-09-23 00:47:14.273  INFO 756 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.41]
+2021-09-23 00:47:14.454  INFO 756 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2021-09-23 00:47:14.454  INFO 756 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2967 ms
+2021-09-23 00:47:14.773  INFO 756 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-09-23 00:47:17.298  INFO 756 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-09-23 00:47:17.399  INFO 756 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-09-23 00:47:17.493  INFO 756 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.27.Final
+2021-09-23 00:47:17.763  INFO 756 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-09-23 00:47:18.385  INFO 756 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2021-09-23 00:47:19.470  INFO 756 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-09-23 00:47:19.501  INFO 756 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-09-23 00:47:20.557  WARN 756 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-09-23 00:47:21.118  INFO 756 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2021-09-23 00:47:21.195  INFO 756 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : createRestApi
+2021-09-23 00:47:21.199  INFO 756 --- [main] co.com.edu.usbcali.pdg.SwaggerConfig     : apiInfo
+2021-09-23 00:47:21.438  INFO 756 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4f7bc9a3, org.springframework.security.web.context.SecurityContextPersistenceFilter@2975715, org.springframework.security.web.header.HeaderWriterFilter@415c5469, org.springframework.web.filter.CorsFilter@544faa01, org.springframework.security.web.authentication.logout.LogoutFilter@517d68b8, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2e8417ea, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@688e6d4e, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@cf933b1, org.springframework.security.web.session.SessionManagementFilter@314b0d53, org.springframework.security.web.access.ExceptionTranslationFilter@57629340]
+2021-09-23 00:47:21.574  INFO 756 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-09-23 00:47:21.968  INFO 756 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9090 (http) with context path ''
+2021-09-23 00:47:22.450  INFO 756 --- [RMI TCP Connection(3)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-09-23 00:47:22.450  INFO 756 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-09-23 00:47:22.454  INFO 756 --- [RMI TCP Connection(3)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2021-09-23 00:47:22.840  INFO 756 --- [main] co.com.edu.usbcali.pdg.SpringBootRunner  : Started SpringBootRunner in 11.994 seconds (JVM running for 13.211)
