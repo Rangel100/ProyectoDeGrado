@@ -56,8 +56,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Autowired
 	private ArtefactoMapper artefactoMapper;
 	
-	@Autowired
-	private PasswordGenerator pssG;
+//	@Autowired
+//	private PasswordGenerator pssG;
 	
 	@Autowired
 	private SendMail sendMail;
@@ -442,7 +442,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	private String encriptarPss(String pss) {
 		
-		Optional<String> stringOpt = pssG.hashPassword(pss);
+		Optional<String> stringOpt = PasswordGenerator.hashPassword(pss);
 		
 		if(!stringOpt.isPresent()) {
 			throw new ZMessManager("Error al encriptar la contraseña");
