@@ -167,7 +167,7 @@ public class TipoUsuarioServiceImpl implements TipoUsuarioService {
 
 	private void validarTipoUsuario(TipoUsuarioDTO tipoUsuarioDTO, TipoUsuario tipoUsuario) {
 		//Validar que el nombre no sea null 
-		if (tipoUsuarioDTO.getNombre() != null && !tipoUsuarioDTO.getNombre().isBlank()) {
+		if (tipoUsuarioDTO.getNombre() != null && !tipoUsuarioDTO.getNombre().isEmpty()) {
 			
 			Optional<TipoUsuario> tipoUsuarioOpt = tipoUsuarioRepository.findByNombre(tipoUsuarioDTO.getNombre().toUpperCase());
 			

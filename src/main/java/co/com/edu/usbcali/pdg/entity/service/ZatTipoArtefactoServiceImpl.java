@@ -289,7 +289,7 @@ public class ZatTipoArtefactoServiceImpl implements ZatTipoArtefactoService {
 
 	private void validarTipoArtefacto(TipoArtefactoDTO tipoArtefactoDTO, TipoArtefacto tipoArtefacto) {
 		//validar que el codigo no sea null
-		if (tipoArtefactoDTO.getCodigo() != null && !tipoArtefactoDTO.getCodigo().isBlank()) {
+		if (tipoArtefactoDTO.getCodigo() != null && !tipoArtefactoDTO.getCodigo().isEmpty()) {
 			
 			//Seteo del codigo
 			tipoArtefacto.setCodigo(tipoArtefactoDTO.getCodigo());
@@ -299,7 +299,7 @@ public class ZatTipoArtefactoServiceImpl implements ZatTipoArtefactoService {
 		}
 		
 		//Validar que el nombre no sea null 
-		if (tipoArtefactoDTO.getNombre() != null && !tipoArtefactoDTO.getNombre().isBlank()) {
+		if (tipoArtefactoDTO.getNombre() != null && !tipoArtefactoDTO.getNombre().isEmpty()) {
 			
 			//Seteo el nombre
 			tipoArtefacto.setNombre(tipoArtefactoDTO.getNombre());

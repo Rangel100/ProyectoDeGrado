@@ -161,7 +161,7 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 
 	private void validarArtefacto(ArtefactoDTO artefactoDTO, Artefacto artefacto) {
 		//validar que el codigo no sea null
-		if (artefactoDTO.getCodigo() != null && !artefactoDTO.getCodigo().isBlank()) {
+		if (artefactoDTO.getCodigo() != null && !artefactoDTO.getCodigo().isEmpty()) {
 			
 			//Seteo del codigo
 			artefacto.setCodigo(artefactoDTO.getCodigo());
@@ -171,7 +171,7 @@ public class ArtefactoServiceImpl implements ArtefactoService {
 		}
 		
 		//Validar que el url no sea null 
-		if (artefactoDTO.getUrl() != null && !artefactoDTO.getUrl().isBlank()) {
+		if (artefactoDTO.getUrl() != null && !artefactoDTO.getUrl().isEmpty()) {
 			
 			//Seteo el url
 			artefacto.setUrl(artefactoDTO.getUrl());
