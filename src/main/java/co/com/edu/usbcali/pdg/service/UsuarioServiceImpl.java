@@ -307,7 +307,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public boolean validarUsuarioYContraseñaCorrecta(UsuarioDTO usuarioDTO) {
+	public UsuarioDTO validarUsuarioYContraseñaCorrecta(UsuarioDTO usuarioDTO) {
 		try {
 			//validar que el tiusId no sea null
 			if (usuarioDTO == null) {
@@ -324,18 +324,23 @@ public class UsuarioServiceImpl implements UsuarioService {
 			
 			List<Usuario> usuarioConsultado = consultarUsuariosPorCodigo(usuarioDTO.getCodigo());
 			
-			if(usuarioConsultado.get(0) != null) {
+			if (!usuarioConsultado.isEmpty()) {
 				
-				String pssEncriptado = encriptarPss(usuarioDTO.getPss());
-				
-				if(usuarioConsultado.get(0).getPss().toLowerCase().equals(pssEncriptado.toLowerCase())) {
-					return true;
+				if(usuarioConsultado.get(0) != null) {
+					
+					String pssEncriptado = encriptarPss(usuarioDTO.getPss());
+					
+					if(usuarioConsultado.get(0).getPss().toLowerCase().equals(pssEncriptado.toLowerCase())) {
+						return usuarioDTO;
+					}else {
+						return null;
+					}
+					
 				}else {
-					return false;
+					return null;
 				}
-				
-			}else {
-				return false;
+			} else {
+				return null;
 			}
 			
 		} catch (Exception e) {

@@ -29,7 +29,7 @@ public interface UsuarioService {
 
 	UsuarioDTO consultarUsuariosPorCodigoOrm(String codigo);
 
-	boolean validarUsuarioYContraseñaCorrecta(UsuarioDTO usuarioDTO);
+	UsuarioDTO validarUsuarioYContraseñaCorrecta(UsuarioDTO usuarioDTO);
 
 	void actualizarEnviarContraseña(String correo) throws Exception;
 }
