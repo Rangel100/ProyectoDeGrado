@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -76,6 +77,9 @@ class UsuarioServiceTest {
 	
 	@Captor
 	ArgumentCaptor<Usuario> usuarioCaptor;
+	
+	@Captor
+	ArgumentCaptor<UsuarioDTO> usuarioDTOCaptor;
 	
 	@Nested
 	class crearUsuarioTests {
@@ -1471,6 +1475,100 @@ class UsuarioServiceTest {
 					() -> assertEquals(correo, usuarioEnviado.getCodigo())
 					
 					);
+			
+		}
+		
+	}
+	
+	@Nested	
+	class validarUsuarioYContraseñaCorrectaTests {
+		
+		@Test
+		void debeLanzarExeptionUsuarioSeaNull() {
+			// Arrange
+			UsuarioDTO usuarioDTO = null;
+			
+			String messageExpected = "El objeto usuario viene vacío o null";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				usuarioServiceImpl.validarUsuarioYContraseñaCorrecta(usuarioDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionPasswordSeaNull() {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setPss(null);
+			
+			String messageExpected = "La contraseña no puede ser vacía";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				usuarioServiceImpl.validarUsuarioYContraseñaCorrecta(usuarioDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionPasswordSeaVacia() {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setPss("");
+			
+			String messageExpected = "La contraseña no puede ser vacía";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				usuarioServiceImpl.validarUsuarioYContraseñaCorrecta(usuarioDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionCorreoSeaNull() {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setCodigo(null);
+			
+			String messageExpected = "El codigo no puede ser vacío";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				usuarioServiceImpl.validarUsuarioYContraseñaCorrecta(usuarioDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
+			
+		}
+		
+		@Test
+		void debeLanzarExeptionCorreoSeaVacio() {
+			// Arrange
+			UsuarioDTO usuarioDTO = UsuarioBuilder.getUsuarioDTO();
+			usuarioDTO.setCodigo("");
+			
+			String messageExpected = "El codigo no puede ser vacío";
+			
+			// Act
+			Exception exception = assertThrows(Exception.class, () -> {
+				usuarioServiceImpl.validarUsuarioYContraseñaCorrecta(usuarioDTO);
+			});
+			
+			// Assert
+			assertEquals(messageExpected, exception.getMessage());
 			
 		}
 		

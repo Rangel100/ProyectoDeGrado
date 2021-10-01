@@ -311,15 +311,15 @@ public class UsuarioServiceImpl implements UsuarioService {
 		try {
 			//validar que el tiusId no sea null
 			if (usuarioDTO == null) {
-				throw new ZMessManager("El objeto usuario viene vacio o null");
+				throw new ZMessManager("El objeto usuario viene vacío o null");
 			}
 			
 			if(usuarioDTO.getPss() == null || usuarioDTO.getPss().trim().trim().isEmpty()) {
-				throw new ZMessManager("La contraseña no puede ser vacia");
+				throw new ZMessManager("La contraseña no puede ser vacía");
 			}
 			
 			if(usuarioDTO.getCodigo() == null || usuarioDTO.getCodigo().trim().isEmpty()) {
-				throw new ZMessManager("El codigo no puede ser vacia");
+				throw new ZMessManager("El codigo no puede ser vacío");
 			}
 			
 			List<Usuario> usuarioConsultado = consultarUsuariosPorCodigo(usuarioDTO.getCodigo());
